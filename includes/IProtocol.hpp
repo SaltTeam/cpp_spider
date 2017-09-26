@@ -8,24 +8,18 @@
 ** Last update Mon Sep 25 13:31:02 2017 Maxime PILLON
 */
 
-#ifndef IPROTOCOL_HPP_
-# define IPROTOCOL_HPP_
+#pragma once
 
-enum class Transmission
+enum class	KEYTYPE
 {
-  EOT = 0,
-  PING,
-  PONG,
-  SEND,
-  ASEND,
+  NONE = 0,
+  RC,
+  LC,
+  SCROLLUP,
+  SCROLLDOWN,
+  MC
 };
 
-enum class Order
+enum class	Order
 {
-  //active
-  //passive
 };
-
-
-
-#endif // !IPROTOCOL_HPP_

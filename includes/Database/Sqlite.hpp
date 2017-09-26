@@ -33,6 +33,10 @@ namespace spider
     bool open(const char *filename);
 
     void close();
+
+    void addEntry(char *mac, char *time, char *proccess, char *message);
+
+    void removeEntry(int id);
   };
 }
 
