@@ -60,3 +60,14 @@ void	spider::Sqlite::execute(const char *querry)
     fprintf(stdout, "Operation done successfully\n");
   }
 }
+
+void spider::Sqlite::addEntry(char *mac, char *time, char *proccess,
+			      char *message)
+{
+  // create the querry then use execute
+}
+
+void spider::Sqlite::removeEntry(int id)
+{
+  // create the query the use execute
+}
