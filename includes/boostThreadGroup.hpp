@@ -10,6 +10,7 @@
 class boostThreadGroup {
 public:
     void init(int nbThreads);
+    void createThreads();
     void joinAll();
     void interruptAll();
 

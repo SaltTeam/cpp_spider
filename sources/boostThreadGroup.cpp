@@ -8,7 +8,7 @@ boostThreadGroup::boostThreadGroup(){
 
 }
 
-boostThreadGroup::~boostThreadGroup() {
+~boostThreadGroup::~boostThreadGroup() {
 
 }
 
