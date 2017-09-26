@@ -6,12 +6,16 @@
 #define BOOSTTHREADPOOL_HPP
 
 #include <boost/asio/io_service.hpp>
+#include <boost/atomic/atomic.hpp>
+#include <boost/lockfree/lockfree_forward.hpp>
 #include <memory>
+#include <queue>
+#include "Service.hpp"
 #include "IThreadGroup.hpp"
 
 class boostThreadPool {
 public:
-    void init();
+    void addClient();
     void run();
     void stop();
 public:
@@ -19,8 +23,10 @@ public:
     ~boostThreadPool();
 
 private:
-    std::unique_ptr<IThreadGroup>   pool;
-    boost::asio::io_service         service;
+    std::unique_ptr<IThreadGroup>          pool;
+    friend boost::atomic_bool              poolContinue;
+    friend boost::atomic<std::queue>       clientqueue;
+    Service                                service;
 };
 
 

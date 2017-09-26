@@ -6,10 +6,10 @@
 #define BOOSTTHREADGROUP_HPP
 
 #include <boost/thread/thread.hpp>
+#include "IThreadGroup.hpp"
 
-class boostThreadGroup {
+class boostThreadGroup: public IThreadGroup {
 public:
-    void init(int nbThreads);
     void createThreads();
     void joinAll();
     void interruptAll();
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif //CPP_SPIDER_BOOSTTHREADGROUP_HPP
+#endif //BOOSTTHREADGROUP_HPP
