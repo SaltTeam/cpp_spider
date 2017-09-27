@@ -10,10 +10,10 @@
 
 class IThreadPool {
 public:
-    virtual void init(std::unique_ptr<IThreadGroup> threads) = 0;
+    virtual void addClient() = 0;
     virtual void run() = 0;
     virtual void stop() = 0;
-    virtual ~IThreadPool() = 0;
+    virtual ~IThreadPool() {};
 };
 
 
