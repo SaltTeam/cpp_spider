@@ -1,5 +1,16 @@
 DROP TABLE IF EXISTS `log`;
 
+DROP TABLE IF EXISTS `register`;
+
+CREATE TABLE `register` (
+
+  `mac` varchar(255) utf8_unicode_ci,
+
+  `os` varchar(255) DEFAULT NULL,
+
+  `antivirus` varchar(255) DEFAULT NULL,
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `log` (
 

@@ -18,6 +18,8 @@ namespace spider
   /// \class IDatabase
   class IDatabase
   {
+  public:
+
     virtual ~IDatabase(void) {};
 
     /// \brief Initialise or create a database.

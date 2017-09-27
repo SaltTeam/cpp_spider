@@ -27,7 +27,6 @@ namespace spider
     Sqlite();
     virtual ~Sqlite();
 
-  protected:
     void execute(const char *querry);
 
     bool open(const char *filename);

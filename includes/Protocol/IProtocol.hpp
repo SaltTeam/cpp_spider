@@ -20,6 +20,20 @@ enum class	KEYTYPE
   MC
 };
 
-enum class	Order
-{
+class IProtocol {
+protected:
+  // queue of command
+  // INetwork
+
+
+public:
+  virtual ~IProtocol();
+
+  virtual void		sendData() = 0;
+
+  virtual void		sendPing() = 0;
+
+  virtual bool		hasCommand() = 0;
+
+  virtual void		getCommand() = 0;
 };
