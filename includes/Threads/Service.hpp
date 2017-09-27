@@ -8,6 +8,8 @@
 
 class Service {
 public:
+    void manageCom();
+    void loop();
 
 };
 

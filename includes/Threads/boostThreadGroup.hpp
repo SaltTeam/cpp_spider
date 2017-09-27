@@ -8,15 +8,15 @@
 #include <boost/thread/thread.hpp>
 #include "IThreadGroup.hpp"
 
-class boostThreadGroup: public IThreadGroup {
+class BoostThreadGroup: public IThreadGroup {
 public:
     void createThreads();
     void joinAll();
     void interruptAll();
 
 public:
-    boostThreadGroup();
-    ~boostThreadGroup();
+    BoostThreadGroup();
+    ~BoostThreadGroup();
 
 private:
     boost::thread_group group;

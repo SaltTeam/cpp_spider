@@ -10,8 +10,8 @@ class IThreadGroup {
 public:
     virtual void joinAll() = 0;
     virtual void interruptAll() = 0;
-    virtual ~IThreadGroup() = 0;
     virtual void createThreads() = 0;
+    virtual ~IThreadGroup() {};
 };
 
 
