@@ -15,7 +15,7 @@
 #include <boost/asio/ssl.hpp>
 #include "INetworkSession.hpp"
 
-using boost_ssl_socket = boost::asio::ssl::stream<boost::asio::ip::tcp::socket>;
+typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> boost_ssl_socket;
 
 /// \namespace spider
 namespace spider
@@ -25,7 +25,10 @@ namespace spider
   {
   public :
 
-    BoostNetworkSession(std::string const& host, std::string const& port);
+    BoostNetworkSession(std::string const& host, unsigned short port);
+    explicit BoostNetworkSession(unsigned short port);
+    BoostNetworkSession(boost::asio::io_service& io_service,
+			boost::asio::ssl::context& context);
 
     ~BoostNetworkSession();
 
@@ -55,9 +58,9 @@ namespace spider
     void Accept(unsigned int timeout) override;
 
   protected:
-    boost_ssl_socket _socket;
-    boost::asio::ssl::context _context;
     boost::asio::io_service _ios;
-    boost::asio::ip::tcp::acceptor _acceptor;
+    boost::asio::ssl::context _context;
+    std::unique_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
+    std::unique_ptr<boost_ssl_socket> _socket;
   };
 }

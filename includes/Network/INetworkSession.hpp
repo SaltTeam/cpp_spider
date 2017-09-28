@@ -10,6 +10,9 @@
 
 #pragma once
 
+#undef SERVER_CERT
+#define SERVER_CERT "resources/pki_tmp/server.crt"
+
 /// \namespace spider
 namespace spider
 {

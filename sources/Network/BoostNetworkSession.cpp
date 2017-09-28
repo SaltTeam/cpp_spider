@@ -8,10 +8,30 @@
 ** Last update Thu Sep 28 12:58:49 2017 Maxime PILLON
 */
 
+#include <boost/bind.hpp>
 #include "Network/BoostNetworkSession.hpp"
 
-spider::BoostNetworkSession::BoostNetworkSession(std::string const &host,
-						 std::string const &port)
+spider::BoostNetworkSession::BoostNetworkSession(std::string const& host,
+						 unsigned short port)
+  : _ios(), _context(boost::asio::ssl::context::tlsv12)
+{
+  // Here we are in client mode.
+
+  _context.load_verify_file(SERVER_CERT);
+  _socket = new boost_ssl_socket(_ios, _context);
+  _socket->set_verify_mode(boost::asio::ssl::verify_peer);
+
+}
+
+spider::BoostNetworkSession::BoostNetworkSession(unsigned short port)
+  : _ios(), _context(boost::asio::ssl::context::tlsv12)
+{
+
+}
+
+spider::BoostNetworkSession::BoostNetworkSession(boost::asio::io_service& io_service,
+boost::asio::ssl::context& context)
+  : _ios(), _context(boost::asio::ssl::context::tlsv12)
 {
 
 }
