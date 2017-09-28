@@ -15,6 +15,8 @@
 #include <boost/asio/ssl.hpp>
 #include "INetworkSession.hpp"
 
+using boost_ssl_socket = boost::asio::ssl::stream<boost::asio::ip::tcp::socket>;
+
 /// \namespace spider
 namespace spider
 {
@@ -53,7 +55,7 @@ namespace spider
     virtual void Accept(unsigned int timeout);
 
   protected:
-    boost::asio::ssl::stream<boost::asio::ip::tcp::socket> _socket;
+    boost_ssl_socket _socket;
     boost::asio::ssl::context _context;
     boost::asio::io_service _ios;
     boost::asio::ip::tcp::acceptor _acceptor;
