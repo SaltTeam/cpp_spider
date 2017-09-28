@@ -30,29 +30,29 @@ namespace spider
     ~BoostNetworkSession();
 
   public:
-    virtual void setConnectCallback();
+    void setConnectCallback();
 
-    virtual void setSendCallback();
+    void setSendCallback() override;
 
-    virtual void setRecvCallback();
+    void setRecvCallback() override;
 
-    virtual void setAcceptCallback();
+    void setAcceptCallback() override;
 
-    virtual void Connect();
+    void Connect() override;
 
-    virtual void Connect(unsigned int timeout);
+    void Connect(unsigned int timeout) override;
 
-    virtual void Send();
+    void Send() override;
 
-    virtual void Send(unsigned int timeout);
+    void Send(unsigned int timeout) override;
 
-    virtual void Recv();
+    void Recv() override;
 
-    virtual void Recv(unsigned int timeout);
+    void Recv(unsigned int timeout) override;
 
-    virtual void Accept();
+    void Accept() override;
 
-    virtual void Accept(unsigned int timeout);
+    void Accept(unsigned int timeout) override;
 
   protected:
     boost_ssl_socket _socket;
