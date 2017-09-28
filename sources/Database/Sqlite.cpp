@@ -47,7 +47,7 @@ void spider::Sqlite::close()
   sqlite3_close(_db);
 }
 
-bool spider::Sqlite::createDb()
+void spider::Sqlite::createDb()
 {
   execute(     "CREATE TABLE IF NOT EXISTS `register` (" \
 	       "`mac` varchar(255)," \
@@ -89,7 +89,7 @@ void spider::Sqlite::addEntryLog(const char *mac, const char *time, const char *
   execute(querry.c_str());
 }
 
-bool spider::Sqlite::dropDb()
+void spider::Sqlite::dropDb()
 {
   execute(     "DROP TABLE IF EXISTS `register`;" \
 	       "DROP TABLE IF EXISTS `log`;");

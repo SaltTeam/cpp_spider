@@ -33,6 +33,20 @@ namespace spider
     /// \param Querry the statement to execute
     virtual void execute(const char *Querry) = 0;
 
+    /// \brief drop all the database row
+    virtual void dropDb() = 0;
+
+    /// \brief create all the tables if it's needed
+    virtual void createDb() = 0;
+
+    /// \brief Add a row to the database
+    ///
+    /// \param mac address mac
+    /// \param time timestamp of the action
+    /// \param proccess process where the commad has been typed
+    /// \param message message which has been typed
+    virtual void addEntryLog(const char *mac, const char *time, const char *proccess, const char *message) = 0;
+
     /// \brief Close the actual database
     virtual void close() = 0;
   };

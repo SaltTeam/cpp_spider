@@ -31,9 +31,9 @@ namespace spider
 
     bool open(const char *filename);
 
-    bool createDb();
+    void createDb();
 
-    bool dropDb();
+    void dropDb();
 
     void close();
 
