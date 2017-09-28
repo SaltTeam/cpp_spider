@@ -14,7 +14,7 @@
 
 struct		t_message {
   const char	*mac;
-  std::time_t	timestamp;
+  const char 	*timestamp;
   const char	*process;
   const char	*message;
 };
