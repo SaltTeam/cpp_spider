@@ -31,11 +31,15 @@ namespace spider
 
     bool open(const char *filename);
 
+    bool createDb();
+
+    bool dropDb();
+
     void close();
 
-    void addEntry(char *mac, char *time, char *proccess, char *message);
+    void addEntryLog(const char *mac, const char *time, const char *proccess, const char *message);
 
-    void removeEntry(int id);
+    void removeEntryLog(int id);
   };
 }
 

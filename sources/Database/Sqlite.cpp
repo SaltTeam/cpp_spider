@@ -9,6 +9,7 @@
 */
 
 #include	<iostream>
+#include <sstream>
 #include	"Database/Sqlite.hpp"
 
 static int	callback(void *data, int argc, char **argv, char **azColName)
@@ -46,6 +47,22 @@ void spider::Sqlite::close()
   sqlite3_close(_db);
 }
 
+bool spider::Sqlite::createDb()
+{
+  execute(     "CREATE TABLE IF NOT EXISTS `register` (" \
+	       "`mac` varchar(255)," \
+	       "`os` varchar(255) DEFAULT NULL," \
+	       "`antivirus` varchar(255) DEFAULT NULL" \
+	       ");" \
+	       "CREATE TABLE IF NOT EXISTS `log` (" \
+	       "  `id` INTEGER PRIMARY KEY AUTOINCREMENT," \
+	       "  `mac` varchar(255)," \
+	       "  `time` timestamp DEFAULT NULL," \
+	       "  `process` varchar(255) DEFAULT NULL," \
+	       "  `message` longtext DEFAULT NULL" \
+	       "  );");
+}
+
 void	spider::Sqlite::execute(const char *querry)
 {
   int	rc;
@@ -61,13 +78,30 @@ void	spider::Sqlite::execute(const char *querry)
   }
 }
 
-void spider::Sqlite::addEntry(char *mac, char *time, char *proccess,
-			      char *message)
+void spider::Sqlite::addEntryLog(const char *mac, const char *time, const char *proccess,
+			      const char *message)
 {
-  // create the querry then use execute
+  std::ostringstream strstream;
+  std::string		querry;
+
+  strstream <<  "INSERT INTO log (mac, time, process, message) VALUES ('" << mac << "', '" << time << "', '" << proccess << "', '" << message << "');";
+  querry = strstream.str();
+  execute(querry.c_str());
 }
 
-void spider::Sqlite::removeEntry(int id)
+bool spider::Sqlite::dropDb()
 {
-  // create the query the use execute
+  execute(     "DROP TABLE IF EXISTS `register`;" \
+	       "DROP TABLE IF EXISTS `log`;");
+}
+
+void spider::Sqlite::removeEntryLog(int id)
+{
+  std::ostringstream strstream;
+  std::string		querry;
+
+  strstream <<  "DELETE FROM log WHERE id='" << id << "'";
+  querry = strstream.str();
+
+  execute(querry.c_str());
 }
