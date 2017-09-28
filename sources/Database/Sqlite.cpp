@@ -84,7 +84,7 @@ void spider::Sqlite::addEntryLog(const char *mac, const char *time, const char *
   std::ostringstream strstream;
   std::string		querry;
 
-  strstream <<  "INSERT INTO log (mac, time, process, message) VALUES ('" << mac << "', '" << time << "', '" << proccess << "', '" << message << "');";
+  strstream << "INSERT INTO log (mac, time, process, message) VALUES ('" << mac << "', '" << time << "', '" << proccess << "', '" << message << "');";
   querry = strstream.str();
   execute(querry.c_str());
 }
