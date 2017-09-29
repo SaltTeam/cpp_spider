@@ -5,7 +5,7 @@
 ** Login   <maxime.pillon@epitech.eu>
 **
 ** Started on  Thu Sep 28 12:09:55 2017 Maxime PILLON
-** Last update Thu Sep 28 12:09:55 2017 Maxime PILLON
+** Last update Fri Sep 29 08:46:50 2017 Hugo SOSZYNSKI
 */
 
 #pragma once
@@ -43,23 +43,19 @@ namespace spider
 
     void Connect() override;
 
-    void Connect(unsigned int timeout) override;
-
     void Send() override;
-
-    void Send(unsigned int timeout) override;
 
     void Recv() override;
 
-    void Recv(unsigned int timeout) override;
-
     void Accept() override;
 
-    void Accept(unsigned int timeout) override;
+    void Select() override;
 
   protected:
-    boost::asio::io_service _ios;
-    boost::asio::ssl::context _context;
+    std::string _host;
+    unsigned short _port;
+    std::unique_ptr<boost::asio::io_service> _ios;
+    std::unique_ptr<boost::asio::ssl::context> _context;
     std::unique_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
     std::unique_ptr<boost_ssl_socket> _socket;
   };
