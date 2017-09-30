@@ -150,7 +150,7 @@ boost::property_tree::ptree Serializer::get_ptree_from_string(std::string const 
     return (pt);
 }
 
-std::string const& Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
+std::string const Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
 {
     std::ostringstream buf2;
 
