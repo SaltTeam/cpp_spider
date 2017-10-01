@@ -25,21 +25,25 @@ namespace spider
 
   public:
     Sqlite();
-    virtual ~Sqlite();
+    ~Sqlite() override;
 
-    void execute(const char *querry);
+    void execute(const char *querry) override;
 
-    bool open(const char *filename);
+    bool open(const char *filename) override;
 
-    void createDb();
+    void createDb() override;
 
-    void dropDb();
+    void dropDb() override;
 
-    void close();
+    void close() override;
 
-    void addEntryLog(const char *mac, const char *time, const char *proccess, const char *message);
+    void addEntryLog(const char *time, const char *proccess, const char *message);
 
-    void removeEntryLog(int id);
+    void addEntryRegister(const char *mac, const char *os, const char *antivirus);
+
+    void removeEntryRegister(int id);
+
+    void removeEntryLog(int id) override;
   };
 }
 
