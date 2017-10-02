@@ -41,11 +41,15 @@ namespace spider
 
     /// \brief Add a row to the database
     ///
-    /// \param mac address mac
     /// \param time timestamp of the action
     /// \param proccess process where the commad has been typed
     /// \param message message which has been typed
-    virtual void addEntryLog(const char *mac, const char *time, const char *proccess, const char *message) = 0;
+    virtual void addEntryLog(const char *time, const char *proccess, const char *message) = 0;
+
+    /// \brief remove a special row of the db
+    ///
+    /// \param id remove the row where id=id
+    virtual void removeEntryLog(int id) = 0;
 
     /// \brief Close the actual database
     virtual void close() = 0;
