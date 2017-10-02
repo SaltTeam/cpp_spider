@@ -27,29 +27,28 @@ namespace spider
 
     BoostNetworkSession(std::string const& host, unsigned short port);
     explicit BoostNetworkSession(unsigned short port);
-    BoostNetworkSession(boost::asio::io_service& io_service,
-			boost::asio::ssl::context& context);
+    explicit BoostNetworkSession(std::unique_ptr<boost_ssl_socket>& socket);
 
-    ~BoostNetworkSession();
+    virtual ~BoostNetworkSession();
 
   public:
-    void setConnectCallback();
 
-    void setSendCallback() override;
+    template <typename ConnectHandler>
+    void Connect(ConnectHandler hdl) override;
 
-    void setRecvCallback() override;
+    template <typename SendHandler>
+    void Send(std::string const& msg, SendHandler hdl) override;
 
-    void setAcceptCallback() override;
+    template <typename RecvHandler>
+    void Recv(RecvHandler hdl) override;
 
-    void Connect() override;
-
-    void Send() override;
-
-    void Recv() override;
-
-    void Accept() override;
+    template<typename AcceptHandler>
+    BoostNetworkSession& Accept(AcceptHandler hdl) override;
 
     void Select() override;
+
+  protected:
+    static std::string get_ssl_passwd() const;
 
   protected:
     std::string _host;
