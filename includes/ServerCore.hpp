@@ -22,7 +22,6 @@ namespace spider
     IDatabase	_db;
     IProtocol	_proto;
     IThreadPool	_pool;
-    // need INetwork
 
   public:
     ServerCore();

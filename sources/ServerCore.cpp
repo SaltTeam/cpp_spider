@@ -17,7 +17,6 @@ spider::ServerCore::ServerCore() : _db(spider::Sqlite()), _proto(spider::Protoco
 
 spider::ServerCore::~ServerCore()
 {
-
 }
 
 void spider::ServerCore::run()
