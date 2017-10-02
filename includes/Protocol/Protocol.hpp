@@ -10,6 +10,9 @@
 
 #pragma once
 
+#include <queue>
+#include "Network/INetworkSession.hpp"
+#include "Network/BoostNetworkSession.hpp"
 #include "IProtocol.hpp"
 #include "Serializer.hpp"
 
@@ -18,17 +21,21 @@ namespace spider
   class Protocol : public IProtocol
   {
   protected:
-    // queue of command
-    // INetworkSession
-    Serializer		serializer;
+    std::queue<t_command>	cmds;
+    INetworkSession		session;
+    Serializer			serializer;
 
   public:
     Protocol();
     ~Protocol();
 
-    void		sendData();
-    void		sendPing();
-    bool		hasCommand();
-    void		getCommand();
+    void		sendData(t_message message);
+    void		sendData(t_command cmd);
+    void		sendData(t_register _register);
+    void		sendData(t_mouse mouse);
+
+    void		sendPing() override;
+    bool		hasCommand() override;
+    void		getCommand() override;
   };
 }
