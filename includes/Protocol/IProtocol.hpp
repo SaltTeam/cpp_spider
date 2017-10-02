@@ -23,7 +23,7 @@ enum class	KEYTYPE
 class IProtocol {
 protected:
   // queue of command
-  // INetwork
+  // INetworkSession
 
 
 public:
