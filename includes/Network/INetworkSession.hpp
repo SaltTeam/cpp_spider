@@ -22,6 +22,8 @@
 #undef CLIENT_CERT
 #define CLIENT_CERT "resources/pki_tmp/server.crt"
 
+#include <string>
+
 /// \namespace spider
 namespace spider
 {
@@ -32,21 +34,17 @@ namespace spider
     /// \brief The destructor.
     virtual ~INetwork() {}
 
-    virtual void setConnectCallback() = 0;
+    template <typename ConnectHandler>
+    virtual void Connect(ConnectHandler hdl) = 0;
 
-    virtual void setSendCallback() = 0;
+    template <typename SendHandler>
+    virtual void Send(std::string const& msg, SendHandler hdl) = 0;
 
-    virtual void setRecvCallback() = 0;
+    template <typename RecvHandler>
+    virtual void Recv(RecvHandler hdl) = 0;
 
-    virtual void setAcceptCallback() = 0;
-
-    virtual void Connect() = 0;
-
-    virtual void Send() = 0;
-
-    virtual void Recv() = 0;
-
-    virtual void Accept() = 0;
+    template<typename AcceptHandler>
+    virtual INetworkSession& Accept(AcceptHandler hdl) = 0;
 
     virtual void Select() = 0;
 
