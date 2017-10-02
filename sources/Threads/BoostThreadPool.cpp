@@ -2,24 +2,27 @@
 // Created by Grégoire on 26/09/2017.
 //
 
-#include "Threads/BoostThreadPool.hpp"
+#include "../../includes/Threads/BoostThreadPool.hpp"
 
-BoostThreadPool::BoostThreadPool() {
 
-}
+namespace spider {
+    BoostThreadPool::BoostThreadPool() {
 
-BoostThreadPool::~BoostThreadPool() {
+    }
 
-}
+    BoostThreadPool::~BoostThreadPool() {
 
-void BoostThreadPool::addClient() {
+    }
 
-}
+    void BoostThreadPool::addClient() {
 
-void BoostThreadPool::run() {
+    }
 
-}
+    void BoostThreadPool::run() {
+        poolContinue = true;
+    }
 
-void BoostThreadPool::stop() {
+    void BoostThreadPool::stop() {
 
+    }
 }

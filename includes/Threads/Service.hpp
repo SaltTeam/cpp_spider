@@ -5,13 +5,18 @@
 #ifndef CPP_SPIDER_SERVICE_HPP
 #define CPP_SPIDER_SERVICE_HPP
 
+#include <queue>
+#include <boost/atomic/atomic.hpp>
 
-class Service {
-public:
-    void manageCom();
-    void loop();
+namespace spider {
 
-};
+    class Service {
+    public:
+        void manageCom();
 
+        void loop();
 
+        void checkClient();
+    };
+}
 #endif //CPP_SPIDER_SERVICE_HPP
