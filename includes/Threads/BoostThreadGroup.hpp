@@ -8,19 +8,23 @@
 #include <boost/thread/thread.hpp>
 #include "IThreadGroup.hpp"
 
-class BoostThreadGroup: public IThreadGroup {
-public:
-    void createThreads(std::function<void(void)> funcPtr);
-    void joinAll();
-    void interruptAll();
+namespace spider {
+    class BoostThreadGroup : public IThreadGroup {
+    public:
+        void createThreads(std::function<void(void)> funcPtr);
 
-public:
-    BoostThreadGroup();
-    ~BoostThreadGroup();
+        void joinAll();
 
-private:
-    boost::thread_group group;
-};
+        void interruptAll();
 
+    public:
+        BoostThreadGroup();
+
+        ~BoostThreadGroup();
+
+    private:
+        boost::thread_group group;
+    };
+}
 
 #endif //BOOSTTHREADGROUP_HPP

@@ -4,14 +4,16 @@
 
 #include "../../includes/Threads/Service.hpp"
 
-void Service::manageCom() {
+namespace spider {
+    void Service::manageCom() {
 
-}
+    }
 
-void Service::loop() {
+    void Service::loop() {
 
-}
+    }
 
-void Service::checkClient() {
+    void Service::checkClient() {
 
+    }
 }

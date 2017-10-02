@@ -8,12 +8,15 @@
 #include <queue>
 #include <boost/atomic/atomic.hpp>
 
-class Service {
-public:
-    void manageCom();
-    void loop();
-    void checkClient();
-};
+namespace spider {
 
+    class Service {
+    public:
+        void manageCom();
 
+        void loop();
+
+        void checkClient();
+    };
+}
 #endif //CPP_SPIDER_SERVICE_HPP

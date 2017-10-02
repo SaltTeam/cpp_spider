@@ -14,22 +14,29 @@
 #include "IThreadGroup.hpp"
 #include "IThreadPool.hpp"
 
-class BoostThreadPool: public IThreadPool {
-public:
-    void addClient();
-    void run();
-    void stop();
-public:
-    BoostThreadPool();
-    ~BoostThreadPool();
+namespace spider
+{
+    class BoostThreadPool : public IThreadPool {
+    public:
+        void addClient();
 
-private:
-    friend class Service;
-    std::unique_ptr<IThreadGroup>   pool;
-    boost::atomic_bool              poolContinue;
-    boost::atomic<std::queue<int>>  clientqueue;
-    Service                         service;
-};
+        void run();
 
+        void stop();
+
+    public:
+        BoostThreadPool();
+
+        ~BoostThreadPool();
+
+    private:
+        friend class Service;
+
+        std::unique_ptr<IThreadGroup> pool;
+        boost::atomic_bool poolContinue;
+        boost::atomic<std::queue<int>> clientqueue;
+        Service service;
+    };
+}
 
 #endif //BOOSTTHREADPOOL_HPP
