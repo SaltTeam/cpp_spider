@@ -21,5 +21,5 @@ spider::ServerCore::~ServerCore()
 
 void spider::ServerCore::run()
 {
-
+  
 }

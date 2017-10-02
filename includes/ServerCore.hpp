@@ -19,9 +19,10 @@ namespace spider
   class ServerCore
   {
   protected:
-    IDatabase	_db;
-    IProtocol	_proto;
-    IThreadPool	_pool;
+    IDatabase					_db;
+    IProtocol					_proto;
+    IThreadPool					_pool;
+    boost::atomic<std::queue<t_unserialized>>	data;
 
   public:
     ServerCore();
