@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <boost/property_tree/json_parser.hpp>
-#include "Serializer.hpp"
+#include "Protocol/Serializer.hpp"
 
 
-t_unserialized unserialize_message(boost::property_tree::ptree const &pt)
+static t_unserialized unserialize_message(boost::property_tree::ptree const &pt)
 {
     t_unserialized ret;
 
@@ -22,7 +22,7 @@ t_unserialized unserialize_message(boost::property_tree::ptree const &pt)
     return (ret);
 }
 
-t_unserialized unserialize_register(boost::property_tree::ptree const &pt)
+static t_unserialized unserialize_register(boost::property_tree::ptree const &pt)
 {
     t_unserialized ret;
 
@@ -36,7 +36,7 @@ t_unserialized unserialize_register(boost::property_tree::ptree const &pt)
     return (ret);
 }
 
-t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
+static t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
 {
     t_unserialized ret;
 
@@ -53,7 +53,7 @@ t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
     return (ret);
 }
 
-t_unserialized unserialize_command(boost::property_tree::ptree const &pt)
+static t_unserialized unserialize_command(boost::property_tree::ptree const &pt)
 {
     t_unserialized ret;
 
@@ -66,7 +66,7 @@ t_unserialized unserialize_command(boost::property_tree::ptree const &pt)
     return (ret);
 }
 
-Serializer::Serializer()
+spider::Serializer::Serializer()
 {
     this->unserialize_func["KEYSTROKE"] = unserialize_message;
     this->unserialize_func["REGISTER"] = unserialize_register;
@@ -74,13 +74,13 @@ Serializer::Serializer()
     this->unserialize_func["COMMAND"] = unserialize_command;
 }
 
-Serializer::~Serializer()
+spider::Serializer::~Serializer()
 {
     this->unserialize_func.clear();
 }
 
 
-boost::property_tree::ptree Serializer::serialize(t_message const &data) const
+boost::property_tree::ptree spider::Serializer::serialize(t_message const &data) const
 {
     boost::property_tree::ptree pt;
 
@@ -91,7 +91,7 @@ boost::property_tree::ptree Serializer::serialize(t_message const &data) const
     return (pt);
 }
 
-boost::property_tree::ptree Serializer::serialize(t_register const &data) const
+boost::property_tree::ptree spider::Serializer::serialize(t_register const &data) const
 {
     boost::property_tree::ptree pt;
 
@@ -101,7 +101,7 @@ boost::property_tree::ptree Serializer::serialize(t_register const &data) const
     return (pt);
 }
 
-boost::property_tree::ptree Serializer::serialize(t_mouse const &data) const
+boost::property_tree::ptree spider::Serializer::serialize(t_mouse const &data) const
 {
     boost::property_tree::ptree pt;
 
@@ -114,7 +114,7 @@ boost::property_tree::ptree Serializer::serialize(t_mouse const &data) const
     return (pt);
 }
 
-boost::property_tree::ptree Serializer::serialize(t_command const &data) const
+boost::property_tree::ptree spider::Serializer::serialize(t_command const &data) const
 {
     boost::property_tree::ptree pt;
 
@@ -123,7 +123,7 @@ boost::property_tree::ptree Serializer::serialize(t_command const &data) const
     return (pt);
 }
 
-t_unserialized Serializer::unserialize(boost::property_tree::ptree const &pt)
+t_unserialized spider::Serializer::unserialize(boost::property_tree::ptree const &pt)
 {
     std::string tmp;
 
@@ -140,7 +140,7 @@ t_unserialized Serializer::unserialize(boost::property_tree::ptree const &pt)
     return (this->unserialize_func["COMMAND"](pt));
 }
 
-boost::property_tree::ptree Serializer::get_ptree_from_string(std::string const &json) const
+boost::property_tree::ptree spider::Serializer::get_ptree_from_string(std::string const &json) const
 {
     boost::property_tree::ptree pt;
     std::istringstream tmp;
@@ -150,7 +150,7 @@ boost::property_tree::ptree Serializer::get_ptree_from_string(std::string const 
     return (pt);
 }
 
-std::string const Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
+std::string const spider::Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
 {
     std::ostringstream buf2;
 

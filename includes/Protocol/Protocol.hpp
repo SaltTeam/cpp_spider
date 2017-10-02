@@ -11,17 +11,24 @@
 #pragma once
 
 #include "IProtocol.hpp"
+#include "Serializer.hpp"
 
-class Protocol : public IProtocol
+namespace spider
 {
-protected:
+  class Protocol : public IProtocol
+  {
+  protected:
+    // queue of command
+    // INetworkSession
+    Serializer		serializer;
 
-public:
-  Protocol();
-  ~Protocol();
+  public:
+    Protocol();
+    ~Protocol();
 
-  void		sendData();
-  void		sendPing();
-  bool		hasCommand();
-  void		getCommand();
-};
+    void		sendData();
+    void		sendPing();
+    bool		hasCommand();
+    void		getCommand();
+  };
+}
