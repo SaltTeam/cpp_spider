@@ -12,6 +12,7 @@
 # define SQLITE_HPP_
 
 # include <sqlite3.h>
+#include <dataStructure.hpp>
 # include "IDatabase.hpp"
 
 /// \namespace spider
@@ -36,6 +37,8 @@ namespace spider
     void dropDb() override;
 
     void close() override;
+
+    void pushData(t_unserialized data);
 
     void addEntryLog(const char *time, const char *proccess, const char *message);
 

