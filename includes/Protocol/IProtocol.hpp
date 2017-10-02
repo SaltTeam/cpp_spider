@@ -10,30 +10,28 @@
 
 #pragma once
 
-enum class	KEYTYPE
+namespace spider
 {
-  NONE = 0,
-  RC,
-  LC,
-  SCROLLUP,
-  SCROLLDOWN,
-  MC
-};
+  enum class	KEYTYPE
+  {
+    NONE = 0,
+    RC,
+    LC,
+    SCROLLUP,
+    SCROLLDOWN,
+    MC
+  };
 
-class IProtocol {
-protected:
-  // queue of command
-  // INetwork
+  class IProtocol {
+  public:
+    virtual ~IProtocol();
 
+    virtual void		sendData() = 0;
 
-public:
-  virtual ~IProtocol();
+    virtual void		sendPing() = 0;
 
-  virtual void		sendData() = 0;
+    virtual bool		hasCommand() = 0;
 
-  virtual void		sendPing() = 0;
-
-  virtual bool		hasCommand() = 0;
-
-  virtual void		getCommand() = 0;
-};
+    virtual void		getCommand() = 0;
+  };
+}
