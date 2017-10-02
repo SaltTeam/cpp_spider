@@ -10,7 +10,7 @@
 
 class BoostThreadGroup: public IThreadGroup {
 public:
-    void createThreads();
+    void createThreads(std::function<void(void)> funcPtr);
     void joinAll();
     void interruptAll();
 
