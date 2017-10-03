@@ -7,16 +7,25 @@
 
 #include <string>
 
+/// \namespace spider
 namespace spider {
+
+    /// \class Buffer
     class Buffer {
     public:
+        /// \brief constructor
         Buffer();
+
+        /// \brief destructor
         ~Buffer();
+
         Buffer(Buffer const &copy) = delete;
 
-
     public:
+        /// \brief Call a Buffer Instance
         static Buffer &BufferInstance();
+
+        /// \brief push a string in the buffer
         void push(std::string msg);
 
     private:
