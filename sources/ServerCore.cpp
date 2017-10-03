@@ -10,13 +10,16 @@
 
 #include "ServerCore.hpp"
 
-spider::ServerCore::ServerCore() : _db(spider::Sqlite()), _proto(spider::Protocol()), _pool(spider::BoostThreadPool())
+spider::ServerCore::ServerCore() : _db(spider::Sqlite()),
+				   _proto(spider::Protocol()),
+				   _pool(spider::BoostThreadPool())
 {
   _db.open("db.sqlite");
 }
 
 spider::ServerCore::~ServerCore()
 {
+  _db.close();
 }
 
 void spider::ServerCore::run()
