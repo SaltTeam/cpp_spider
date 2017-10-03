@@ -11,6 +11,8 @@ class Buffer {
 public:
     Buffer();
     ~Buffer();
+    Buffer(Buffer const& copy) = delete;
+
 
 public:
     static Buffer &BufferInstance();
@@ -19,9 +21,6 @@ public:
 private:
     static Buffer       _Instance;
     std::string         _buffer;
-
-private:
-    Buffer(Buffer const& copy) = delete;
 };
 
 
