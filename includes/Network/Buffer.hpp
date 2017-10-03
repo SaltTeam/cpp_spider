@@ -7,21 +7,22 @@
 
 #include <string>
 
-class Buffer {
-public:
-    Buffer();
-    ~Buffer();
-    Buffer(Buffer const& copy) = delete;
+namespace spider {
+    class Buffer {
+    public:
+        Buffer();
+        ~Buffer();
+        Buffer(Buffer const &copy) = delete;
 
 
-public:
-    static Buffer &BufferInstance();
-    void push(std::string msg);
+    public:
+        static Buffer &BufferInstance();
+        void push(std::string msg);
 
-private:
-    static Buffer       _Instance;
-    std::string         _buffer;
-};
-
+    private:
+        static Buffer _Instance;
+        std::string _buffer;
+    };
+}
 
 #endif //_BUFFER_HPP
