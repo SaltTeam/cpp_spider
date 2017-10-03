@@ -3,7 +3,7 @@
 //
 
 #include "Network/Buffer.hpp"
-#include "../includes/Network/Buffer.hpp"
+#include "Network/Buffer.hpp"
 
 namespace spider {
 
