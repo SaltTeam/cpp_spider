@@ -1,6 +1,12 @@
-//
-// Created by Grégoire on 03/10/2017.
-//
+/*
+** Buffer.hpp for cpp_spider in /home/soszyn_h/rendu/cpp_spider/includes/Network/Buffer.hpp
+**
+** Made by Hugo SOSZYNSKI
+** Login   <hugo.soszynski@epitech.eu>
+**
+** Started on  Tue Oct 03 20:16:37 2017 Hugo SOSZYNSKI
+** Last update Tue Oct 03 20:16:37 2017 Hugo SOSZYNSKI
+*/
 
 #ifndef _BUFFER_HPP
 # define _BUFFER_HPP
