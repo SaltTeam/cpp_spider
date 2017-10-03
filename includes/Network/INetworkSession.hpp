@@ -22,6 +22,9 @@
 #undef CLIENT_CERT
 #define CLIENT_CERT "resources/pki_tmp/server.crt"
 
+#undef NET_BUFFER_LENGTH
+#define NET_BUFFER_LENGTH 1024
+
 #include <string>
 
 /// \namespace spider

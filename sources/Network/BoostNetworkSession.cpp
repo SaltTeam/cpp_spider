@@ -68,13 +68,21 @@ void spider::BoostNetworkSession::Connect(ConnectHandler hdl)
 template <typename SendHandler>
 void spider::BoostNetworkSession::Send(std::string const& msg, SendHandler hdl)
 {
-
+  boost::asio::async_write(*_socket,
+			   boost::asio::buffer(msg.c_str(), msg.size()),
+			   hdl);
 }
 
 template <typename RecvHandler>
 void spider::BoostNetworkSession::Recv(RecvHandler hdl)
 {
+  // The handler MUST have the following prototype.
+  // handler(char[NET_BUFFER_LEN], const boost::system::error_code& error, std::size_t bytes_transferred);
 
+  boost::asio::async_read(*_socket,
+			  boost::asio::buffer(_buffer, NET_BUFFER_LENGTH),
+  boost::bind(hdl, _buffer, boost::asio::placeholders::error,
+	      boost::asio::placeholders::bytes_transferred));
 }
 
 template<typename AcceptHandler>

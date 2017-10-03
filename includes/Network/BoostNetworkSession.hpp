@@ -57,5 +57,6 @@ namespace spider
     std::unique_ptr<boost::asio::ssl::context> _context;
     std::unique_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
     std::unique_ptr<boost_ssl_socket> _socket;
+    char _buffer[NET_BUFFER_LENGTH];
   };
 }
