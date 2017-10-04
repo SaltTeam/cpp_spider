@@ -64,7 +64,10 @@ namespace spider
   public:
     void accept();
 
-    void acceptHandler(boost::system::error_code const& error);
+    void handleAccept(NetworkSession* session,
+		      boost::system::error_code const& error);
+
+    static std::string get_password();
 
   private:
     boost::asio::io_service _ios;
