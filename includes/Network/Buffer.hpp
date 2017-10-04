@@ -25,7 +25,11 @@ namespace spider {
         /// \brief destructor
         ~Buffer();
 
+        /// \brief deleted copy constructor
         Buffer(Buffer const &copy) = delete;
+
+        /// \brief deleted operator =
+        Buffer *operator=(Buffer const& copy) = delete;
 
     public:
         /// \brief Call a Buffer Instance
