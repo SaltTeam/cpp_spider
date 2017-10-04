@@ -11,19 +11,24 @@
 #pragma once
 
 #include <queue>
-#include "Network/INetworkSession.hpp"
-#include "Network/BoostNetworkSession.hpp"
+#include "Network/ServerNetwork.hpp"
 #include "IProtocol.hpp"
 #include "Serializer.hpp"
+
+# undef PORT
+# define PORT 42000
 
 namespace spider
 {
   class Protocol : public IProtocol
   {
   protected:
-    std::queue<t_command>	cmds;
-    INetworkSession		session;
+    typedef std::queue<t_unserialized> unserialized_queue;
+
+    ServerNetwork		net;
     Serializer			serializer;
+    std::queue<t_command>	cmds;
+    unserialized_queue		data;
 
   public:
     Protocol();
@@ -34,6 +39,8 @@ namespace spider
     void		sendData(t_register _register);
     void		sendData(t_mouse mouse);
 
+    void		run() override;
+    unserialized_queue& getInfo() override;
     void		sendPing() override;
     bool		hasCommand() override;
     void		getCommand() override;

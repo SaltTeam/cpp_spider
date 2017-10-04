@@ -18,11 +18,9 @@ namespace spider
   class ServerCore
   {
   protected:
-    typedef std::queue<t_unserialized> unserialized_queue;
 
     IDatabase			_db;
     IProtocol			_proto;
-    unserialized_queue		data;
 
   public:
     ServerCore();

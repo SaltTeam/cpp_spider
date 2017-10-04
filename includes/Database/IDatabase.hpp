@@ -12,6 +12,9 @@
 #ifndef IDATABASE_HPP_
 # define IDATABASE_HPP_
 
+# include <queue>
+
+
 /// \namespace spider
 namespace spider
 {
@@ -19,6 +22,7 @@ namespace spider
   class IDatabase
   {
   public:
+    typedef std::queue<t_unserialized> unserialized_queue;
 
     virtual ~IDatabase(void) {};
 
@@ -38,6 +42,8 @@ namespace spider
 
     /// \brief create all the tables if it's needed
     virtual void createDb() = 0;
+
+    virtual void treat(unserialized_queue &toTreat) = 0;
 
     /// \brief Add a row to the database
     ///

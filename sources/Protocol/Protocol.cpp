@@ -10,14 +10,12 @@
 
 #include "Protocol/Protocol.hpp"
 
-spider::Protocol::Protocol()
+spider::Protocol::Protocol() : net(PORT)
 {
-
 }
 
 spider::Protocol::~Protocol()
 {
-
 }
 
 void spider::Protocol::sendData(t_message message)
@@ -56,3 +54,12 @@ void spider::Protocol::getCommand()
 {
 }
 
+unserialized_queue& spider::Protocol::getInfo()
+{
+  return data;
+}
+
+void spider::Protocol::run()
+{
+  //get all data from the buffer and serialize, tu put it in unserialized_queue
+}

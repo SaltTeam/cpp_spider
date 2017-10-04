@@ -152,3 +152,12 @@ void spider::Sqlite::removeEntryLog(int id)
 
   execute(querry.c_str());
 }
+
+void spider::Sqlite::treat(unserialized_queue &toTreat)
+{
+  while (!toTreat.empty())
+  {
+    pushData(toTreat.front());
+    toTreat.pop();
+  }
+}

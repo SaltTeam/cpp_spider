@@ -24,11 +24,17 @@ namespace spider
 
   class IProtocol {
   public:
+    typedef std::queue<t_unserialized> unserialized_queue;
+
     virtual ~IProtocol();
 
     virtual void		sendData() = 0;
 
     virtual void		sendPing() = 0;
+
+    virtual void		run() = 0;
+
+    virtual unserialized_queue& getInfo() = 0;
 
     virtual bool		hasCommand() = 0;
 

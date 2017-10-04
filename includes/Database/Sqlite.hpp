@@ -47,6 +47,8 @@ namespace spider
     void removeEntryRegister(int id);
 
     void removeEntryLog(int id) override;
+
+    void treat(unserialized_queue &toTreat) override;
   };
 }
 

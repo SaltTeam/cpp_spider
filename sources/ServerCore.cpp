@@ -23,5 +23,9 @@ spider::ServerCore::~ServerCore()
 
 void spider::ServerCore::run()
 {
-  
+  while(1)
+  {
+   _proto.run();
+    _db.treat(_proto.getInfo());
+  }
 }
