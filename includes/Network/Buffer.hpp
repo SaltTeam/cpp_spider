@@ -12,6 +12,7 @@
 # define _BUFFER_HPP
 
 #include <string>
+#include <map>
 
 /// \namespace spider
 namespace spider {
@@ -33,14 +34,20 @@ namespace spider {
 
     public:
         /// \brief Call a Buffer Instance
+        /// \return instance of Buffer class
         static Buffer &BufferInstance();
 
         /// \brief push a string in the buffer
-        void push(std::string msg);
+        void push(int id, std::string msg);
+
+        /// \brief add a new buffer in the bufferMap
+        /// \arg id of the client which the buffer is linked
+        void addBuffer(int id);
 
     private:
         static Buffer _Instance;
-        std::string _buffer;
+
+        std::map<int, std::string> _bufferMap;
     };
 }
 
