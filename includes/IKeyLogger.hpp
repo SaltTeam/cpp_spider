@@ -20,7 +20,6 @@
 class 		IKeyLogger
 {
 public:
-  virtual bool 		checkUpper() = 0;
   virtual void		initHooks() = 0;
   virtual void		stealth() = 0;
   virtual void		unHooks() = 0;
