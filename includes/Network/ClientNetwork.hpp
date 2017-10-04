@@ -20,24 +20,40 @@ typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> boost_ssl_socket;
 # undef NET_BUFFER_LEN
 # define NET_BUFFER_LEN 1024
 
-class ClientNetwork
+namespace spider
 {
-public:
-  ClientNetwork(std::string const& host, unsigned short port);
-  ~ClientNetwork();
-  ClientNetwork(ClientNetwork const&) = delete;
-  ClientNetwork& operator=(ClientNetwork const&) = delete;
+  class ClientNetwork
+  {
+  public:
+    ClientNetwork(std::string const& host, unsigned short port);
 
-public:
-  void Connect();
-  void Send(std::string const& msg);
+    ~ClientNetwork();
 
+    ClientNetwork(ClientNetwork const&) = delete;
 
-private:
-  boost::asio::io_service _ios;
-  boost::asio::ssl::context _context;
-  boost_ssl_socket _socket;
-  char _light_buf[NET_BUFFER_LEN];
-};
+    ClientNetwork& operator=(ClientNetwork const&) = delete;
 
+  public:
+    void connect();
+
+    void send(std::string const& msg);
+
+    bool isConnected() const;
+
+    void handleConnect(const boost::system::error_code& error);
+
+    void handleHandshake(const boost::system::error_code& error);
+
+    void handleRead(const boost::system::error_code& error,
+		    size_t bytes_transferred);
+
+  private:
+    boost::asio::io_service _ios;
+    boost::asio::ssl::context _context;
+    boost::asio::ip::tcp::endpoint _endpoint;
+    bool _connected;
+    std::unique_ptr<boost_ssl_socket> _socket;
+    char _light_buf[NET_BUFFER_LEN + 1];
+  };
+}
 #endif /* !CPP_SPIDER_CLIENTNETWORK_HPP */
