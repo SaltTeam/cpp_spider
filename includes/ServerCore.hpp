@@ -10,7 +10,6 @@
 
 #pragma once
 
-# include "Threads/BoostThreadPool.hpp"
 # include "Database/Sqlite.hpp"
 # include "Protocol/Protocol.hpp"
 
@@ -19,11 +18,10 @@ namespace spider
   class ServerCore
   {
   protected:
-    typedef boost::atomic<std::queue<t_unserialized>> unserialized_queue;
+    typedef std::queue<t_unserialized> unserialized_queue;
 
     IDatabase			_db;
     IProtocol			_proto;
-    IThreadPool			_pool;
     unserialized_queue		data;
 
   public:
