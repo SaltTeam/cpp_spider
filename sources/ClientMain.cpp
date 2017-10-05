@@ -8,3 +8,12 @@
 ** Last update Thu Oct 05 10:58:28 2017 Maxime PILLON
 */
 
+#include "ClientCore.hpp"
+
+int			main()
+{
+  spider::ClientCore	client;
+
+  client.run();
+  return 0;
+}

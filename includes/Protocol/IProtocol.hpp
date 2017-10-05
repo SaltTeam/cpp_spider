@@ -12,6 +12,8 @@
 
 namespace spider
 {
+# include "dataStructure.hpp"
+
   enum class	KEYTYPE
   {
     NONE = 0,

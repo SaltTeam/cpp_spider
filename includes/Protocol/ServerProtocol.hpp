@@ -20,7 +20,7 @@
 
 namespace spider
 {
-  class Protocol : public IProtocol
+  class ServerProtocol : public IProtocol
   {
   protected:
     typedef std::queue<t_unserialized> unserialized_queue;
@@ -31,8 +31,8 @@ namespace spider
     unserialized_queue		data;
 
   public:
-    Protocol();
-    ~Protocol();
+    ServerProtocol();
+    ~ServerProtocol();
 
     void		sendData(t_message message);
     void		sendData(t_command cmd);

@@ -11,7 +11,7 @@
 #include "ServerCore.hpp"
 
 spider::ServerCore::ServerCore() : _db(spider::Sqlite()),
-				   _proto(spider::Protocol())
+				   _proto(spider::ServerProtocol())
 {
   _db.open("db.sqlite");
 }

@@ -15,5 +15,5 @@ int			main()
   spider::ServerCore	server;
 
   server.run();
-  return (0);
+  return 0;
 }
