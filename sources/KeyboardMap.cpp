@@ -7,7 +7,7 @@
 // Started on  Fri Sep 29 16:20:42 2017 Jeremy Thoveron
 // Last update Fri Sep 29 16:20:55 2017 Jeremy Thoveron
 //
-#include	"KeyLogger.hpp"
+#include	"WindowsKeyLogger.hpp"
 
 std::map<DWORD, std::string> const WindowsKeyLogger::keys = {
   { VK_ADD, "Numpad +" },

