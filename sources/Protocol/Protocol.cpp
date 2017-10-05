@@ -8,6 +8,7 @@
 ** Last update Mon Oct 02 08:48:15 2017 Maxime PILLON
 */
 
+#include "Network/Buffer.hpp"
 #include "Protocol/Protocol.hpp"
 
 spider::Protocol::Protocol() : net(PORT)
@@ -61,5 +62,10 @@ unserialized_queue& spider::Protocol::getInfo()
 
 void spider::Protocol::run()
 {
-  //get all data from the buffer and serialize, tu put it in unserialized_queue
+  Buffer& buf = Buffer::BufferInstance();
+  std::string& data = buf.getBuf();
+  while (!data.empty())
+  {
+
+  }
 }

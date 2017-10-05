@@ -14,34 +14,38 @@
 #include <string>
 
 /// \namespace spider
-namespace spider {
+namespace spider
+{
 
-    /// \class Buffer
-    class Buffer {
-    public:
-        /// \brief constructor
-        Buffer();
+  /// \class Buffer
+  class Buffer
+  {
+  private:
+    /// \brief constructor
+    Buffer();
 
-        /// \brief destructor
-        ~Buffer();
+    /// \brief destructor
+    ~Buffer();
 
-        /// \brief deleted copy constructor
-        Buffer(Buffer const &copy) = delete;
+    /// \brief deleted copy constructor
+    Buffer(Buffer const &copy) = delete;
 
-        /// \brief deleted operator =
-        Buffer *operator=(Buffer const& copy) = delete;
+    /// \brief deleted operator =
+    Buffer *operator=(Buffer const &copy) = delete;
 
-    public:
-        /// \brief Call a Buffer Instance
-        static Buffer &BufferInstance();
+  public:
+    /// \brief Call a Buffer Instance
+    static Buffer &BufferInstance();
 
-        /// \brief push a string in the buffer
-        void push(std::string msg);
+    /// \brief push a string in the buffer
+    void push(std::string msg);
 
-    private:
-        static Buffer _Instance;
-        std::string _buffer;
-    };
+    std::string& getBuf();
+
+  private:
+    static Buffer _Instance;
+    std::string _buffer;
+  };
 }
 
 #endif //_BUFFER_HPP

@@ -21,4 +21,9 @@ namespace spider {
     Buffer &Buffer::BufferInstance() {
         return _Instance;
     }
+
+  std::string& Buffer::getBuf()
+  {
+    return _buffer;
+  }
 }
