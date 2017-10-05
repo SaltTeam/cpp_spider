@@ -10,6 +10,7 @@
 
 #include "Protocol/Buffer.hpp"
 #include "Protocol/Protocol.hpp"
+#include <regex>
 
 spider::Protocol::Protocol() : net(PORT)
 {
@@ -62,10 +63,10 @@ unserialized_queue& spider::Protocol::getInfo()
 
 void spider::Protocol::run()
 {
-  Buffer& buf = Buffer::BufferInstance();
-  std::string& data = buf.getBuf();
-  while (!data.empty())
-  {
+	Buffer& buf = Buffer::BufferInstance();
+	std::string& str = buf.getBuf();
+	std::regex reg = std::regex("\\{(?:(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)|(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)\\}");
 
-  }
+	for (auto it = std::sregex_iterator(str.begin(), str.end(), reg); it != std::sregex_iterator(); ++it)
+		this->data.push(this->serializer.unserialize(this->serializer.get_ptree_from_string(it->str())));
 }
