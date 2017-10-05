@@ -11,7 +11,7 @@
 #pragma once
 
 # include "Database/Sqlite.hpp"
-# include "Protocol/Protocol.hpp"
+# include "Protocol/ServerProtocol.hpp"
 
 namespace spider
 {
