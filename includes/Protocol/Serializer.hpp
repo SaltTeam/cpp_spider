@@ -14,10 +14,10 @@ namespace spider
   {
   private:
     std::map<std::string, std::function<t_unserialized (boost::property_tree::ptree const &)>> unserialize_func;
+    static Serializer m_instance;
 
   public:
-    Serializer();
-    ~Serializer();
+    static Serializer &getSerializer();
     boost::property_tree::ptree serialize(t_message const &data) const;
     boost::property_tree::ptree serialize(t_register const &data) const;
     boost::property_tree::ptree serialize(t_mouse const &data) const;
@@ -25,5 +25,11 @@ namespace spider
     t_unserialized unserialize(boost::property_tree::ptree const &pt);
     boost::property_tree::ptree get_ptree_from_string(std::string const &json) const;
     std::string const get_string_from_ptree(boost::property_tree::ptree const &pt) const;
+
+  private:
+    Serializer();
+    ~Serializer();
+    Serializer &operator=(Serializer const &other);
+    Serializer(Serializer const &other);
   };
 }

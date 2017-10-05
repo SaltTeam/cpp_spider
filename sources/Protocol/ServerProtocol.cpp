@@ -22,26 +22,26 @@ spider::ServerProtocol::~ServerProtocol()
 
 void spider::ServerProtocol::sendData(t_message message)
 {
-  this->serializer.get_string_from_ptree(this->serializer.serialize(message));
+  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(message));
   //todo send this data;
 }
 
 void spider::ServerProtocol::sendData(t_command cmd)
 {
-  this->serializer.get_string_from_ptree(this->serializer.serialize(cmd));
+  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(cmd));
   //todo send this data;
 }
 
 void spider::ServerProtocol::sendData(t_register _register)
 {
-  this->serializer.get_string_from_ptree(
-    this->serializer.serialize(_register));
+  Serializer::getSerializer().get_string_from_ptree(
+    Serializer::getSerializer().serialize(_register));
   //todo send this data;
 }
 
 void spider::ServerProtocol::sendData(t_mouse mouse)
 {
-  this->serializer.get_string_from_ptree(this->serializer.serialize(mouse));
+  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(mouse));
   //todo send this data;
 }
 
@@ -67,7 +67,8 @@ void spider::ServerProtocol::run()
   Buffer &buf = Buffer::BufferInstance();
   std::string &str = buf.getBuf();
   std::regex reg = std::regex("\\{(?:(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)|(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)\\}");
+
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
-    this->data.push(this->serializer.unserialize(this->serializer.get_ptree_from_string(it->str())));
+    this->data.push(Serializer::getSerializer().unserialize(Serializer::getSerializer().get_ptree_from_string(it->str())));
 }

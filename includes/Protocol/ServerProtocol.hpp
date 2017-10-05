@@ -26,7 +26,6 @@ namespace spider
     typedef std::queue<t_unserialized> unserialized_queue;
 
     ServerNetwork		net;
-    Serializer			serializer;
     std::queue<t_command>	cmds;
     unserialized_queue		data;
 
