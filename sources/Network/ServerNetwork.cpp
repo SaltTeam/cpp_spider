@@ -9,7 +9,7 @@
 */
 
 #include <boost/bind.hpp>
-#include "Network/Buffer.hpp"
+#include <Protocol/Buffer.hpp>
 #include "Network/ServerNetwork.hpp"
 
 spider::ServerNetwork::ServerNetwork(unsigned short port)

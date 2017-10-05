@@ -8,7 +8,7 @@
 ** Last update Mon Oct 02 08:48:15 2017 Maxime PILLON
 */
 
-#include "Network/Buffer.hpp"
+#include "Protocol/Buffer.hpp"
 #include "Protocol/Protocol.hpp"
 
 spider::Protocol::Protocol() : net(PORT)
