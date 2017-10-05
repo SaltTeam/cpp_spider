@@ -187,3 +187,5 @@ Supprimerait deployement/Linux/sinbad-ogre-108ab0bcc696/
 !/deployement/Windows/SaltySetup.exe
 resources.cfg
 !/deployement/IrrKlang/*
+
+CMakeLists.txt
