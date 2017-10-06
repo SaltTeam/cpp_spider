@@ -8,7 +8,7 @@ SERVER	=	cpp_spider_server
 
 CLIENT	=	cpp_spider_client
 
-CPPFLAGS	+=	-W -Wall -Wextra -Werror -std=c++14 -MD -MP $(INCLUDE) -lssl
+CPPFLAGS	+=	-W -Wall -Wextra -Werror -std=c++14 -MD -MP $(INCLUDE) -lssl -lboost_system -lboost_thread
 
 LDFLAGS	+=	\
 
@@ -35,10 +35,10 @@ S_SRCS	=	$(SOURCES)ServerCore.cpp \
 		$(SOURCES)ServerMain.cpp \
 		$(DATABASE)Sqlite.cpp \
 		$(LOGGER)Logger.cpp \
-		$(NETWORK)ServerNetwork.cpp \
 		$(PROTOCOL)Buffer.cpp \
 		$(PROTOCOL)Serializer.cpp \
-		$(PROTOCOL)ServerProtocol.cpp
+		$(PROTOCOL)ServerProtocol.cpp \
+		$(NETWORK)ServerNetwork.cpp
 
 S_OBJS	=	$(S_SRCS:.cpp=.o)
 

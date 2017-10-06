@@ -22,6 +22,7 @@ spider::ServerProtocol::~ServerProtocol()
 
 spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other) : net(PORT)
 {
+  static_cast<void>(other);
 }
 
 void spider::ServerProtocol::sendData(t_message message)
@@ -55,13 +56,14 @@ void spider::ServerProtocol::sendPing()
 
 bool spider::ServerProtocol::hasCommand()
 {
+  return (false);
 }
 
 void spider::ServerProtocol::getCommand()
 {
 }
 
-unserialized_queue &spider::ServerProtocol::getInfo()
+spider::ServerProtocol::unserialized_queue &spider::ServerProtocol::getInfo()
 {
   return data;
 }

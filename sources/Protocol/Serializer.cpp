@@ -88,7 +88,10 @@ namespace spider
   { static_cast<void>(other); }
 
   Serializer& Serializer::operator=(Serializer const &other)
-  { return *this; }
+  {
+    static_cast<void>(other);
+    return *this;
+  }
 
   Serializer& Serializer::getSerializer() { return m_instance; }
 
