@@ -16,9 +16,9 @@ SERVER	=	cpp_spider_server
 
 CLIENT	=	cpp_spider_client
 
-CPPFLAGS	+=	-W -Wall -Wextra -Werror -std=c++14 -MD -MP $(INCLUDE) -lssl -lboost_system -lboost_thread
+CPPFLAGS	+=	-W -Wall -Wextra -Werror -std=c++14 -MD -MP $(INCLUDE)
 
-LDFLAGS	+=	\
+LDFLAGS	+=	 -lssl -lboost_system -lboost_thread -lcrypto -lm -lsqlite3
 
 CC	=   g++
 

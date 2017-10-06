@@ -10,15 +10,18 @@
 
 #pragma once
 
+# include <queue>
+# include "dataStructure.hpp"
+
 namespace spider
 {
-# include "dataStructure.hpp"
+
 
   class IProtocol {
   public:
     typedef std::queue<t_unserialized> unserialized_queue;
 
-    virtual ~IProtocol();
+    virtual ~IProtocol(){}
 
     virtual void		sendData() = 0;
 

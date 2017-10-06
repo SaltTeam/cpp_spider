@@ -27,10 +27,10 @@ namespace spider {
     ~Buffer();
 
     /// \brief deleted copy constructor
-    Buffer(Buffer const &copy) = delete;
+    Buffer(__attribute__((unused)) Buffer const &copy){};
 
     /// \brief deleted operator =
-    Buffer *operator=(Buffer const& copy) = delete;
+    Buffer& operator=(__attribute__((unused)) Buffer const& copy){ return *this; };
 
   public:
     /// \brief Call a Buffer Instance

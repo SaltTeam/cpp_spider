@@ -9,7 +9,7 @@
 */
 
 #include <boost/bind.hpp>
-#include <Protocol/Buffer.hpp>
+#include "Protocol/Buffer.hpp"
 #include "Network/ServerNetwork.hpp"
 
 spider::ServerNetwork::ServerNetwork(unsigned short port)
@@ -49,7 +49,7 @@ void spider::ServerNetwork::handleAccept(NetworkSession* session,
   this->accept();
 }
 
-std::string spider::ServerNetwork::get_password()
+std::string spider::ServerNetwork::get_password() const
 {
   return "test_pem_password";
 }
@@ -85,7 +85,8 @@ spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
     _socket.async_read_some(
       boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
       boost::bind(&NetworkSession::handleRead,
-		  this, boost::asio::placeholders::error)
+		  this, boost::asio::placeholders::error,
+		  boost::asio::placeholders::bytes_transferred)
     );
   }
   else
@@ -104,7 +105,8 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
     _socket.async_read_some(
       boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
       boost::bind(&NetworkSession::handleRead,
-		  this, boost::asio::placeholders::error)
+		  this, boost::asio::placeholders::error,
+		  boost::asio::placeholders::bytes_transferred)
     );
   }
   else
