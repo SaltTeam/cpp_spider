@@ -12,7 +12,7 @@
 # define SQLITE_HPP_
 
 # include <sqlite3.h>
-#include <dataStructure.hpp>
+#include "dataStructure.hpp"
 # include "IDatabase.hpp"
 
 /// \namespace spider

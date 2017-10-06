@@ -2,14 +2,14 @@
 // Created by delacr_a on 28/09/17.
 //
 
-#ifndef JSON_CPP_DATASTRUCTURE_H
-#define JSON_CPP_DATASTRUCTURE_H
+#ifndef CPP_SPIDER_DATASTRUCTURE_H
+#define CPP_SPIDER_DATASTRUCTURE_H
 
 # include <string>
 
 enum class	KEYTYPE
 {
-    NONE = 0,
+    KNONE = 0,
     RC,
     LC,
     SCROLLUP,
@@ -56,4 +56,4 @@ struct          t_unserialized
     t_command   *command;
 };
 
-#endif //JSON_CPP_DATASTRUCTURE_H
+#endif //CPP_SPIDER_DATASTRUCTURE_H

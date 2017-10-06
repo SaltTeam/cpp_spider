@@ -20,6 +20,10 @@ spider::ServerProtocol::~ServerProtocol()
 {
 }
 
+spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other) : net(PORT)
+{
+}
+
 void spider::ServerProtocol::sendData(t_message message)
 {
   Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(message));

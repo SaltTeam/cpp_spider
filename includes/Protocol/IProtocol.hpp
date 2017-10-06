@@ -14,16 +14,6 @@ namespace spider
 {
 # include "dataStructure.hpp"
 
-  enum class	KEYTYPE
-  {
-    NONE = 0,
-    RC,
-    LC,
-    SCROLLUP,
-    SCROLLDOWN,
-    MC
-  };
-
   class IProtocol {
   public:
     typedef std::queue<t_unserialized> unserialized_queue;

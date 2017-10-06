@@ -19,8 +19,8 @@ namespace spider
   {
   protected:
 
-    IDatabase			_db;
-    IProtocol			_proto;
+    Sqlite			_db;
+    ServerProtocol		_proto;
 
   public:
     ServerCore();

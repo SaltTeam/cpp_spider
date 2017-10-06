@@ -32,11 +32,13 @@ namespace spider
   public:
     ServerProtocol();
     ~ServerProtocol();
+    ServerProtocol(ServerProtocol const &);
 
     void		sendData(t_message message);
     void		sendData(t_command cmd);
     void		sendData(t_register _register);
     void		sendData(t_mouse mouse);
+    void                sendData(){}
 
     void		run() override;
     unserialized_queue& getInfo() override;
