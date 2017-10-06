@@ -1,4 +1,12 @@
-## Created by maxence.delacroix@epitech.eu the 06/10/2017
+##
+## Makefile for cpp_spider in /home/delacr_a/rendu/CPP/cpp_spider
+## 
+## Made by Maxence Delacroix
+## Login   <delacr_a@epitech.net>
+## 
+## Started on  Fri Oct  6 15:48:25 2017 Maxence Delacroix
+## Last update Fri Oct  6 15:52:18 2017 Maxence Delacroix
+##
 
 INCLUDE	=	-I./includes/
 

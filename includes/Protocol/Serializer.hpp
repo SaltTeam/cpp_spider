@@ -1,6 +1,13 @@
 //
-// Created by delacr_a on 28/09/17.
+// Serializer.hpp for cpp_spider in /home/delacr_a/rendu/CPP/cpp_spider
+// 
+// Made by Maxence Delacroix
+// Login   <delacr_a@epitech.net>
+// 
+// Started on  Fri Oct  6 15:54:01 2017 Maxence Delacroix
+// Last update Fri Oct  6 15:54:02 2017 Maxence Delacroix
 //
+
 
 #pragma once
 
