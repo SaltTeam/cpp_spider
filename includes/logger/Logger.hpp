@@ -41,7 +41,7 @@
 #   define BASIC_CRITICAL_LOG_FILE "%~dp0\log\indie.log"
 #  endif //!BASIC_CRITICAL_LOG_FILE
 
-# elif defined (linux)
+# else /* defined (linux cause error)*/
 
 #  ifndef LOGGER_CONF_PATHNAME
 #   define LOGGER_CONF_PATHNAME "log/logger.conf"
@@ -66,10 +66,6 @@
 #  ifndef BASIC_CRITICAL_LOG_FILE
 #   define BASIC_CRITICAL_LOG_FILE "log/indie.log"
 #  endif //!BASIC_CRITICAL_LOG_FILE
-
-# else
-
-#  error not defined for this platform
 
 # endif
 

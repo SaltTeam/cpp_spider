@@ -27,10 +27,8 @@ spider::ServerNetwork::ServerNetwork(unsigned short port)
   this->accept();
 }
 
-spider::ServerNetwork::~ServerNetwork() = default
-{
+spider::ServerNetwork::~ServerNetwork() = default;
 
-}
 
 void spider::ServerNetwork::accept()
 {
@@ -63,14 +61,11 @@ spider::NetworkSession::NetworkSession(boost::asio::io_service& io_service,
 
 }
 
-spider::NetworkSession::~NetworkSession() = default
-{
-
-}
+spider::NetworkSession::~NetworkSession() = default;
 
 void spider::NetworkSession::send(std::string const& msg)
 {
-
+  static_cast<void>(msg);
 }
 
 void spider::NetworkSession::start()
