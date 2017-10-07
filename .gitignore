@@ -188,5 +188,4 @@ Supprimerait deployement/Linux/sinbad-ogre-108ab0bcc696/
 resources.cfg
 !/deployement/IrrKlang/*
 
-CMakeLists.txt
 Makefile

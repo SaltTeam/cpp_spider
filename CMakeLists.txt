@@ -39,13 +39,10 @@ else(UNIX)
         includes/logger/Logger.hpp
         includes/Network/ServerNetwork.hpp
         includes/Protocol/Buffer.hpp
-        includes/Protocol/ClientProtocol.hpp
         includes/Protocol/IProtocol.hpp
         includes/Protocol/Serializer.hpp
         includes/Protocol/ServerProtocol.hpp
-        includes/ClientCore.hpp
         includes/dataStructure.hpp
-        includes/IKeyLogger.hpp
         includes/ServerCore.hpp
         includes/SpiderException.hpp
         sources/Database/Sqlite.cpp
