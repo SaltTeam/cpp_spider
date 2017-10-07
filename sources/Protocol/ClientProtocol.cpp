@@ -42,9 +42,10 @@ void spider::ClientProtocol::run()
   if (str.empty())
     return ;
   if (!_net.isConnected())
-    if (!connect())
-      return ;
+    if (!connect()) {//todo writting in file and vider buffer
+    }
 
+//todo if file not empty add it in the beginning of str
   std::regex reg = std::regex("\\{(?:(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)|(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)\\}");
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
