@@ -12,11 +12,15 @@
 #include <iostream>
 #include "Protocol/Buffer.hpp"
 #include "Network/ServerNetwork.hpp"
+#include "logger/Logger.hpp"
 
 spider::ServerNetwork::ServerNetwork(unsigned short port)
   : _ios(), _context(boost::asio::ssl::context::tlsv12_server),
     _acceptor(_ios, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
+  logger::Logger& logger = logger::Logger::getLogger();
+
+  logger.log(logger::INFO, "Starting server network handling...");
   _context.set_options(
     boost::asio::ssl::context::default_workarounds
     | boost::asio::ssl::context::no_sslv2
@@ -27,8 +31,6 @@ spider::ServerNetwork::ServerNetwork(unsigned short port)
 				boost::asio::ssl::context::pem);
   _context.use_tmp_dh_file("resources/cert/dHParam.pem");
 
-  std::clog << "Creating server" << std::endl;
-
   this->accept();
 }
 
@@ -37,7 +39,9 @@ spider::ServerNetwork::~ServerNetwork() = default;
 
 void spider::ServerNetwork::accept()
 {
-  std::clog << "Accepting..." << std::endl;
+  logger::Logger& logger = logger::Logger::getLogger();
+
+  logger.log(logger::DEBUG, "Accepting...");
   _new_session = new NetworkSession(_ios, _context);
   _acceptor.async_accept(_new_session->socket(),
 			 boost::bind(&ServerNetwork::handleAccept,
@@ -46,12 +50,16 @@ void spider::ServerNetwork::accept()
 
 void spider::ServerNetwork::handleAccept(boost::system::error_code const& error)
 {
-  std::clog << "Hdl Accepting..." << std::endl;
+  logger::Logger& logger = logger::Logger::getLogger();
+
   if (!error)
+  {
+    logger.log(logger::INFO, "Accepted new connection.");
     _new_session->start();
+  }
   else
   {
-    std::clog << "Accept error: " << error.message() << std::endl;
+    logger.log(logger::ERROR, "Cannot accept connection: " + error.message());
     delete _new_session;
   }
   this->accept();
@@ -71,7 +79,9 @@ spider::NetworkSession::NetworkSession(boost::asio::io_service& io_service,
 				       boost::asio::ssl::context& context)
   : _socket(io_service, context)
 {
-  std::clog << "Creating session" << std::endl;
+  logger::Logger& logger = logger::Logger::getLogger();
+
+  logger.log(logger::DEBUG, "Creating new session");
 }
 
 spider::NetworkSession::~NetworkSession() = default;
@@ -83,7 +93,9 @@ void spider::NetworkSession::send(std::string const& msg)
 
 void spider::NetworkSession::start()
 {
-  std::clog << "Startnig session..." << std::endl;
+  logger::Logger& logger = logger::Logger::getLogger();
+
+  logger.log(logger::INFO, "Trying ssl handshake with client...");
   _socket.async_handshake(
     boost::asio::ssl::stream_base::server,
     boost::bind(&NetworkSession::handleHandshake,
@@ -94,9 +106,11 @@ void spider::NetworkSession::start()
 void
 spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
 {
-  std::clog << "Session handshake..." << std::endl;
+  logger::Logger& logger = logger::Logger::getLogger();
+
   if (!error)
   {
+    logger.log(logger::INFO, "SSL handshake successful.");
     _socket.async_read_some(
       boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
       boost::bind(&NetworkSession::handleRead,
@@ -106,7 +120,7 @@ spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
   }
   else
   {
-    std::clog << "Handshake error: " << error.message() << std::endl;
+    logger.log(logger::ERROR, "SSL handshake failed: " + error.message());
     delete this;
   }
 }
@@ -114,11 +128,14 @@ spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
 void spider::NetworkSession::handleRead(boost::system::error_code const& error,
 					std::size_t bytes_transferred)
 {
+  logger::Logger& logger = logger::Logger::getLogger();
+
   if (!error)
   {
-    std::clog << "Reading..." << std::endl;
-    std::clog.write(_light_buf, bytes_transferred);
-    std::clog << std::endl;
+    logger.log(logger::DEBUG, "Reading data.");
+//    std::clog << "Reading..." << std::endl;
+//    std::clog.write(_light_buf, bytes_transferred);
+//    std::clog << std::endl;
     Buffer &buf = Buffer::BufferInstance();
     std::string str(_light_buf);
     str.resize(bytes_transferred);
@@ -132,7 +149,7 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
   }
   else
   {
-    std::clog << "Read error: " << error.message() << std::endl;
+    logger.log(logger::DEBUG, "Cannot read data: " + error.message());
     delete this;
   }
 }

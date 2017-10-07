@@ -10,6 +10,7 @@
 
 #include	<iostream>
 #include	<sstream>
+#include	"logger/Logger.hpp"
 #include	"Database/Sqlite.hpp"
 
 static int	callback(void *data, int argc, char **argv, char **azColName)
@@ -49,6 +50,9 @@ void spider::Sqlite::close()
 
 void spider::Sqlite::createDb()
 {
+  logger::Logger	&logger  = logger::Logger::getLogger();
+
+  logger.log(logger::INFO, "Generate DB");
   execute(     "CREATE TABLE IF NOT EXISTS `register` (" \
 	       "`mac` varchar(255)," \
 	       "`os` varchar(255) DEFAULT NULL," \
@@ -80,9 +84,11 @@ void	spider::Sqlite::execute(const char *querry)
 void spider::Sqlite::addEntryRegister(const char *mac, const char *os,
 				      const char *antivirus)
 {
-  std::ostringstream strstream;
+  std::ostringstream 	strstream;
   std::string		querry;
+  logger::Logger	&logger  = logger::Logger::getLogger();
 
+  logger.log(logger::DEBUG, "Pushing one entry register");
   strstream << "INSERT INTO register (mac, os, antivirus) VALUES ('" << mac << "', '" << os << "', '" << antivirus << "');";
   querry = strstream.str();
   execute(querry.c_str());
@@ -128,9 +134,11 @@ void spider::Sqlite::pushData(t_unserialized data)
 void spider::Sqlite::addEntryLog(const char *time, const char *proccess,
 			      const char *message)
 {
-  std::ostringstream strstream;
+  std::ostringstream	strstream;
   std::string		querry;
+  logger::Logger	&logger  = logger::Logger::getLogger();
 
+  logger.log(logger::DEBUG, "Pushing one entry log");
   strstream << "INSERT INTO log (time, process, message) VALUES ('" << time << "', '" << proccess << "', '" << message << "');";
   querry = strstream.str();
   execute(querry.c_str());
