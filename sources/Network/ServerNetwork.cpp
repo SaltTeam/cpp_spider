@@ -14,10 +14,9 @@
 #include "Network/ServerNetwork.hpp"
 
 spider::ServerNetwork::ServerNetwork(unsigned short port)
-  : _ios(), _context(boost::asio::ssl::context::tlsv12),
+  : _ios(), _context(boost::asio::ssl::context::tlsv12_server),
     _acceptor(_ios, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 {
-  std::clog << "Creating server" << std::endl;
   _context.set_options(
     boost::asio::ssl::context::default_workarounds
     | boost::asio::ssl::context::no_sslv2
@@ -28,6 +27,8 @@ spider::ServerNetwork::ServerNetwork(unsigned short port)
 				boost::asio::ssl::context::pem);
   _context.use_tmp_dh_file("resources/cert/dHParam.pem");
 
+  std::clog << "Creating server" << std::endl;
+
   this->accept();
 }
 
@@ -37,23 +38,21 @@ spider::ServerNetwork::~ServerNetwork() = default;
 void spider::ServerNetwork::accept()
 {
   std::clog << "Accepting..." << std::endl;
-  NetworkSession* new_session = new NetworkSession(_ios, _context);
-  _acceptor.async_accept(new_session->socket(),
+  _new_session = new NetworkSession(_ios, _context);
+  _acceptor.async_accept(_new_session->socket(),
 			 boost::bind(&ServerNetwork::handleAccept,
-				     this, new_session,
-				     boost::asio::placeholders::error));
+				     this, boost::asio::placeholders::error));
 }
 
-void spider::ServerNetwork::handleAccept(NetworkSession* session,
-					 boost::system::error_code const& error)
+void spider::ServerNetwork::handleAccept(boost::system::error_code const& error)
 {
-  std::clog << "HAccepting..." << std::endl;
+  std::clog << "Hdl Accepting..." << std::endl;
   if (!error)
-    session->start();
+    _new_session->start();
   else
   {
     std::clog << "Accept error: " << error.message() << std::endl;
-    delete session;
+    delete _new_session;
   }
   this->accept();
 }
@@ -63,11 +62,16 @@ std::string spider::ServerNetwork::get_password() const
   return "toto";
 }
 
+void spider::ServerNetwork::run()
+{
+  _ios.run();
+}
+
 spider::NetworkSession::NetworkSession(boost::asio::io_service& io_service,
 				       boost::asio::ssl::context& context)
   : _socket(io_service, context)
 {
-
+  std::clog << "Creating session" << std::endl;
 }
 
 spider::NetworkSession::~NetworkSession() = default;
@@ -90,9 +94,9 @@ void spider::NetworkSession::start()
 void
 spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
 {
+  std::clog << "Session handshake..." << std::endl;
   if (!error)
   {
-    std::clog << "Session handshake..." << std::endl;
     _socket.async_read_some(
       boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
       boost::bind(&NetworkSession::handleRead,
@@ -101,7 +105,10 @@ spider::NetworkSession::handleHandshake(boost::system::error_code const& error)
     );
   }
   else
+  {
+    std::clog << "Handshake error: " << error.message() << std::endl;
     delete this;
+  }
 }
 
 void spider::NetworkSession::handleRead(boost::system::error_code const& error,
@@ -124,7 +131,10 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
     );
   }
   else
+  {
+    std::clog << "Read error: " << error.message() << std::endl;
     delete this;
+  }
 }
 
 boost_ssl_socket::lowest_layer_type& spider::NetworkSession::socket()

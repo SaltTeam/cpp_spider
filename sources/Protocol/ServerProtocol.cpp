@@ -70,6 +70,7 @@ void spider::ServerProtocol::run()
   std::string &str = buf.getBuf();
   std::regex reg = std::regex("\\{(?:(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+)|(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+)\\}");
 
+  net.run();
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
     this->data.push(Serializer::getSerializer().unserialize(Serializer::getSerializer().get_ptree_from_string(it->str())));
