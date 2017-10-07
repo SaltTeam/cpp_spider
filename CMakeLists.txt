@@ -3,6 +3,8 @@ project(cpp_spider)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} -W -Wall -Wextra -Werror")
+
 set(SOURCE_FILES
     includes/Database/IDatabase.hpp
     includes/Database/Sqlite.hpp
@@ -32,6 +34,6 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.63.0 COMPONENTS system thread REQUIRED)
 
-add_executable(cpp_spider ${SOURCE_FILES})
-target_link_libraries(cpp_spider boost_system boost_thread sqlite3 ssl crypto)
+add_executable(cpp_spider_server ${SOURCE_FILES})
+target_link_libraries(cpp_spider_server boost_system boost_thread sqlite3 ssl crypto)
 include_directories(includes)
