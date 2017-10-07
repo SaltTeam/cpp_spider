@@ -189,3 +189,4 @@ resources.cfg
 !/deployement/IrrKlang/*
 
 CMakeLists.txt
+Makefile
