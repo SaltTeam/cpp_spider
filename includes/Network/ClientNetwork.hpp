@@ -46,6 +46,9 @@ namespace spider
 
     void handleRead(const boost::system::error_code& error,
 		    size_t bytes_transferred);
+    void run();
+
+    static void noop(boost::system::error_code const& e, std::size_t s) { static_cast<void>(e); static_cast<void>(s); }
 
   private:
     boost::asio::io_service _ios;

