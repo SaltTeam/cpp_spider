@@ -9,6 +9,7 @@
 */
 
 #include <regex>
+#include <fstream>
 #include "Protocol/Buffer.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
