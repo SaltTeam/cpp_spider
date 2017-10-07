@@ -189,3 +189,6 @@ resources.cfg
 !/deployement/IrrKlang/*
 
 Makefile
+
+cpp_spider_server
+cpp_spider
