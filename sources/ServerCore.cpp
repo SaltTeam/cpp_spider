@@ -14,6 +14,7 @@ spider::ServerCore::ServerCore() : _db(spider::Sqlite()),
 				   _proto(spider::ServerProtocol())
 {
   _db.open("db.sqlite");
+  _db.createDb();
 }
 
 spider::ServerCore::~ServerCore()
