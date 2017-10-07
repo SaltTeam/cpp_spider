@@ -21,8 +21,9 @@ spider::ServerNetwork::ServerNetwork(unsigned short port)
     | boost::asio::ssl::context::no_sslv2
     | boost::asio::ssl::context::single_dh_use);
   _context.set_password_callback(boost::bind(&ServerNetwork::get_password, this));
-  _context.use_certificate_chain_file("server.crt");
-  _context.use_private_key_file("server.key", boost::asio::ssl::context::pem);
+  _context.use_certificate_chain_file("resources/pki_tmp/server.crt");
+  _context.use_private_key_file("resources/pki_tmp/server.key",
+				boost::asio::ssl::context::pem);
 
   this->accept();
 }
