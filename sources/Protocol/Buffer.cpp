@@ -9,6 +9,7 @@
 */
 
 #include <string>
+#include "logger/Logger.hpp"
 #include "Protocol/Buffer.hpp"
 
 namespace spider {
@@ -24,6 +25,9 @@ namespace spider {
   }
 
   void Buffer::push(std::string msg) {
+    logger::Logger	&logger  = logger::Logger::getLogger();
+
+    logger.log(logger::DEBUG, "Pushing data on buffer");
     this->_buffer += msg;
   }
 

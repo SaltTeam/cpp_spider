@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <boost/property_tree/json_parser.hpp>
+#include "logger/Logger.hpp"
 #include "Protocol/Serializer.hpp"
 
 
@@ -140,7 +141,9 @@ namespace spider
   boost::property_tree::ptree Serializer::serialize(t_command const &data) const
   {
     boost::property_tree::ptree pt;
+    logger::Logger	&logger  = logger::Logger::getLogger();
 
+    logger.log(logger::DEBUG, "serializing data start");
     pt.put("type", data.type);
     pt.put("data", data.data);
     return (pt);
@@ -149,7 +152,9 @@ namespace spider
   t_unserialized Serializer::unserialize(boost::property_tree::ptree const &pt)
   {
     std::string tmp;
+    logger::Logger	&logger  = logger::Logger::getLogger();
 
+    logger.log(logger::DEBUG, "unserializing data start");
     try
     {
       tmp = pt.get<std::string>("type");
