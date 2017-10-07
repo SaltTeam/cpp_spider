@@ -5,13 +5,16 @@
 #ifndef CPP_SPIDER_ITHREAD_H
 #define CPP_SPIDER_ITHREAD_H
 
+namespace spider {
 
-class IThread {
-public:
-    virtual void createThread(std::function<void()> funcptr) = 0;
-    virtual void threadJoin() = 0;
-    virtual ~IThread() = 0;
+    class IThread {
+    public:
+        virtual void createThread(std::function<void()> funcptr) = 0;
+
+        virtual void threadJoin() = 0;
+
+        virtual ~IThread() = 0;
+    };
 };
-
 
 #endif //CPP_SPIDER_ITHREAD_H

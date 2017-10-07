@@ -8,19 +8,24 @@
 #include <boost/thread/thread.hpp>
 #include "IThread.hpp"
 
-class BoostThread: public IThread {
-public:
-    BoostThread(BoostThread const& copy) = delete;
-    BoostThread(std::function<void()> funcptr);
-    ~BoostThread();
+namespace spider {
 
-public:
-    void threadJoin() override;
-    void createThread(std::function<void()> funcptr) override;
+    class BoostThread : public IThread {
+    public:
+        BoostThread(BoostThread const &copy) = delete;
 
-private:
-    boost::thread       thread;
+        BoostThread(std::function<void()> funcptr);
+
+        ~BoostThread();
+
+    public:
+        void threadJoin() override;
+
+        void createThread(std::function<void()> funcptr) override;
+
+    private:
+        boost::thread thread;
+    };
+
 };
-
-
 #endif //CPP_SPIDER_BOOSTTHREAD_HPP

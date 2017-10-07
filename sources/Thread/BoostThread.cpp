@@ -4,9 +4,12 @@
 
 #include "Thread/BoostThread.hpp"
 
-BoostThread::BoostThread(std::function<void()> funcptr):
-thread(funcptr)
+namespace spider
 {
+
+
+BoostThread::BoostThread(std::function<void()> funcptr) :
+        thread(funcptr) {
 
 }
 
@@ -21,3 +24,5 @@ void BoostThread::threadJoin() {
 void BoostThread::createThread(std::function<void()> funcptr) {
     thread = boost::thread(funcptr);
 }
+
+};
