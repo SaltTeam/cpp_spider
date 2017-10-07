@@ -68,7 +68,7 @@ void spider::ServerProtocol::run()
 {
   Buffer &buf = Buffer::BufferInstance();
   std::string &str = buf.getBuf();
-  std::regex reg = std::regex("\\{(?:(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)|(?:\\s*\"\\w+\": \"\\w+\",{0,1}\\s*)+)\\}");
+  std::regex reg = std::regex("\\{(?:(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+)|(?:\\s*\"[\\w\\s.;,_]+\": \"[\\w\\s.;,_]+\",{0,1}\\s*)+)\\}");
 
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
