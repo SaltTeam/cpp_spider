@@ -6,6 +6,7 @@
 #define CPP_SPIDER_BOOSTTHREAD_HPP
 
 #include <boost/thread/thread.hpp>
+#include <Protocol/IProtocol.hpp>
 #include "IThread.hpp"
 
 namespace spider {
@@ -14,14 +15,14 @@ namespace spider {
     public:
         BoostThread(BoostThread const &copy) = delete;
 
-        BoostThread(std::function<void()> funcptr);
+        BoostThread();
 
         ~BoostThread();
 
     public:
         void threadJoin() override;
 
-        void createThread(std::function<void()> funcptr) override;
+        void createThread(std::unique_ptr<IProtocol> &protocol) override;
 
     private:
         boost::thread thread;

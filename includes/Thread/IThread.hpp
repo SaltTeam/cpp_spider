@@ -5,11 +5,14 @@
 #ifndef CPP_SPIDER_ITHREAD_H
 #define CPP_SPIDER_ITHREAD_H
 
+#include <bits/unique_ptr.h>
+#include "Protocol/IProtocol.hpp"
+
 namespace spider {
 
     class IThread {
     public:
-        virtual void createThread(std::function<void()> funcptr) = 0;
+        virtual void createThread(std::unique_ptr<IProtocol> &protocol) = 0;
 
         virtual void threadJoin() = 0;
 
