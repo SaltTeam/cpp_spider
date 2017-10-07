@@ -23,7 +23,7 @@ spider::ClientProtocol::~ClientProtocol()
 void spider::ClientProtocol::sendPing()
 {}
 
-spider::ClientProtocol::sendData()
+void	spider::ClientProtocol::sendData()
 {}
 
 void spider::ClientProtocol::run()

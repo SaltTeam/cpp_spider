@@ -9,8 +9,9 @@
 */
 
 #include <boost/bind.hpp>
+#include <boost/asio.hpp>
 #include "Network/ClientNetwork.hpp"
-#include "Network/Buffer.hpp"
+#include "Protocol/Buffer.hpp"
 
 spider::ClientNetwork::ClientNetwork(std::string const& host,
 				     unsigned short port)
@@ -22,26 +23,31 @@ spider::ClientNetwork::ClientNetwork(std::string const& host,
   _context.load_verify_file("resources/pki_tmp/server.crt");
 }
 
-spider::ClientNetwork::~ClientNetwork() = default
-{
-
-}
+spider::ClientNetwork::~ClientNetwork() = default;
 
 void spider::ClientNetwork::connect()
 {
   _socket.reset(new boost_ssl_socket(_ios, _context));
   _socket->set_verify_mode(boost::asio::ssl::verify_peer |
 			   boost::asio::ssl::verify_fail_if_no_peer_cert);
-  boost::asio::async_connect(_socket->lowest_layer(),
-			     _endpoint,
-			     boost::bind(&ClientNetwork::handleConnect,
-					 this,
-					 boost::asio::placeholders::error));
+  _socket->lowest_layer().async_connect(
+    _endpoint,
+    boost::bind(
+      &ClientNetwork::handleConnect,
+      this,
+      boost::asio::placeholders::error
+    )
+  );
+//  boost::asio::async_connect(_socket->lowest_layer(),
+//			     _endpoint,
+//			     boost::bind(&ClientNetwork::handleConnect,
+//					 this,
+//					 boost::asio::placeholders::error));
 }
 
 void spider::ClientNetwork::send(std::string const& msg)
 {
-  boost::asio::write(_socket, boost::asio::buffer(msg.c_str(), msg.size()));
+  boost::asio::write(*_socket, boost::asio::buffer(msg.c_str(), msg.size()));
 }
 
 void spider::ClientNetwork::handleConnect(const boost::system::error_code& error)
@@ -65,11 +71,12 @@ void spider::ClientNetwork::handleHandshake(const boost::system::error_code& err
     _connected = false;
     return ;
   }
-  boost::asio::async_read(_socket,
+  boost::asio::async_read(*_socket,
 			  boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
 			  boost::bind(&ClientNetwork::handleRead,
 				      this,
-				      boost::asio::placeholders::error));
+				      boost::asio::placeholders::error,
+				      boost::asio::placeholders::bytes_transferred));
 }
 
 void spider::ClientNetwork::handleRead(const boost::system::error_code& error,

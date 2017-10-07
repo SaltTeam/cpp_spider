@@ -122,11 +122,11 @@ namespace logger
     /// \brief Copy operator.
     /// \param other, The logger to copy
     /// \return *this
-    Logger &operator=(__attribute__((unused)) Logger const &other) { return *this; };
+    Logger &operator=(Logger const &other) {static_cast<void>(other); return *this; };
 
     /// \brief Do nothing just for good working of singleton
     /// \param other useless
-    Logger(__attribute__((unused)) Logger const &other) {};
+    Logger(Logger const &other) {static_cast<void>(other);};
 
   private:
     log_type _logLevel;

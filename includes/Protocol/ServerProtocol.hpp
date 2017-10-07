@@ -41,9 +41,9 @@ namespace spider
     void                sendData(){}
 
     void		run() override;
-    unserialized_queue& getInfo() override;
+    unserialized_queue& getInfo();
     void		sendPing() override;
-    bool		hasCommand() override;
-    void		getCommand() override;
+    bool		hasCommand();
+    void		getCommand();
   };
 }

