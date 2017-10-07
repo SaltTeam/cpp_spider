@@ -16,9 +16,7 @@ spider::ServerProtocol::ServerProtocol() : net(PORT)
 {
 }
 
-spider::ServerProtocol::~ServerProtocol()
-{
-}
+spider::ServerProtocol::~ServerProtocol() {}
 
 spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other) : net(PORT)
 {
@@ -50,18 +48,16 @@ void spider::ServerProtocol::sendData(t_mouse mouse)
   //todo send this data;
 }
 
-void spider::ServerProtocol::sendPing()
-{
-}
+void spider::ServerProtocol::sendPing() {}
 
 bool spider::ServerProtocol::hasCommand()
 {
   return (false);
 }
 
-void spider::ServerProtocol::getCommand()
-{
-}
+void spider::ServerProtocol::getCommand() {}
+
+bool spider::ServerProtocol::connect() {}
 
 spider::ServerProtocol::unserialized_queue &spider::ServerProtocol::getInfo()
 {
