@@ -13,6 +13,7 @@
 #include <iostream>
 #include <Thread/IThread.hpp>
 #include <Thread/BoostThread.hpp>
+#include "Protocol/Buffer.hpp"
 #include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
@@ -23,7 +24,32 @@ spider::ClientProtocol::ClientProtocol()
 
 spider::ClientProtocol::~ClientProtocol() {}
 
-void spider::ClientProtocol::sendPing() {}
+void spider::ClientProtocol::checkPing()
+{
+  Buffer &buf = Buffer::BufferInstance();
+  BufferSender &sender = BufferSender::BufferSenderInstance();
+
+  std::string str = buf.getBuf();
+
+  if (str.empty())
+    return ;
+  t_unserialized tmp = spider::Serializer::getSerializer().unserialize(spider::Serializer::getSerializer().get_ptree_from_string(str));
+  if (!tmp.command)
+    return ;
+  isConnected.store(true);
+  if (tmp.command->type == std::string("PING"))
+  {
+    t_command tadaronne;
+    std::time_t			ts;
+    std::stringstream		ss;
+
+    tadaronne.type = "PONG";
+    ts = std::time(nullptr);
+    ss << ts;
+    tadaronne.data = ss.str();
+    sender.push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(tadaronne)));
+  }
+}
 
 void	spider::ClientProtocol::sendData() {}
 
@@ -63,6 +89,8 @@ void spider::ClientProtocol::run()
   for (;;)
   {
     std::string str = buf.getBuf();
+
+    this->checkPing();
     if (!isConnected.load())
     {
       if (!str.empty())
