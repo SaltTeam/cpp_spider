@@ -79,5 +79,12 @@ void spider::ServerProtocol::run()
 
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
+  {
     this->data.push(Serializer::getSerializer().unserialize(Serializer::getSerializer().get_ptree_from_string(it->str())));
+    if (this->data.front().mouse != nullptr)
+    {
+      std::cout << "mouse timestamp" << std::endl;
+      std::cout << this->data.front().mouse->timestamp.c_str() << std::endl;
+    }
+  }
 }

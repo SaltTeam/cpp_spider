@@ -108,6 +108,9 @@ void spider::Sqlite::removeEntryRegister(int id)
 
 void spider::Sqlite::pushData(t_unserialized data)
 {
+  logger::Logger	&logger  = logger::Logger::getLogger();
+
+  logger.log(logger::DEBUG, "Pushing data to DB.");
   if (data.register_)
     addEntryRegister(data.register_->mac.c_str(),
 		     data.register_->os.c_str(),
@@ -119,15 +122,17 @@ void spider::Sqlite::pushData(t_unserialized data)
   else
   {
     std::ostringstream strstream;
-    std::string		querry;
 
+    logger.log(logger::DEBUG, "Pushing data click data.");
     strstream << "Click on " << spider::Serializer::getSerializer().get_string_from_keytype(data.mouse->keytype) <<
 	      ", at position x: " << data.mouse->x <<
-	      ", and y: " << data.mouse->y << ".";
-    querry = strstream.str();
-    addEntryLog(data.message->timestamp.c_str(),
-		data.message->process.c_str(),
-		querry.c_str());
+	      ", and y: " << data.mouse->y << "." << std::endl;
+
+    logger.log(logger::DEBUG, strstream.str());
+    std::cout << strstream.str() << std::endl;
+    addEntryLog(data.mouse->timestamp.c_str(),
+		data.mouse->process.c_str(),
+		strstream.str().c_str());
   }
 
 }
