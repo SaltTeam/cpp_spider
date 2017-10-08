@@ -23,26 +23,28 @@ namespace spider {
 
   }
 
-  void BufferSender::push(std::string msg) {
-    logger::Logger	&logger  = logger::Logger::getLogger();
+  void BufferSender::push(std::string msg)
+  {
 
-    logger.log(logger::DEBUG, "Pushing data on bufferSender");
+    if (msg.empty())
+      return ;
     this->mtx.lock();
     this->_buffer += msg;
     this->mtx.unlock();
   }
-
-  BufferSender &BufferSender::BufferSenderInstance() {
+  BufferSender &BufferSender::BufferSenderInstance()
+  {
     return BufferSender::_Instance;
   }
 
-  const std::string &BufferSender::getBuf()
+  std::string BufferSender::getBuf()
   {
-    this->_tmp.clear();
+    std::string	str;
+
     this->mtx.lock();
-    this->_tmp = this->_buffer;
+    str = this->_buffer;
     this->_buffer.clear();
     this->mtx.unlock();
-    return (this->_tmp);
+    return (str);
   }
 }

