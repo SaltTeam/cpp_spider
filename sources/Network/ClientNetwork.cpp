@@ -19,7 +19,7 @@
 spider::ClientNetwork::ClientNetwork(std::string const& host,
 				     unsigned short port)
   : _ios(), _context(boost::asio::ssl::context::tlsv12_client),
-    _endpoint(boost::asio::ip::address::from_string(host.c_str()), port),
+    _endpoint(boost::asio::ip::address::from_string(host.c_str()), port)
 {
   _light_buf[NET_BUFFER_LEN] = 0;
   _context.load_verify_file("resources/cert/cert.pem");
