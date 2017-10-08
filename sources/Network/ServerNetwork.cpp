@@ -10,7 +10,7 @@
 
 #include <boost/bind.hpp>
 #include <iostream>
-#include "Protocol/Buffer.hpp"
+#include "Protocol/ServerBuffer.hpp"
 #include "Network/ServerNetwork.hpp"
 #include "logger/Logger.hpp"
 
@@ -80,11 +80,20 @@ spider::NetworkSession::NetworkSession(boost::asio::io_service& io_service,
   : _socket(io_service, context)
 {
   logger::Logger& logger = logger::Logger::getLogger();
+  spider::ServerBuffer& buf = spider::ServerBuffer::ServerBufferInstance();
 
   logger.log(logger::DEBUG, "Creating new session");
+  buf.registerSession(this);
 }
 
-spider::NetworkSession::~NetworkSession() = default;
+spider::NetworkSession::~NetworkSession()
+{
+  logger::Logger& logger = logger::Logger::getLogger();
+  spider::ServerBuffer& buf = spider::ServerBuffer::ServerBufferInstance();
+
+  logger.log(logger::DEBUG, "Deleting session");
+  buf.unregisterSession(this);
+}
 
 void spider::NetworkSession::send(std::string const& msg)
 {
@@ -133,13 +142,12 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
   if (!error)
   {
     logger.log(logger::DEBUG, "Reading data.");
-//    std::clog << "Reading..." << std::endl;
-//    std::clog.write(_light_buf, bytes_transferred);
-//    std::clog << std::endl;
-    Buffer &buf = Buffer::BufferInstance();
+    std::clog.write(_light_buf, bytes_transferred);
+    std::clog << std::endl;
     std::string str(_light_buf);
     str.resize(bytes_transferred);
-    buf.push(str);
+    ServerBuffer &buf = ServerBuffer::ServerBufferInstance();
+    buf.push(this, str);
     _socket.async_read_some(
       boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
       boost::bind(&NetworkSession::handleRead,

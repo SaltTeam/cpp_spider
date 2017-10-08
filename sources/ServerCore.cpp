@@ -8,7 +8,10 @@
 ** Last update Fri Sep 29 08:08:01 2017 Maxime PILLON
 */
 
-#include <logger/Logger.hpp>
+#include <boost/make_unique.hpp>
+#include "logger/Logger.hpp"
+#include "Thread/IThread.hpp"
+#include "Thread/BoostThread.hpp"
 #include "ServerCore.hpp"
 
 spider::ServerCore::ServerCore() : _db(spider::Sqlite()),
@@ -32,8 +35,13 @@ spider::ServerCore::~ServerCore()
 void spider::ServerCore::run()
 {
   logger::Logger &logger  = logger::Logger::getLogger();
+  std::unique_ptr<spider::IThread>	threadnet(boost::make_unique<BoostThread>());
 
-  logger.log(logger::INFO, "Main ServerCore function start");
+  if (threadnet)
+  {
+    logger.log(logger::DEBUG, "Start the net thread");
+    threadnet.get()->createNetServThread();
+  }
   while(1)
   {
    _proto.run();

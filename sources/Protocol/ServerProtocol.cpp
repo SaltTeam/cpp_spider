@@ -12,13 +12,13 @@
 #include "Protocol/ServerProtocol.hpp"
 #include <regex>
 
-spider::ServerProtocol::ServerProtocol() : net(PORT)
+spider::ServerProtocol::ServerProtocol()
 {
 }
 
 spider::ServerProtocol::~ServerProtocol() {}
 
-spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other) : net(PORT)
+spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other)
 {
   static_cast<void>(other);
 }
@@ -57,20 +57,26 @@ bool spider::ServerProtocol::hasCommand()
 
 void spider::ServerProtocol::getCommand() {}
 
-bool spider::ServerProtocol::connect() {}
-
 spider::ServerProtocol::unserialized_queue &spider::ServerProtocol::getInfo()
 {
   return data;
 }
 
+void spider::runServerNetwork()
+{
+  spider::ServerNetwork		net(PORT);
+
+  net.run();
+}
+
+void spider::runNetwork() {};
+
 void spider::ServerProtocol::run()
 {
   Buffer &buf = Buffer::BufferInstance();
   std::string &str = buf.getBuf();
-  std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
+  std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)\\}");
 
-  net.run();
   for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
        it != std::sregex_iterator(); ++it)
     this->data.push(Serializer::getSerializer().unserialize(Serializer::getSerializer().get_ptree_from_string(it->str())));

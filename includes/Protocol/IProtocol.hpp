@@ -23,8 +23,6 @@ namespace spider
 
     virtual ~IProtocol(){}
 
-    virtual bool		connect() = 0;
-
     virtual void		sendData() = 0;
 
     virtual void		sendPing() = 0;

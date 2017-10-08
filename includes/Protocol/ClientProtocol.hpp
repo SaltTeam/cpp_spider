@@ -18,21 +18,21 @@
 # undef PORT
 # define PORT 42000
 
+extern std::atomic_bool isConnected;
+
 namespace spider
 {
   class ClientProtocol : public IProtocol
   {
-  protected:
-    ClientNetwork	_net;
-
   public:
-    ClientProtocol(std::string const& host, unsigned short port);
+    ClientProtocol();
     ~ClientProtocol();
 
   public:
     void sendData() override;
-    bool connect() override;
     void sendPing() override;
     void run() override;
   };
+
+  void runNetwork();
 }
