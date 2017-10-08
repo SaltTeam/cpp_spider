@@ -16,7 +16,7 @@
 #include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
-std::atomic<bool> isConnected(false);
+std::atomic_bool isConnected(false);
 
 spider::ClientProtocol::ClientProtocol()
 {}
@@ -31,8 +31,18 @@ void runNetwork()
 {
   spider::ClientNetwork	_net("10.26.112.233", PORT);
 
-  _net.connect();
-  _net.run();
+  for (;;)
+  {
+    if (!isConnected.load())
+    {
+      _net.connect();
+      continue ;
+    }
+    if (isConnected.load())
+      _net.send();
+    if (isConnected.load())
+      _net.read();
+  }
 }
 
 void spider::ClientProtocol::run()
@@ -65,18 +75,7 @@ void spider::ClientProtocol::run()
     str = tmp;
     std::cout << "here to send to server" << std::endl;
     std::cout << str << std::endl;
-
-    // push str to buf and add this part of code in handler;
     buf.push(str);
-
-    // handlers have to change the value of the bool isConnected
-    std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)\\}");
-    for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
-	 it != std::sregex_iterator(); ++it)
-    {
-      _net.send(it->str());
-      std::cout << it->str() << std::endl;
-    }
     str.clear();
     tmp.clear();
   }

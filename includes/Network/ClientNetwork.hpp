@@ -17,6 +17,8 @@
 
 typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> boost_ssl_socket;
 
+extern std::atomic_bool isConnected;
+
 # undef NET_BUFFER_LEN
 # define NET_BUFFER_LEN 1024
 
@@ -36,25 +38,14 @@ namespace spider
   public:
     void connect();
 
-    void send(std::string const& msg);
+    void send();
 
-    bool isConnected() const;
-
-    void handleConnect(const boost::system::error_code& error);
-
-    void handleHandshake(const boost::system::error_code& error);
-
-    void handleRead(const boost::system::error_code& error,
-		    size_t bytes_transferred);
-    void run();
-
-    static void noop(boost::system::error_code const& e, std::size_t s) { static_cast<void>(e); static_cast<void>(s); }
+    void read();
 
   private:
     boost::asio::io_service _ios;
     boost::asio::ssl::context _context;
     boost::asio::ip::tcp::endpoint _endpoint;
-    bool _connected;
     std::unique_ptr<boost_ssl_socket> _socket;
     char _light_buf[NET_BUFFER_LEN + 1];
   };

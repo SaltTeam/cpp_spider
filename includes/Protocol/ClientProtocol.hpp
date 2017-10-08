@@ -18,7 +18,7 @@
 # undef PORT
 # define PORT 42000
 
-extern std::atomic<bool> isConnected;
+extern std::atomic_bool isConnected;
 
 namespace spider
 {
