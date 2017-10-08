@@ -1,4 +1,4 @@
-project(test_spider)
+project(cpp_spider_client)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -31,8 +31,8 @@ if (WIN32)
     LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
     INCLUDE_DIRECTORIES(C:/OpenSSL-Win32/include)
     find_package(OPENSSL)
-    add_executable(test_spider ${SOURCE_FILES})
-    target_link_libraries(test_spider ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+    add_executable(cpp_spider_client ${SOURCE_FILES})
+    target_link_libraries(cpp_spider_client ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 else(UNIX)
     cmake_minimum_required(VERSION 3.8)
     set(SOURCE_FILES
@@ -47,8 +47,8 @@ else(UNIX)
         includes/Protocol/ServerProtocol.hpp
         includes/dataStructure.hpp
         includes/ServerCore.hpp
-            includes/Thread/IThread.hpp
-            includes/Thread/BoostThread.hpp
+        includes/Thread/IThread.hpp
+        includes/Thread/BoostThread.hpp
         includes/SpiderException.hpp
         sources/Database/Sqlite.cpp
         sources/Thread/BoostThread.cpp
@@ -59,7 +59,7 @@ else(UNIX)
         sources/Protocol/ServerProtocol.cpp
         sources/ServerCore.cpp
         sources/ServerMain.cpp
-            sources/Thread/BoostThread.cpp)
+        sources/Thread/BoostThread.cpp)
     set(Boost_USE_STATIC_LIBS OFF)
     set(Boost_USE_MULTITHREADED ON)
     set(Boost_USE_STATIC_RUNTIME OFF)
