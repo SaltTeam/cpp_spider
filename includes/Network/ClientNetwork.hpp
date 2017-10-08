@@ -22,13 +22,19 @@ extern std::atomic_bool isConnected;
 # undef NET_BUFFER_LEN
 # define NET_BUFFER_LEN 1024
 
+/// \namespace spider
 namespace spider
 {
+  /// \class ClientNetwork
   class ClientNetwork
   {
   public:
+    /// \brief The constructor.
+    /// \param host The host to connect to.
+    /// \param port The port to connect to.
     ClientNetwork(std::string const& host, unsigned short port);
 
+    /// \brief The destructor.
     ~ClientNetwork();
 
     ClientNetwork(ClientNetwork const&) = delete;
@@ -36,10 +42,13 @@ namespace spider
     ClientNetwork& operator=(ClientNetwork const&) = delete;
 
   public:
+    /// \brief Sync connect to distant host.
     void connect();
 
+    /// \brief Send the data to distant host.
     void send();
 
+    /// \brief Read data from distant host.
     void read();
 
   private:

@@ -13,19 +13,28 @@
 # include "Database/Sqlite.hpp"
 # include "Protocol/ServerProtocol.hpp"
 
+/// \namespace spider
 namespace spider
 {
+  /// \class ServerCore
   class ServerCore
   {
   protected:
 
+      /// \brief database
     Sqlite			_db;
+
+      /// \ brief communication protocol class
     ServerProtocol		_proto;
 
   public:
-    ServerCore();
-    ~ServerCore();
+      /// \brief default constructor
+      ServerCore();
 
+      /// \brief default destructor
+      virtual  ~ServerCore();
+
+      /// \brief run server
     void run();
   };
 }

@@ -53,6 +53,7 @@ static t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
   ret.mouse = new t_mouse;
   ret.mouse->timestamp = pt.get<std::string>("timestamp");
   ret.mouse->process = pt.get<std::string>("process");
+  std::cout << "process is " << ret.mouse->process << std::endl;
   ret.mouse->keytype = spider::Serializer::getSerializer().get_keytype_from_string(pt.get<std::string>("data.click"));
   ret.mouse->x = pt.get<unsigned int>("data.x");
   ret.mouse->y = pt.get<unsigned int>("data.y");
@@ -183,7 +184,7 @@ namespace spider
     return (pt);
   }
 
-  std::string const Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
+  std::string Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
   {
     std::ostringstream buf2;
 
@@ -191,10 +192,10 @@ namespace spider
     return (buf2.str());
   }
 
-  std::string const Serializer::get_string_from_keytype(KEYTYPE const &key) const
+  std::string Serializer::get_string_from_keytype(KEYTYPE const &key) const
   { return (this->keytype_string.at(key)); }
 
-  KEYTYPE const Serializer::get_keytype_from_string(std::string const &str) const
+  KEYTYPE Serializer::get_keytype_from_string(std::string const &str) const
   {
     for (auto it : this->keytype_string)
       if (it.second.compare(str) == 0)
