@@ -1,4 +1,4 @@
-project(cpp_spider_client)
+project(cpp_spider_client2)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -31,8 +31,8 @@ if (WIN32)
     LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
     INCLUDE_DIRECTORIES(C:/OpenSSL-Win32/include)
     find_package(OPENSSL)
-    add_executable(cpp_spider_client ${SOURCE_FILES})
-    target_link_libraries(cpp_spider_client ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+    add_executable(cpp_spider_client2 ${SOURCE_FILES})
+    target_link_libraries(cpp_spider_client2 ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 else(UNIX)
     cmake_minimum_required(VERSION 3.8)
     set(SOURCE_FILES
