@@ -48,7 +48,7 @@ void spider::ServerProtocol::sendData(t_mouse mouse)
   //todo send this data;
 }
 
-void spider::ServerProtocol::sendPing() {}
+void spider::ServerProtocol::checkPing() {}
 
 bool spider::ServerProtocol::hasCommand()
 {

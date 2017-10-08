@@ -30,7 +30,7 @@ namespace spider
 
   public:
     void sendData() override;
-    void sendPing() override;
+    void checkPing() override;
     void run() override;
   };
 

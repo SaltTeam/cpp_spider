@@ -25,7 +25,7 @@ namespace spider
 
     virtual void		sendData() = 0;
 
-    virtual void		sendPing() = 0;
+    virtual void		checkPing() = 0;
 
     virtual void		run() = 0;
   };
