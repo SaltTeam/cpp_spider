@@ -1,41 +1,209 @@
-\section{spider\+:\+:Serializer Class Reference}
+\hypertarget{classspider_1_1_serializer}{}\section{spider\+:\+:Serializer Class Reference}
 \label{classspider_1_1_serializer}\index{spider\+::\+Serializer@{spider\+::\+Serializer}}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{classspider_1_1_serializer_ad8cbce40137efc7be3cb679a883800f8}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries serialize} (\textbf{ t\+\_\+message} const \&data) const
-\item 
-\mbox{\label{classspider_1_1_serializer_adca362ee0cd4c86234dd3f85fc62390b}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries serialize} (\textbf{ t\+\_\+register} const \&data) const
-\item 
-\mbox{\label{classspider_1_1_serializer_a758144d21b9e7334b9a45736095e175f}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries serialize} (\textbf{ t\+\_\+mouse} const \&data) const
-\item 
-\mbox{\label{classspider_1_1_serializer_a939015316b28fb2ed6021bf6f4ee81df}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries serialize} (\textbf{ t\+\_\+command} const \&data) const
-\item 
-\mbox{\label{classspider_1_1_serializer_af3bdf08f49c4c9f6111b392264256b7b}} 
-\textbf{ t\+\_\+unserialized} {\bfseries unserialize} (boost\+::property\+\_\+tree\+::ptree const \&pt)
-\item 
-\mbox{\label{classspider_1_1_serializer_a8c998904275aa15bb1b114fe8a82be50}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries get\+\_\+ptree\+\_\+from\+\_\+string} (std\+::string const \&json) const
-\item 
-\mbox{\label{classspider_1_1_serializer_ab7253d1d906ea8cfc5921a06e9a31263}} 
-std\+::string {\bfseries get\+\_\+string\+\_\+from\+\_\+ptree} (boost\+::property\+\_\+tree\+::ptree const \&pt) const
-\item 
-\mbox{\label{classspider_1_1_serializer_a63becae2837c0f731ee95da9abadcc58}} 
-std\+::string {\bfseries get\+\_\+string\+\_\+from\+\_\+keytype} (K\+E\+Y\+T\+Y\+PE const \&key) const
-\item 
-\mbox{\label{classspider_1_1_serializer_a7cf640d978492cc59889778c108759b0}} 
-K\+E\+Y\+T\+Y\+PE {\bfseries get\+\_\+keytype\+\_\+from\+\_\+string} (std\+::string const \&str) const
-\end{DoxyCompactItemize}
+boost\+::property\+\_\+tree\+::ptree \hyperlink{classspider_1_1_serializer_ad8cbce40137efc7be3cb679a883800f8}{serialize} (\hyperlink{structt__message}{t\+\_\+message} const \&data) const
+\begin{DoxyCompactList}\small\item\em Creates a ptree with the infos contained in the data structure (message). \end{DoxyCompactList}\item 
+boost\+::property\+\_\+tree\+::ptree \hyperlink{classspider_1_1_serializer_adca362ee0cd4c86234dd3f85fc62390b}{serialize} (\hyperlink{structt__register}{t\+\_\+register} const \&data) const
+\begin{DoxyCompactList}\small\item\em Creates a ptree with the infos contained in the data structure (register). \end{DoxyCompactList}\item 
+boost\+::property\+\_\+tree\+::ptree \hyperlink{classspider_1_1_serializer_a758144d21b9e7334b9a45736095e175f}{serialize} (\hyperlink{structt__mouse}{t\+\_\+mouse} const \&data) const
+\begin{DoxyCompactList}\small\item\em Creates a ptree with the infos contained in the data structure (mouse). \end{DoxyCompactList}\item 
+boost\+::property\+\_\+tree\+::ptree \hyperlink{classspider_1_1_serializer_a939015316b28fb2ed6021bf6f4ee81df}{serialize} (\hyperlink{structt__command}{t\+\_\+command} const \&data) const
+\begin{DoxyCompactList}\small\item\em Creates a ptree with the infos contained in the data structure (command). \end{DoxyCompactList}\item 
+\hyperlink{structt__unserialized}{t\+\_\+unserialized} \hyperlink{classspider_1_1_serializer_af3bdf08f49c4c9f6111b392264256b7b}{unserialize} (boost\+::property\+\_\+tree\+::ptree const \&pt)
+\begin{DoxyCompactList}\small\item\em Creates a \hyperlink{structt__unserialized}{t\+\_\+unserialized} structure that contains one structure with the infos that are contained in ptree (message, register, mouse or command). \end{DoxyCompactList}\item 
+boost\+::property\+\_\+tree\+::ptree \hyperlink{classspider_1_1_serializer_a8c998904275aa15bb1b114fe8a82be50}{get\+\_\+ptree\+\_\+from\+\_\+string} (std\+::string const \&json) const
+\begin{DoxyCompactList}\small\item\em This function creates a ptree from a json formatted string. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classspider_1_1_serializer_ab7253d1d906ea8cfc5921a06e9a31263}{get\+\_\+string\+\_\+from\+\_\+ptree} (boost\+::property\+\_\+tree\+::ptree const \&pt) const
+\begin{DoxyCompactList}\small\item\em This function creates a json formatted string from a ptree. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classspider_1_1_serializer_a63becae2837c0f731ee95da9abadcc58}{get\+\_\+string\+\_\+from\+\_\+keytype} (K\+E\+Y\+T\+Y\+PE const \&key) const
+\begin{DoxyCompactList}\small\item\em This function is used to get the name of the keytype in a string. \end{DoxyCompactList}\item 
+K\+E\+Y\+T\+Y\+PE \hyperlink{classspider_1_1_serializer_a7cf640d978492cc59889778c108759b0}{get\+\_\+keytype\+\_\+from\+\_\+string} (std\+::string const \&str) const
+\begin{DoxyCompactList}\small\item\em This function is used to get the keytype value from its name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{classspider_1_1_serializer_aaadf4a402a583583667757408d60d4d7}} 
-static \textbf{ Serializer} \& {\bfseries get\+Serializer} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classspider_1_1_serializer}{Serializer} \& \hyperlink{classspider_1_1_serializer_aaadf4a402a583583667757408d60d4d7}{get\+Serializer} ()
+\begin{DoxyCompactList}\small\item\em Function to get the \hyperlink{classspider_1_1_serializer}{Serializer} or create it if he hasnn\textquotesingle{}t been created yet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classspider_1_1_serializer_a7cf640d978492cc59889778c108759b0}\label{classspider_1_1_serializer_a7cf640d978492cc59889778c108759b0}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!get\+\_\+keytype\+\_\+from\+\_\+string@{get\+\_\+keytype\+\_\+from\+\_\+string}}
+\index{get\+\_\+keytype\+\_\+from\+\_\+string@{get\+\_\+keytype\+\_\+from\+\_\+string}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{get\+\_\+keytype\+\_\+from\+\_\+string()}{get\_keytype\_from\_string()}}
+{\footnotesize\ttfamily K\+E\+Y\+T\+Y\+PE spider\+::\+Serializer\+::get\+\_\+keytype\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{std\+::string const \&}]{str }\end{DoxyParamCaption}) const}
+
+
+
+This function is used to get the keytype value from its name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & string correponding to the name of the keytype. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the keytype value that correspond to the keytype name passed in parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_a8c998904275aa15bb1b114fe8a82be50}\label{classspider_1_1_serializer_a8c998904275aa15bb1b114fe8a82be50}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!get\+\_\+ptree\+\_\+from\+\_\+string@{get\+\_\+ptree\+\_\+from\+\_\+string}}
+\index{get\+\_\+ptree\+\_\+from\+\_\+string@{get\+\_\+ptree\+\_\+from\+\_\+string}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{get\+\_\+ptree\+\_\+from\+\_\+string()}{get\_ptree\_from\_string()}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree spider\+::\+Serializer\+::get\+\_\+ptree\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{std\+::string const \&}]{json }\end{DoxyParamCaption}) const}
+
+
+
+This function creates a ptree from a json formatted string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & json formatted string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a ptree which contain the infos contained in the json formatted string 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_a63becae2837c0f731ee95da9abadcc58}\label{classspider_1_1_serializer_a63becae2837c0f731ee95da9abadcc58}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!get\+\_\+string\+\_\+from\+\_\+keytype@{get\+\_\+string\+\_\+from\+\_\+keytype}}
+\index{get\+\_\+string\+\_\+from\+\_\+keytype@{get\+\_\+string\+\_\+from\+\_\+keytype}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{get\+\_\+string\+\_\+from\+\_\+keytype()}{get\_string\_from\_keytype()}}
+{\footnotesize\ttfamily std\+::string spider\+::\+Serializer\+::get\+\_\+string\+\_\+from\+\_\+keytype (\begin{DoxyParamCaption}\item[{K\+E\+Y\+T\+Y\+PE const \&}]{key }\end{DoxyParamCaption}) const}
+
+
+
+This function is used to get the name of the keytype in a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & keytype you want to retrieve the name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the string that correspond to name of the keytype. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_ab7253d1d906ea8cfc5921a06e9a31263}\label{classspider_1_1_serializer_ab7253d1d906ea8cfc5921a06e9a31263}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!get\+\_\+string\+\_\+from\+\_\+ptree@{get\+\_\+string\+\_\+from\+\_\+ptree}}
+\index{get\+\_\+string\+\_\+from\+\_\+ptree@{get\+\_\+string\+\_\+from\+\_\+ptree}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{get\+\_\+string\+\_\+from\+\_\+ptree()}{get\_string\_from\_ptree()}}
+{\footnotesize\ttfamily std\+::string spider\+::\+Serializer\+::get\+\_\+string\+\_\+from\+\_\+ptree (\begin{DoxyParamCaption}\item[{boost\+::property\+\_\+tree\+::ptree const \&}]{pt }\end{DoxyParamCaption}) const}
+
+
+
+This function creates a json formatted string from a ptree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & ptree that contains the info you need to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a string which contain the infos contained in the ptree in json format 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_aaadf4a402a583583667757408d60d4d7}\label{classspider_1_1_serializer_aaadf4a402a583583667757408d60d4d7}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!get\+Serializer@{get\+Serializer}}
+\index{get\+Serializer@{get\+Serializer}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{get\+Serializer()}{getSerializer()}}
+{\footnotesize\ttfamily static \hyperlink{classspider_1_1_serializer}{Serializer}\& spider\+::\+Serializer\+::get\+Serializer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Function to get the \hyperlink{classspider_1_1_serializer}{Serializer} or create it if he hasnn\textquotesingle{}t been created yet. 
+
+\begin{DoxyReturn}{Returns}
+Returns the \hyperlink{classspider_1_1_serializer}{Serializer} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_ad8cbce40137efc7be3cb679a883800f8}\label{classspider_1_1_serializer_ad8cbce40137efc7be3cb679a883800f8}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!serialize@{serialize}}
+\index{serialize@{serialize}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{serialize()}{serialize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree spider\+::\+Serializer\+::serialize (\begin{DoxyParamCaption}\item[{\hyperlink{structt__message}{t\+\_\+message} const \&}]{data }\end{DoxyParamCaption}) const}
+
+
+
+Creates a ptree with the infos contained in the data structure (message). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & \hyperlink{structt__message}{t\+\_\+message} structure containing all the infos that needs to be serialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a ptree containing the infos of the structure that was given as parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_adca362ee0cd4c86234dd3f85fc62390b}\label{classspider_1_1_serializer_adca362ee0cd4c86234dd3f85fc62390b}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!serialize@{serialize}}
+\index{serialize@{serialize}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{serialize()}{serialize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree spider\+::\+Serializer\+::serialize (\begin{DoxyParamCaption}\item[{\hyperlink{structt__register}{t\+\_\+register} const \&}]{data }\end{DoxyParamCaption}) const}
+
+
+
+Creates a ptree with the infos contained in the data structure (register). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & \hyperlink{structt__register}{t\+\_\+register} structure containing all the infos that needs to be serialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a ptree containing the infos of the structure that was given as parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_a758144d21b9e7334b9a45736095e175f}\label{classspider_1_1_serializer_a758144d21b9e7334b9a45736095e175f}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!serialize@{serialize}}
+\index{serialize@{serialize}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{serialize()}{serialize()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree spider\+::\+Serializer\+::serialize (\begin{DoxyParamCaption}\item[{\hyperlink{structt__mouse}{t\+\_\+mouse} const \&}]{data }\end{DoxyParamCaption}) const}
+
+
+
+Creates a ptree with the infos contained in the data structure (mouse). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & \hyperlink{structt__mouse}{t\+\_\+mouse} structure containing all the infos that needs to be serialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a ptree containing the infos of the structure that was given as parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_a939015316b28fb2ed6021bf6f4ee81df}\label{classspider_1_1_serializer_a939015316b28fb2ed6021bf6f4ee81df}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!serialize@{serialize}}
+\index{serialize@{serialize}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{serialize()}{serialize()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree spider\+::\+Serializer\+::serialize (\begin{DoxyParamCaption}\item[{\hyperlink{structt__command}{t\+\_\+command} const \&}]{data }\end{DoxyParamCaption}) const}
+
+
+
+Creates a ptree with the infos contained in the data structure (command). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & \hyperlink{structt__command}{t\+\_\+command} structure containing all the infos that needs to be serialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a ptree containing the infos of the structure that was given as parameter. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classspider_1_1_serializer_af3bdf08f49c4c9f6111b392264256b7b}\label{classspider_1_1_serializer_af3bdf08f49c4c9f6111b392264256b7b}} 
+\index{spider\+::\+Serializer@{spider\+::\+Serializer}!unserialize@{unserialize}}
+\index{unserialize@{unserialize}!spider\+::\+Serializer@{spider\+::\+Serializer}}
+\subsubsection{\texorpdfstring{unserialize()}{unserialize()}}
+{\footnotesize\ttfamily \hyperlink{structt__unserialized}{t\+\_\+unserialized} spider\+::\+Serializer\+::unserialize (\begin{DoxyParamCaption}\item[{boost\+::property\+\_\+tree\+::ptree const \&}]{pt }\end{DoxyParamCaption})}
+
+
+
+Creates a \hyperlink{structt__unserialized}{t\+\_\+unserialized} structure that contains one structure with the infos that are contained in ptree (message, register, mouse or command). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & ptree containing all the infos that needs to be unserialized. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a \hyperlink{structt__unserialized}{t\+\_\+unserialized} structure containing one structure with the infos that was contained in ptree (message, register, mouse or command). 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

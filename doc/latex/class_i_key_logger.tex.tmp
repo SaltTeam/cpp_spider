@@ -1,4 +1,4 @@
-\section{I\+Key\+Logger Class Reference}
+\hypertarget{class_i_key_logger}{}\section{I\+Key\+Logger Class Reference}
 \label{class_i_key_logger}\index{I\+Key\+Logger@{I\+Key\+Logger}}
 
 
@@ -7,27 +7,27 @@ Inheritance diagram for I\+Key\+Logger\+:
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{class_i_key_logger_aff61d09da801b8f86c642055072159f1}} 
-virtual void \textbf{ init\+Hooks} ()=0
+\mbox{\Hypertarget{class_i_key_logger_aff61d09da801b8f86c642055072159f1}\label{class_i_key_logger_aff61d09da801b8f86c642055072159f1}} 
+virtual void \hyperlink{class_i_key_logger_aff61d09da801b8f86c642055072159f1}{init\+Hooks} ()=0
 \begin{DoxyCompactList}\small\item\em brief init the hooks for the mouse and the keyboard \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_a43b772981b9c7aa706077a0e7e75204d}} 
-virtual void \textbf{ stealth} ()=0
+\mbox{\Hypertarget{class_i_key_logger_a43b772981b9c7aa706077a0e7e75204d}\label{class_i_key_logger_a43b772981b9c7aa706077a0e7e75204d}} 
+virtual void \hyperlink{class_i_key_logger_a43b772981b9c7aa706077a0e7e75204d}{stealth} ()=0
 \begin{DoxyCompactList}\small\item\em brief init the stealth mode to be sure that no windows is displayed when the keylogger is launched \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_ad1a8d92ab442fdce24e80571079de853}} 
-virtual void \textbf{ un\+Hooks} ()=0
+\mbox{\Hypertarget{class_i_key_logger_ad1a8d92ab442fdce24e80571079de853}\label{class_i_key_logger_ad1a8d92ab442fdce24e80571079de853}} 
+virtual void \hyperlink{class_i_key_logger_ad1a8d92ab442fdce24e80571079de853}{un\+Hooks} ()=0
 \begin{DoxyCompactList}\small\item\em brief release the hooks for the mouse and the keyboard \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_a9df4c12c13debc19d632be752280660e}} 
-virtual void \textbf{ get\+Mac\+Addr} ()=0
+\mbox{\Hypertarget{class_i_key_logger_a9df4c12c13debc19d632be752280660e}\label{class_i_key_logger_a9df4c12c13debc19d632be752280660e}} 
+virtual void \hyperlink{class_i_key_logger_a9df4c12c13debc19d632be752280660e}{get\+Mac\+Addr} ()=0
 \begin{DoxyCompactList}\small\item\em brief retrieve the address mac \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_a8eec7278fc8d5d0f981f381201162ec7}} 
-virtual void \textbf{ get\+Operating\+System} ()=0
+\mbox{\Hypertarget{class_i_key_logger_a8eec7278fc8d5d0f981f381201162ec7}\label{class_i_key_logger_a8eec7278fc8d5d0f981f381201162ec7}} 
+virtual void \hyperlink{class_i_key_logger_a8eec7278fc8d5d0f981f381201162ec7}{get\+Operating\+System} ()=0
 \begin{DoxyCompactList}\small\item\em brief retrieve the operating system \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_aa511566fd6c006d83ab44920a8a805a2}} 
-virtual void \textbf{ get\+Anti\+Virus} ()=0
+\mbox{\Hypertarget{class_i_key_logger_aa511566fd6c006d83ab44920a8a805a2}\label{class_i_key_logger_aa511566fd6c006d83ab44920a8a805a2}} 
+virtual void \hyperlink{class_i_key_logger_aa511566fd6c006d83ab44920a8a805a2}{get\+Anti\+Virus} ()=0
 \begin{DoxyCompactList}\small\item\em brief retrieve the anti virus of the computer \end{DoxyCompactList}\item 
-\mbox{\label{class_i_key_logger_a63bdc1446a90f9b7f9f8a0c2a01b5b23}} 
-virtual \textbf{ t\+\_\+register} const  $\ast$ \textbf{ get\+Infos} ()=0
-\begin{DoxyCompactList}\small\item\em brief getter of the \doxyref{t\+\_\+register}{p.}{structt__register} attribute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\Hypertarget{class_i_key_logger_a63bdc1446a90f9b7f9f8a0c2a01b5b23}\label{class_i_key_logger_a63bdc1446a90f9b7f9f8a0c2a01b5b23}} 
+virtual \hyperlink{structt__register}{t\+\_\+register} const  $\ast$ \hyperlink{class_i_key_logger_a63bdc1446a90f9b7f9f8a0c2a01b5b23}{get\+Infos} ()=0
+\begin{DoxyCompactList}\small\item\em brief getter of the \hyperlink{structt__register}{t\+\_\+register} attribute. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

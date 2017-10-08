@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['file',['file',['../structlogger_1_1s__typo.html#af125bb498bedcab1c10cc31fe5342972',1,'logger::s_typo']]],
-  ['format',['format',['../structlogger_1_1s__typo.html#a4523814ca3b3d3c7596bb5651c1376bc',1,'logger::s_typo']]]
+  ['command',['command',['../structt__unserialized.html#acdd08ba2aad8aba936bb5f7933dd6a0a',1,'t_unserialized']]],
+  ['correlingtable',['correlingTable',['../classspider_1_1_windows_key_logger.html#a89947f89f001038b6a0de42c6da383f5',1,'spider::WindowsKeyLogger']]]
 ];

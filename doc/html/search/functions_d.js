@@ -1,6 +1,7 @@
 var searchData=
 [
   ['send',['send',['../classspider_1_1_client_network.html#ab43d94d1843e5991dd715b0bf605ee62',1,'spider::ClientNetwork']]],
+  ['serialize',['serialize',['../classspider_1_1_serializer.html#ad8cbce40137efc7be3cb679a883800f8',1,'spider::Serializer::serialize(t_message const &amp;data) const'],['../classspider_1_1_serializer.html#adca362ee0cd4c86234dd3f85fc62390b',1,'spider::Serializer::serialize(t_register const &amp;data) const'],['../classspider_1_1_serializer.html#a758144d21b9e7334b9a45736095e175f',1,'spider::Serializer::serialize(t_mouse const &amp;data) const'],['../classspider_1_1_serializer.html#a939015316b28fb2ed6021bf6f4ee81df',1,'spider::Serializer::serialize(t_command const &amp;data) const']]],
   ['servercore',['ServerCore',['../classspider_1_1_server_core.html#a12254a1286172b54c2e20d613e5e4654',1,'spider::ServerCore']]],
   ['servernetwork',['ServerNetwork',['../classspider_1_1_server_network.html#af115121ee56f135db6ae6a2f9c24e6fc',1,'spider::ServerNetwork']]],
   ['serverprotocol',['ServerProtocol',['../classspider_1_1_server_protocol.html#af84520983479ef6e777da34cb58c2e24',1,'spider::ServerProtocol::ServerProtocol()'],['../classspider_1_1_server_protocol.html#a866603c79adf96b04f6d9229b52280ed',1,'spider::ServerProtocol::ServerProtocol(ServerProtocol const &amp;)']]],

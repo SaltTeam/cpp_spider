@@ -1,4 +1,4 @@
-\section{spider\+:\+:I\+Database Class Reference}
+\hypertarget{classspider_1_1_i_database}{}\section{spider\+:\+:I\+Database Class Reference}
 \label{classspider_1_1_i_database}\index{spider\+::\+I\+Database@{spider\+::\+I\+Database}}
 
 
@@ -7,38 +7,38 @@ Inheritance diagram for spider\+:\+:I\+Database\+:
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{classspider_1_1_i_database_af210e17b98b7d928ed5c71ba176b9f32}} 
-typedef std\+::queue$<$ \textbf{ t\+\_\+unserialized} $>$ {\bfseries unserialized\+\_\+queue}
+\mbox{\Hypertarget{classspider_1_1_i_database_af210e17b98b7d928ed5c71ba176b9f32}\label{classspider_1_1_i_database_af210e17b98b7d928ed5c71ba176b9f32}} 
+typedef std\+::queue$<$ \hyperlink{structt__unserialized}{t\+\_\+unserialized} $>$ {\bfseries unserialized\+\_\+queue}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual bool \textbf{ open} (const char $\ast$filename)=0
+virtual bool \hyperlink{classspider_1_1_i_database_a307a753933fa76e57a96dfbb65489cc7}{open} (const char $\ast$filename)=0
 \begin{DoxyCompactList}\small\item\em Initialise or create a database. \end{DoxyCompactList}\item 
-virtual void \textbf{ execute} (const char $\ast$Querry)=0
+virtual void \hyperlink{classspider_1_1_i_database_ab5179b84a43043a685bdc53447393779}{execute} (const char $\ast$Querry)=0
 \begin{DoxyCompactList}\small\item\em Execute an Querry to the database. \end{DoxyCompactList}\item 
-\mbox{\label{classspider_1_1_i_database_a619f1c1479891d1ff0599fd96281280a}} 
-virtual void \textbf{ drop\+Db} ()=0
+\mbox{\Hypertarget{classspider_1_1_i_database_a619f1c1479891d1ff0599fd96281280a}\label{classspider_1_1_i_database_a619f1c1479891d1ff0599fd96281280a}} 
+virtual void \hyperlink{classspider_1_1_i_database_a619f1c1479891d1ff0599fd96281280a}{drop\+Db} ()=0
 \begin{DoxyCompactList}\small\item\em drop all the database row \end{DoxyCompactList}\item 
-\mbox{\label{classspider_1_1_i_database_af93e0077e55af0e91b8ff54e982b6d3b}} 
-virtual void \textbf{ create\+Db} ()=0
+\mbox{\Hypertarget{classspider_1_1_i_database_af93e0077e55af0e91b8ff54e982b6d3b}\label{classspider_1_1_i_database_af93e0077e55af0e91b8ff54e982b6d3b}} 
+virtual void \hyperlink{classspider_1_1_i_database_af93e0077e55af0e91b8ff54e982b6d3b}{create\+Db} ()=0
 \begin{DoxyCompactList}\small\item\em create all the tables if it\textquotesingle{}s needed \end{DoxyCompactList}\item 
-virtual void \textbf{ treat} (unserialized\+\_\+queue \&to\+Treat)=0
+virtual void \hyperlink{classspider_1_1_i_database_ad5f4a8f7bd0936833d50c126f203a7c5}{treat} (unserialized\+\_\+queue \&to\+Treat)=0
 \begin{DoxyCompactList}\small\item\em treat an queue to insert it in the db \end{DoxyCompactList}\item 
-virtual void \textbf{ add\+Entry\+Log} (const char $\ast$time, const char $\ast$proccess, const char $\ast$message)=0
+virtual void \hyperlink{classspider_1_1_i_database_abd4a02abea860308486d908b9007a5db}{add\+Entry\+Log} (const char $\ast$time, const char $\ast$proccess, const char $\ast$message)=0
 \begin{DoxyCompactList}\small\item\em Add a row to the database. \end{DoxyCompactList}\item 
-virtual void \textbf{ remove\+Entry\+Log} (int id)=0
+virtual void \hyperlink{classspider_1_1_i_database_a88a6faa9ca865e687de6f62ddb131915}{remove\+Entry\+Log} (int id)=0
 \begin{DoxyCompactList}\small\item\em remove a special row of the db \end{DoxyCompactList}\item 
-\mbox{\label{classspider_1_1_i_database_acc9248269c8caf08a9c54017f5e364a9}} 
-virtual void \textbf{ close} ()=0
+\mbox{\Hypertarget{classspider_1_1_i_database_acc9248269c8caf08a9c54017f5e364a9}\label{classspider_1_1_i_database_acc9248269c8caf08a9c54017f5e364a9}} 
+virtual void \hyperlink{classspider_1_1_i_database_acc9248269c8caf08a9c54017f5e364a9}{close} ()=0
 \begin{DoxyCompactList}\small\item\em Close the actual database. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
-\mbox{\label{classspider_1_1_i_database_abd4a02abea860308486d908b9007a5db}} 
+\mbox{\Hypertarget{classspider_1_1_i_database_abd4a02abea860308486d908b9007a5db}\label{classspider_1_1_i_database_abd4a02abea860308486d908b9007a5db}} 
 \index{spider\+::\+I\+Database@{spider\+::\+I\+Database}!add\+Entry\+Log@{add\+Entry\+Log}}
 \index{add\+Entry\+Log@{add\+Entry\+Log}!spider\+::\+I\+Database@{spider\+::\+I\+Database}}
-\subsubsection{add\+Entry\+Log()}
+\subsubsection{\texorpdfstring{add\+Entry\+Log()}{addEntryLog()}}
 {\footnotesize\ttfamily virtual void spider\+::\+I\+Database\+::add\+Entry\+Log (\begin{DoxyParamCaption}\item[{const char $\ast$}]{time,  }\item[{const char $\ast$}]{proccess,  }\item[{const char $\ast$}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
@@ -56,12 +56,12 @@ Add a row to the database.
 \end{DoxyParams}
 
 
-Implemented in \textbf{ spider\+::\+Sqlite} \doxyref{}{p.}{classspider_1_1_sqlite_ae8ebd53fa6e30b8c8cfb463cc4e28cb8}.
+Implemented in \hyperlink{classspider_1_1_sqlite_ae8ebd53fa6e30b8c8cfb463cc4e28cb8}{spider\+::\+Sqlite}.
 
-\mbox{\label{classspider_1_1_i_database_ab5179b84a43043a685bdc53447393779}} 
+\mbox{\Hypertarget{classspider_1_1_i_database_ab5179b84a43043a685bdc53447393779}\label{classspider_1_1_i_database_ab5179b84a43043a685bdc53447393779}} 
 \index{spider\+::\+I\+Database@{spider\+::\+I\+Database}!execute@{execute}}
 \index{execute@{execute}!spider\+::\+I\+Database@{spider\+::\+I\+Database}}
-\subsubsection{execute()}
+\subsubsection{\texorpdfstring{execute()}{execute()}}
 {\footnotesize\ttfamily virtual void spider\+::\+I\+Database\+::execute (\begin{DoxyParamCaption}\item[{const char $\ast$}]{Querry }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
@@ -75,12 +75,12 @@ Execute an Querry to the database.
 \end{DoxyParams}
 
 
-Implemented in \textbf{ spider\+::\+Sqlite} \doxyref{}{p.}{classspider_1_1_sqlite_a169f434d0a8ece6711695815cd622253}.
+Implemented in \hyperlink{classspider_1_1_sqlite_a169f434d0a8ece6711695815cd622253}{spider\+::\+Sqlite}.
 
-\mbox{\label{classspider_1_1_i_database_a307a753933fa76e57a96dfbb65489cc7}} 
+\mbox{\Hypertarget{classspider_1_1_i_database_a307a753933fa76e57a96dfbb65489cc7}\label{classspider_1_1_i_database_a307a753933fa76e57a96dfbb65489cc7}} 
 \index{spider\+::\+I\+Database@{spider\+::\+I\+Database}!open@{open}}
 \index{open@{open}!spider\+::\+I\+Database@{spider\+::\+I\+Database}}
-\subsubsection{open()}
+\subsubsection{\texorpdfstring{open()}{open()}}
 {\footnotesize\ttfamily virtual bool spider\+::\+I\+Database\+::open (\begin{DoxyParamCaption}\item[{const char $\ast$}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
@@ -97,12 +97,12 @@ True if the db is created or opened
 \end{DoxyReturn}
 
 
-Implemented in \textbf{ spider\+::\+Sqlite} \doxyref{}{p.}{classspider_1_1_sqlite_a753bd493b18a804e2533c10f821a714f}.
+Implemented in \hyperlink{classspider_1_1_sqlite_a753bd493b18a804e2533c10f821a714f}{spider\+::\+Sqlite}.
 
-\mbox{\label{classspider_1_1_i_database_a88a6faa9ca865e687de6f62ddb131915}} 
+\mbox{\Hypertarget{classspider_1_1_i_database_a88a6faa9ca865e687de6f62ddb131915}\label{classspider_1_1_i_database_a88a6faa9ca865e687de6f62ddb131915}} 
 \index{spider\+::\+I\+Database@{spider\+::\+I\+Database}!remove\+Entry\+Log@{remove\+Entry\+Log}}
 \index{remove\+Entry\+Log@{remove\+Entry\+Log}!spider\+::\+I\+Database@{spider\+::\+I\+Database}}
-\subsubsection{remove\+Entry\+Log()}
+\subsubsection{\texorpdfstring{remove\+Entry\+Log()}{removeEntryLog()}}
 {\footnotesize\ttfamily virtual void spider\+::\+I\+Database\+::remove\+Entry\+Log (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
@@ -116,12 +116,12 @@ remove a special row of the db
 \end{DoxyParams}
 
 
-Implemented in \textbf{ spider\+::\+Sqlite} \doxyref{}{p.}{classspider_1_1_sqlite_a62ae99de93b05a3c3282ac42fbc13468}.
+Implemented in \hyperlink{classspider_1_1_sqlite_a62ae99de93b05a3c3282ac42fbc13468}{spider\+::\+Sqlite}.
 
-\mbox{\label{classspider_1_1_i_database_ad5f4a8f7bd0936833d50c126f203a7c5}} 
+\mbox{\Hypertarget{classspider_1_1_i_database_ad5f4a8f7bd0936833d50c126f203a7c5}\label{classspider_1_1_i_database_ad5f4a8f7bd0936833d50c126f203a7c5}} 
 \index{spider\+::\+I\+Database@{spider\+::\+I\+Database}!treat@{treat}}
 \index{treat@{treat}!spider\+::\+I\+Database@{spider\+::\+I\+Database}}
-\subsubsection{treat()}
+\subsubsection{\texorpdfstring{treat()}{treat()}}
 {\footnotesize\ttfamily virtual void spider\+::\+I\+Database\+::treat (\begin{DoxyParamCaption}\item[{unserialized\+\_\+queue \&}]{to\+Treat }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
@@ -135,7 +135,7 @@ treat an queue to insert it in the db
 \end{DoxyParams}
 
 
-Implemented in \textbf{ spider\+::\+Sqlite} \doxyref{}{p.}{classspider_1_1_sqlite_a3f2bc8e3e6eae99b7e2d4e9d9f6e0e94}.
+Implemented in \hyperlink{classspider_1_1_sqlite_a3f2bc8e3e6eae99b7e2d4e9d9f6e0e94}{spider\+::\+Sqlite}.
 
 
 

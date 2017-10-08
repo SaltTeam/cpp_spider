@@ -5,6 +5,7 @@ var searchData=
   ['clientnetwork',['ClientNetwork',['../classspider_1_1_client_network.html',1,'spider::ClientNetwork'],['../classspider_1_1_client_network.html#a03f8f213aa0855475d2884cdfd12cd34',1,'spider::ClientNetwork::ClientNetwork()']]],
   ['clientprotocol',['ClientProtocol',['../classspider_1_1_client_protocol.html',1,'spider::ClientProtocol'],['../classspider_1_1_client_protocol.html#a99b5dc9ff233b3ef65ab3b6507ebc0b1',1,'spider::ClientProtocol::ClientProtocol()']]],
   ['close',['close',['../classspider_1_1_i_database.html#acc9248269c8caf08a9c54017f5e364a9',1,'spider::IDatabase::close()'],['../classspider_1_1_sqlite.html#ac47e8e734196589594e95543cc7cd697',1,'spider::Sqlite::close()']]],
+  ['command',['command',['../structt__unserialized.html#acdd08ba2aad8aba936bb5f7933dd6a0a',1,'t_unserialized']]],
   ['connect',['connect',['../classspider_1_1_client_network.html#ab308d2c05e4e306344534b0f2d0d5016',1,'spider::ClientNetwork']]],
   ['correlingtable',['correlingTable',['../classspider_1_1_windows_key_logger.html#a89947f89f001038b6a0de42c6da383f5',1,'spider::WindowsKeyLogger']]],
   ['createdb',['createDb',['../classspider_1_1_i_database.html#af93e0077e55af0e91b8ff54e982b6d3b',1,'spider::IDatabase::createDb()'],['../classspider_1_1_sqlite.html#a8f553c8250b53adb7839e1dd3e91398c',1,'spider::Sqlite::createDb()']]],
