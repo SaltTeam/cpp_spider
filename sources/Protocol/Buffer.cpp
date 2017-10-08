@@ -43,7 +43,6 @@ namespace spider {
     _tmp = std::string(_buffer);
     _buffer.clear();
     mtx.unlock();
-    std::cout << _tmp << std::endl;
     return (_tmp);
   }
 }

@@ -18,7 +18,7 @@ spider::ServerProtocol::ServerProtocol()
 
 spider::ServerProtocol::~ServerProtocol() {}
 
-spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other) : net(PORT)
+spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other)
 {
   static_cast<void>(other);
 }
@@ -62,12 +62,14 @@ spider::ServerProtocol::unserialized_queue &spider::ServerProtocol::getInfo()
   return data;
 }
 
-void runNetwork()
+void spider::runServerNetwork()
 {
   spider::ServerNetwork		net(PORT);
 
   net.run();
 }
+
+void spider::runNetwork() {};
 
 void spider::ServerProtocol::run()
 {
