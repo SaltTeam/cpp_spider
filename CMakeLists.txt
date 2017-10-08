@@ -2,7 +2,7 @@ project(test_spider)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} -W -Wall -Wextra -Werror")
+set(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} -W -Wall -Wextra -Werror -ggdb3")
 
 if (WIN32)
     cmake_minimum_required(VERSION 3.9.3)
