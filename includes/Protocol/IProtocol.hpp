@@ -13,20 +13,21 @@
 # include <queue>
 # include "dataStructure.hpp"
 
+/// \namespace spider
 namespace spider
 {
 
-
+  /// \class IProtocol
   class IProtocol {
   public:
     typedef std::queue<t_unserialized> unserialized_queue;
 
     virtual ~IProtocol(){}
 
-    virtual void		sendData() = 0;
-
+    /// \brief check if a ping command has been sent and respond to it
     virtual void		checkPing() = 0;
 
+    /// \brief run the main function of the protocol
     virtual void		run() = 0;
   };
 }

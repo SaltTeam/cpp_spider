@@ -20,21 +20,31 @@
 
 extern std::atomic_bool isConnected;
 
+/// \namespace spider
 namespace spider
 {
+  /// \class ClientProtocol
   class ClientProtocol : public IProtocol
   {
   public:
+    /// \brief construct client protocol object
     ClientProtocol();
-    ~ClientProtocol();
+
+    /// \brief destruct of client protocol object
+    ~ClientProtocol() override;
 
   public:
-    void sendData() override;
+
+    /// \brief check if a ping command has been sent and respond to it
     void checkPing() override;
+
+    /// \brief run the main function of the protocol
     void run() override;
   };
 
+  /// \brief function that is passed in parameter of a thread
   void runNetwork();
 
+  /// \brief function that is passed in parameter of a thread = 0 cause server side function
   void runServerNetwork();
 }

@@ -43,6 +43,9 @@ namespace spider
     /// \brief create all the tables if it's needed
     virtual void createDb() = 0;
 
+    /// \brief treat an queue to insert it in the db
+    ///
+    /// \param toTreat the queue
     virtual void treat(unserialized_queue &toTreat) = 0;
 
     /// \brief Add a row to the database

@@ -18,13 +18,16 @@
 # undef PORT
 # define PORT 42000
 
-
+/// \namespace spider
 namespace spider
 {
+  /// \brief function that is passed in parameter of a thread
   void runServerNetwork();
 
+  /// \brief function that is passed in parameter of a thread = 0 cause client side function
   void runNetwork();
 
+  /// \class ServerProtocol
   class ServerProtocol : public IProtocol
   {
   protected:
@@ -34,20 +37,24 @@ namespace spider
     unserialized_queue		data;
 
   public:
+    /// \brief construct server protocol object
     ServerProtocol();
+
+    /// \brief destruct of server protocol object
     ~ServerProtocol();
+
+    /// \brief copy operator of server protocol
     ServerProtocol(ServerProtocol const &);
 
-    void		sendData(t_message message);
-    void		sendData(t_command cmd);
-    void		sendData(t_register _register);
-    void		sendData(t_mouse mouse);
-    void                sendData(){}
-
+    /// \brief run the main function of the protocol
     void		run() override;
+
+    /// \brief get the data which's waiting to be stock in DB
+    ///
+    /// \return the queue to be save in DB
     unserialized_queue& getInfo();
+
+    /// \brief check if a ping command has been sent and respond to it
     void		checkPing() override;
-    bool		hasCommand();
-    void		getCommand();
   };
 }

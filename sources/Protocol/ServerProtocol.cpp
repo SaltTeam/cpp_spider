@@ -23,39 +23,8 @@ spider::ServerProtocol::ServerProtocol(spider::ServerProtocol const &other)
   static_cast<void>(other);
 }
 
-void spider::ServerProtocol::sendData(t_message message)
-{
-  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(message));
-  //todo send this data;
-}
-
-void spider::ServerProtocol::sendData(t_command cmd)
-{
-  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(cmd));
-  //todo send this data;
-}
-
-void spider::ServerProtocol::sendData(t_register _register)
-{
-  Serializer::getSerializer().get_string_from_ptree(
-    Serializer::getSerializer().serialize(_register));
-  //todo send this data;
-}
-
-void spider::ServerProtocol::sendData(t_mouse mouse)
-{
-  Serializer::getSerializer().get_string_from_ptree(Serializer::getSerializer().serialize(mouse));
-  //todo send this data;
-}
-
 void spider::ServerProtocol::checkPing() {}
 
-bool spider::ServerProtocol::hasCommand()
-{
-  return (false);
-}
-
-void spider::ServerProtocol::getCommand() {}
 
 spider::ServerProtocol::unserialized_queue &spider::ServerProtocol::getInfo()
 {
