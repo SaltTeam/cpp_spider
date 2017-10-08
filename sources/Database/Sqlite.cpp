@@ -14,15 +14,15 @@
 #include	"logger/Logger.hpp"
 #include	"Database/Sqlite.hpp"
 
+static bool	isInDb = false;
+
 static int	callback(void *data, int argc, char **argv, char **azColName)
 {
-  int		i;
-
-  std::cerr << (const char *)data << std::endl;
-
-  for(i = 0; i < argc; i++)
-    printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-  printf("\n");
+  static_cast<void>(data);
+  static_cast<void>(argc);
+  static_cast<void>(argv);
+  static_cast<void>(azColName);
+  isInDb = true;
   return (0);
 }
 
@@ -89,6 +89,16 @@ void spider::Sqlite::addEntryRegister(const char *mac, const char *os,
   std::string		querry;
   logger::Logger	&logger  = logger::Logger::getLogger();
 
+  strstream << "SELECT * FROM register WHERE mac IS '" << mac << "';";
+  querry = strstream.str();
+  execute(querry.c_str());
+  if (isInDb)
+  {
+    isInDb = false;
+    return ;
+  }
+  strstream.clear();
+  querry.clear();
   logger.log(logger::DEBUG, "Pushing one entry register");
   strstream << "INSERT INTO register (mac, os, antivirus) VALUES ('" << mac << "', '" << os << "', '" << antivirus << "');";
   querry = strstream.str();
