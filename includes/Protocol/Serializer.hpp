@@ -22,6 +22,7 @@ namespace spider
   private:
     std::map<std::string, std::function<t_unserialized (boost::property_tree::ptree const &)>> unserialize_func;
     static Serializer m_instance;
+    std::map<KEYTYPE, std::string> keytype_string;
 
   public:
     static Serializer &getSerializer();
@@ -31,7 +32,9 @@ namespace spider
     boost::property_tree::ptree serialize(t_command const &data) const;
     t_unserialized unserialize(boost::property_tree::ptree const &pt);
     boost::property_tree::ptree get_ptree_from_string(std::string const &json) const;
-    std::string const get_string_from_ptree(boost::property_tree::ptree const &pt) const;
+    std::string const &get_string_from_ptree(boost::property_tree::ptree const &pt) const;
+    std::string const &get_string_from_keytype(KEYTYPE const &key) const;
+    KEYTYPE const &get_keytype_from_string(std::string const &str) const;
 
   private:
     Serializer();

@@ -14,8 +14,6 @@
 #include "logger/Logger.hpp"
 #include "Protocol/Serializer.hpp"
 
-static std::map<KEYTYPE, std::string> keytype_string;
-
 static t_unserialized unserialize_message(boost::property_tree::ptree const &pt)
 {
   t_unserialized ret;
@@ -55,10 +53,7 @@ static t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
   ret.mouse = new t_mouse;
   ret.mouse->timestamp = pt.get<std::string>("timestamp");
   ret.mouse->process = pt.get<std::string>("process");
-  ret.mouse->keytype = KEYTYPE::KNONE;
-  for (auto it : keytype_string)
-    if (it.second == pt.get<std::string>("data.click"))
-      ret.mouse->keytype = it.first;
+  ret.mouse->keytype = spider::Serializer::getSerializer().get_keytype_from_string(pt.get<std::string>("data.click"));
   ret.mouse->x = pt.get<unsigned int>("data.x");
   ret.mouse->y = pt.get<unsigned int>("data.y");
   ret.mouse->type = pt.get<std::string>("type");
@@ -141,7 +136,7 @@ namespace spider
 
     pt.put("timestamp", data.timestamp);
     pt.put("process", data.process);
-    pt.put("data.click", keytype_string.at(data.keytype));
+    pt.put("data.click", this->get_string_from_keytype(data.keytype));
     pt.put("data.x", data.x);
     pt.put("data.y", data.y);
     pt.put("type", data.type);
@@ -188,12 +183,23 @@ namespace spider
     return (pt);
   }
 
-  std::string const Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
+  std::string const &Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
   {
     std::ostringstream buf2;
 
     boost::property_tree::write_json (buf2, pt, true);
     return (buf2.str());
+  }
+
+  std::string const &Serializer::get_string_from_keytype(KEYTYPE const &key) const
+  { return (this->keytype_string.at(key)); }
+
+  KEYTYPE const& Serializer::get_keytype_from_string(std::string const &str) const
+  {
+    for (auto it : this->keytype_string)
+      if (it.second == str)
+	return (it.first);
+    return (KEYTYPE::KNONE);
   }
 }
 
