@@ -24,6 +24,8 @@ namespace spider {
 
         void createThread(std::unique_ptr<IProtocol> &proto) override;
 
+      void createNetThread() override;
+
     private:
         boost::thread thread;
     };

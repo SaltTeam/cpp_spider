@@ -13,6 +13,8 @@
 
 #include <string>
 #include <map>
+#include <boost/atomic.hpp>
+#include <boost/thread/mutex.hpp>
 
 /// \namespace spider
 namespace spider {
@@ -44,8 +46,9 @@ namespace spider {
 
   private:
     static Buffer _Instance;
-
     std::string _buffer;
+    boost::mutex		mtx;
+    std::string _tmp;
   };
 }
 

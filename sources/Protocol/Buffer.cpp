@@ -12,6 +12,7 @@
 #include "logger/Logger.hpp"
 #include "Protocol/Buffer.hpp"
 
+//now buffer use mutex
 namespace spider {
 
   Buffer Buffer::_Instance = Buffer();
@@ -28,12 +29,21 @@ namespace spider {
     logger::Logger	&logger  = logger::Logger::getLogger();
 
     logger.log(logger::DEBUG, "Pushing data on buffer");
-    this->_buffer += msg;
-  }
+    mtx.lock();
+    _buffer += msg;
+    mtx.unlock();  }
 
   Buffer &Buffer::BufferInstance() {
     return Buffer::_Instance;
   }
 
-  std::string& Buffer::getBuf() { return (_buffer); }
+  std::string& Buffer::getBuf() {
+    _tmp.clear();
+    mtx.lock();
+    _tmp = std::string(_buffer);
+    _buffer.clear();
+    mtx.unlock();
+    std::cout << _tmp << std::endl;
+    return (_tmp);
+  }
 }

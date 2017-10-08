@@ -3,7 +3,8 @@
 //
 
 #include <iostream>
-#include <Protocol/IProtocol.hpp>
+#include "Protocol/IProtocol.hpp"
+#include "Protocol/ClientProtocol.hpp"
 #include "Thread/BoostThread.hpp"
 
 namespace spider
@@ -24,4 +25,9 @@ void BoostThread::createThread(std::unique_ptr<IProtocol> &proto) {
   thread = boost::thread(boost::bind(&IProtocol::run, proto.get()));
 }
 
+  void BoostThread::createNetThread()
+  {
+    std::cout << "creating net thread" << std::endl;
+    thread = boost::thread(boost::bind(&spider::runNetwork));
+  }
 };

