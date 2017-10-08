@@ -91,11 +91,6 @@ spider::NetworkSession::~NetworkSession()
   logger.log(logger::DEBUG, "Deleting session");
 }
 
-void spider::NetworkSession::send(std::string const& msg)
-{
-  static_cast<void>(msg);
-}
-
 void spider::NetworkSession::start()
 {
   logger::Logger& logger = logger::Logger::getLogger();

@@ -20,13 +20,19 @@ typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> boost_ssl_socket;
 # undef NET_BUFFER_LEN
 # define NET_BUFFER_LEN 1024
 
+/// \namespace spider
 namespace spider
 {
+  /// \class NetworkSession
   class NetworkSession
   {
   public:
+    /// \brief Constructor.
+    /// \param io_service The associated io_service.
+    /// \param context The associated SSL context.
     NetworkSession(boost::asio::io_service& io_service, boost::asio::ssl::context& context);
 
+    /// \brief The destructor.
     ~NetworkSession();
 
     NetworkSession(NetworkSession const&) = delete;
@@ -34,15 +40,21 @@ namespace spider
     NetworkSession& operator=(NetworkSession const&) = delete;
 
   public:
-    void send(std::string const& msg);
 
+    /// \brief Starting the session.
     void start();
 
+    /// \brief Handler for async ssl handshake.
+    /// \param error The boost error code.
     void handleHandshake(boost::system::error_code const& error);
 
+    /// \brief Handler for async read.
+    /// \param error The boost error code.
     void handleRead(boost::system::error_code const& error,
 		    std::size_t bytes_transferred);
 
+    /// \brief Get the ip::tcp::socket.
+    /// \return Ref to the ip::tcp::socket.
     boost_ssl_socket::lowest_layer_type& socket();
 
   private:
@@ -50,11 +62,15 @@ namespace spider
     char _light_buf[NET_BUFFER_LEN];
   };
 
+  /// \class ServerNetwork
   class ServerNetwork
   {
   public:
+    /// \brief The constructor.
+    /// \param port The port to bind to.
     ServerNetwork(unsigned short port);
 
+    /// \brief The destructor.
     ~ServerNetwork();
 
     ServerNetwork(ServerNetwork const&) = delete;
@@ -62,12 +78,18 @@ namespace spider
     ServerNetwork& operator=(ServerNetwork const&) = delete;
 
   public:
+    /// \brief Start accepting connections.
     void accept();
 
+    /// \brief Handler for async accept.
+    /// \param error The boost error code.
     void handleAccept(boost::system::error_code const& error);
 
+    /// \brief Get the password for the pem key.
+    /// \return The string containing the password.
     std::string get_password() const;
-    
+
+    /// \brief Run he pending handlers.
     void run();
 
   private:
