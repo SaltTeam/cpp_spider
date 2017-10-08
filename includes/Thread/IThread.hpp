@@ -16,6 +16,8 @@ namespace spider {
 
       virtual void createNetThread() = 0;
 
+      virtual void createNetServThread() = 0;
+
         virtual void threadJoin() = 0;
     };
 };

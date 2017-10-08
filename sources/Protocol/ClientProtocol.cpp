@@ -42,7 +42,7 @@ void spider::runNetwork()
     if (isConnected.load())
       _net.send();
     if (isConnected.load())
-      _net.read();
+      _net.();
   }
 }
 

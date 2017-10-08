@@ -40,7 +40,7 @@ void spider::ServerCore::run()
   if (threadnet)
   {
     logger.log(logger::DEBUG, "Start the net thread");
-    threadnet.get()->createNetThread();
+    threadnet.get()->createNetServThread();
   }
   while(1)
   {

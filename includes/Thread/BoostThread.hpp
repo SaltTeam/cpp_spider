@@ -26,6 +26,8 @@ namespace spider {
 
       void createNetThread() override;
 
+      void createNetServThread() override;
+
     private:
         boost::thread thread;
     };

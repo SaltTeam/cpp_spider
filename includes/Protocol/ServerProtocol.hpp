@@ -18,8 +18,13 @@
 # undef PORT
 # define PORT 42000
 
+
 namespace spider
 {
+  void runServerNetwork();
+
+  void runNetwork();
+
   class ServerProtocol : public IProtocol
   {
   protected:

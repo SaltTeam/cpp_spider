@@ -72,9 +72,7 @@ std::string spider::ServerNetwork::get_password() const
 
 void spider::ServerNetwork::run()
 {
-  std::cout << "BITE"<< std::endl;
   _ios.run();
-  std::cout << "BOOBIES"<< std::endl;
 }
 
 spider::NetworkSession::NetworkSession(boost::asio::io_service& io_service,

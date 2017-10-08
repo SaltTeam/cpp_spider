@@ -49,6 +49,7 @@ else(UNIX)
         includes/ServerCore.hpp
         includes/SpiderException.hpp
         sources/Database/Sqlite.cpp
+        sources/Thread/BoostThread.cpp
         sources/logger/Logger.cpp
         sources/Network/ServerNetwork.cpp
         sources/Protocol/Buffer.cpp
