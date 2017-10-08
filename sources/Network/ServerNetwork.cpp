@@ -133,8 +133,8 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
   if (!error)
   {
     logger.log(logger::DEBUG, "Reading data.");
-    std::clog.write(_light_buf, bytes_transferred);
-    std::clog << std::endl;
+//    std::clog.write(_light_buf, bytes_transferred);
+//    std::clog << std::endl;
     std::string str(_light_buf);
     str.resize(bytes_transferred);
     Buffer &buf = Buffer::BufferInstance();
