@@ -35,4 +35,6 @@ namespace spider
   };
 
   void runNetwork();
+
+  void runServerNetwork();
 }

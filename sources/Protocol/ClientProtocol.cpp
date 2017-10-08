@@ -27,6 +27,9 @@ void spider::ClientProtocol::sendPing() {}
 
 void	spider::ClientProtocol::sendData() {}
 
+void spider::runServerNetwork() {}
+
+
 void spider::runNetwork()
 {
   spider::ClientNetwork	_net("10.26.112.233", PORT);
@@ -42,7 +45,7 @@ void spider::runNetwork()
     if (isConnected.load())
       _net.send();
     if (isConnected.load())
-      _net.();
+      _net.read();
   }
 }
 

