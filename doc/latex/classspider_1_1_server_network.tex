@@ -1,0 +1,80 @@
+\section{spider\+:\+:Server\+Network Class Reference}
+\label{classspider_1_1_server_network}\index{spider\+::\+Server\+Network@{spider\+::\+Server\+Network}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Server\+Network} (unsigned short port)
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_network_adccf2ce56686855a9566af94e2f39976}} 
+\textbf{ $\sim$\+Server\+Network} ()
+\begin{DoxyCompactList}\small\item\em The destructor. \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_network_af4559a50f6d6886a51444674a3888e86}} 
+{\bfseries Server\+Network} (\textbf{ Server\+Network} const \&)=delete
+\item 
+\mbox{\label{classspider_1_1_server_network_ab7276feccc0acf76b7bc0df9387a118f}} 
+\textbf{ Server\+Network} \& {\bfseries operator=} (\textbf{ Server\+Network} const \&)=delete
+\item 
+\mbox{\label{classspider_1_1_server_network_aa1b10134b8d512368c6b607c8e3e7481}} 
+void \textbf{ accept} ()
+\begin{DoxyCompactList}\small\item\em Start accepting connections. \end{DoxyCompactList}\item 
+void \textbf{ handle\+Accept} (boost\+::system\+::error\+\_\+code const \&error)
+\begin{DoxyCompactList}\small\item\em Handler for async accept. \end{DoxyCompactList}\item 
+std\+::string \textbf{ get\+\_\+password} () const
+\begin{DoxyCompactList}\small\item\em Get the password for the pem key. \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_network_acccd166e6a5ce90636a491a60cc97abf}} 
+void \textbf{ run} ()
+\begin{DoxyCompactList}\small\item\em Run he pending handlers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{classspider_1_1_server_network_af115121ee56f135db6ae6a2f9c24e6fc}} 
+\index{spider\+::\+Server\+Network@{spider\+::\+Server\+Network}!Server\+Network@{Server\+Network}}
+\index{Server\+Network@{Server\+Network}!spider\+::\+Server\+Network@{spider\+::\+Server\+Network}}
+\subsubsection{Server\+Network()}
+{\footnotesize\ttfamily spider\+::\+Server\+Network\+::\+Server\+Network (\begin{DoxyParamCaption}\item[{unsigned short}]{port }\end{DoxyParamCaption})}
+
+
+
+The constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port to bind to. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{classspider_1_1_server_network_af177fc329a2be83ada20a9988025a7cd}} 
+\index{spider\+::\+Server\+Network@{spider\+::\+Server\+Network}!get\+\_\+password@{get\+\_\+password}}
+\index{get\+\_\+password@{get\+\_\+password}!spider\+::\+Server\+Network@{spider\+::\+Server\+Network}}
+\subsubsection{get\+\_\+password()}
+{\footnotesize\ttfamily std\+::string spider\+::\+Server\+Network\+::get\+\_\+password (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the password for the pem key. 
+
+\begin{DoxyReturn}{Returns}
+The string containing the password. 
+\end{DoxyReturn}
+\mbox{\label{classspider_1_1_server_network_a94a88f381fb5ab7c6f779615d14ebbb9}} 
+\index{spider\+::\+Server\+Network@{spider\+::\+Server\+Network}!handle\+Accept@{handle\+Accept}}
+\index{handle\+Accept@{handle\+Accept}!spider\+::\+Server\+Network@{spider\+::\+Server\+Network}}
+\subsubsection{handle\+Accept()}
+{\footnotesize\ttfamily void spider\+::\+Server\+Network\+::handle\+Accept (\begin{DoxyParamCaption}\item[{boost\+::system\+::error\+\_\+code const \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Handler for async accept. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & The boost error code. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+includes/\+Network/Server\+Network.\+hpp\end{DoxyCompactItemize}

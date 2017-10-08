@@ -1,0 +1,96 @@
+\section{spider\+:\+:Network\+Session Class Reference}
+\label{classspider_1_1_network_session}\index{spider\+::\+Network\+Session@{spider\+::\+Network\+Session}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ Network\+Session} (boost\+::asio\+::io\+\_\+service \&io\+\_\+service, boost\+::asio\+::ssl\+::context \&context)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_network_session_ab5de365f6424a495036c9e812f0f4ad6}} 
+\textbf{ $\sim$\+Network\+Session} ()
+\begin{DoxyCompactList}\small\item\em The destructor. \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_network_session_a3ed991568f236bd39ceb0b80f88b455e}} 
+{\bfseries Network\+Session} (\textbf{ Network\+Session} const \&)=delete
+\item 
+\mbox{\label{classspider_1_1_network_session_afa533f49e902b6fb2a0317c882c5dba9}} 
+\textbf{ Network\+Session} \& {\bfseries operator=} (\textbf{ Network\+Session} const \&)=delete
+\item 
+\mbox{\label{classspider_1_1_network_session_a7a4f39e7b5fe0b1784d8399f8299e861}} 
+void \textbf{ start} ()
+\begin{DoxyCompactList}\small\item\em Starting the session. \end{DoxyCompactList}\item 
+void \textbf{ handle\+Handshake} (boost\+::system\+::error\+\_\+code const \&error)
+\begin{DoxyCompactList}\small\item\em Handler for async ssl handshake. \end{DoxyCompactList}\item 
+void \textbf{ handle\+Read} (boost\+::system\+::error\+\_\+code const \&error, std\+::size\+\_\+t bytes\+\_\+transferred)
+\begin{DoxyCompactList}\small\item\em Handler for async read. \end{DoxyCompactList}\item 
+boost\+\_\+ssl\+\_\+socket\+::lowest\+\_\+layer\+\_\+type \& \textbf{ socket} ()
+\begin{DoxyCompactList}\small\item\em Get the ip\+::tcp\+::socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{classspider_1_1_network_session_a1049001c94e30b57a9986a1ec26d1b0c}} 
+\index{spider\+::\+Network\+Session@{spider\+::\+Network\+Session}!Network\+Session@{Network\+Session}}
+\index{Network\+Session@{Network\+Session}!spider\+::\+Network\+Session@{spider\+::\+Network\+Session}}
+\subsubsection{Network\+Session()}
+{\footnotesize\ttfamily spider\+::\+Network\+Session\+::\+Network\+Session (\begin{DoxyParamCaption}\item[{boost\+::asio\+::io\+\_\+service \&}]{io\+\_\+service,  }\item[{boost\+::asio\+::ssl\+::context \&}]{context }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+\_\+service} & The associated io\+\_\+service. \\
+\hline
+{\em context} & The associated S\+SL context. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{classspider_1_1_network_session_afeb40632e9a388efbb4bb575f8eec76a}} 
+\index{spider\+::\+Network\+Session@{spider\+::\+Network\+Session}!handle\+Handshake@{handle\+Handshake}}
+\index{handle\+Handshake@{handle\+Handshake}!spider\+::\+Network\+Session@{spider\+::\+Network\+Session}}
+\subsubsection{handle\+Handshake()}
+{\footnotesize\ttfamily void spider\+::\+Network\+Session\+::handle\+Handshake (\begin{DoxyParamCaption}\item[{boost\+::system\+::error\+\_\+code const \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Handler for async ssl handshake. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & The boost error code. \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classspider_1_1_network_session_a440bcc8bd0a5403a1b98dcd84ceb8aa3}} 
+\index{spider\+::\+Network\+Session@{spider\+::\+Network\+Session}!handle\+Read@{handle\+Read}}
+\index{handle\+Read@{handle\+Read}!spider\+::\+Network\+Session@{spider\+::\+Network\+Session}}
+\subsubsection{handle\+Read()}
+{\footnotesize\ttfamily void spider\+::\+Network\+Session\+::handle\+Read (\begin{DoxyParamCaption}\item[{boost\+::system\+::error\+\_\+code const \&}]{error,  }\item[{std\+::size\+\_\+t}]{bytes\+\_\+transferred }\end{DoxyParamCaption})}
+
+
+
+Handler for async read. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & The boost error code. \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classspider_1_1_network_session_a3a45370fb7c131566c903c3a23366a9f}} 
+\index{spider\+::\+Network\+Session@{spider\+::\+Network\+Session}!socket@{socket}}
+\index{socket@{socket}!spider\+::\+Network\+Session@{spider\+::\+Network\+Session}}
+\subsubsection{socket()}
+{\footnotesize\ttfamily boost\+\_\+ssl\+\_\+socket\+::lowest\+\_\+layer\+\_\+type\& spider\+::\+Network\+Session\+::socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the ip\+::tcp\+::socket. 
+
+\begin{DoxyReturn}{Returns}
+Ref to the ip\+::tcp\+::socket. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+includes/\+Network/Server\+Network.\+hpp\end{DoxyCompactItemize}

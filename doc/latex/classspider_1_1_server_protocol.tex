@@ -1,0 +1,67 @@
+\section{spider\+:\+:Server\+Protocol Class Reference}
+\label{classspider_1_1_server_protocol}\index{spider\+::\+Server\+Protocol@{spider\+::\+Server\+Protocol}}
+
+
+Inheritance diagram for spider\+:\+:Server\+Protocol\+:
+% FIG 0
+
+
+Collaboration diagram for spider\+:\+:Server\+Protocol\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{classspider_1_1_server_protocol_af84520983479ef6e777da34cb58c2e24}} 
+\textbf{ Server\+Protocol} ()
+\begin{DoxyCompactList}\small\item\em construct server protocol object \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_protocol_a958496b2694df2d62c37c363022af169}} 
+\textbf{ $\sim$\+Server\+Protocol} ()
+\begin{DoxyCompactList}\small\item\em destruct of server protocol object \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_protocol_a866603c79adf96b04f6d9229b52280ed}} 
+\textbf{ Server\+Protocol} (\textbf{ Server\+Protocol} const \&)
+\begin{DoxyCompactList}\small\item\em copy operator of server protocol \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_protocol_ad3198a38584d643bd0eb9d86ca1213b4}} 
+void \textbf{ run} () override
+\begin{DoxyCompactList}\small\item\em run the main function of the protocol \end{DoxyCompactList}\item 
+unserialized\+\_\+queue \& \textbf{ get\+Info} ()
+\begin{DoxyCompactList}\small\item\em get the data which\textquotesingle{}s waiting to be stock in DB \end{DoxyCompactList}\item 
+\mbox{\label{classspider_1_1_server_protocol_a9d5d13c8c470e6ef400a08f210b161c7}} 
+void \textbf{ check\+Ping} () override
+\begin{DoxyCompactList}\small\item\em check if a ping command has been sent and respond to it \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{classspider_1_1_server_protocol_af4defcdbe67c7343aaa47e1bd4387dd7}} 
+typedef std\+::queue$<$ \textbf{ t\+\_\+unserialized} $>$ {\bfseries unserialized\+\_\+queue}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{classspider_1_1_server_protocol_af3afac390ff0d3f18150b4fbb57d883c}} 
+std\+::queue$<$ \textbf{ t\+\_\+command} $>$ {\bfseries cmds}
+\item 
+\mbox{\label{classspider_1_1_server_protocol_a051e06bc57c2087fc14d38d1e16adb9f}} 
+unserialized\+\_\+queue {\bfseries data}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{classspider_1_1_server_protocol_a3941b100fc61ae3815f2c1fec004edc0}} 
+\index{spider\+::\+Server\+Protocol@{spider\+::\+Server\+Protocol}!get\+Info@{get\+Info}}
+\index{get\+Info@{get\+Info}!spider\+::\+Server\+Protocol@{spider\+::\+Server\+Protocol}}
+\subsubsection{get\+Info()}
+{\footnotesize\ttfamily unserialized\+\_\+queue\& spider\+::\+Server\+Protocol\+::get\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get the data which\textquotesingle{}s waiting to be stock in DB 
+
+\begin{DoxyReturn}{Returns}
+the queue to be save in DB 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+includes/\+Protocol/Server\+Protocol.\+hpp\end{DoxyCompactItemize}
