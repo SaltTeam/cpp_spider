@@ -14,6 +14,7 @@
 #include "logger/Logger.hpp"
 #include "Protocol/Serializer.hpp"
 
+static std::map<KEYTYPE, std::string> keytype_string;
 
 static t_unserialized unserialize_message(boost::property_tree::ptree const &pt)
 {
@@ -54,7 +55,10 @@ static t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
   ret.mouse = new t_mouse;
   ret.mouse->timestamp = pt.get<std::string>("timestamp");
   ret.mouse->process = pt.get<std::string>("process");
-  ret.mouse->keytype = pt.get<int>("data.click");
+  ret.mouse->keytype = KEYTYPE::KNONE;
+  for (auto it : keytype_string)
+    if (it.second == pt.get<std::string>("data.click"))
+      ret.mouse->keytype = it.first;
   ret.mouse->x = pt.get<unsigned int>("data.x");
   ret.mouse->y = pt.get<unsigned int>("data.y");
   ret.mouse->type = pt.get<std::string>("type");
@@ -85,6 +89,12 @@ namespace spider
     this->unserialize_func["REGISTER"] = unserialize_register;
     this->unserialize_func["MOUSE"] = unserialize_mouse;
     this->unserialize_func["COMMAND"] = unserialize_command;
+    keytype_string[KEYTYPE::KNONE] = "KNONE";
+    keytype_string[KEYTYPE::RC] = "RC";
+    keytype_string[KEYTYPE::LC] = "LC";
+    keytype_string[KEYTYPE::SCROLLUP] = "SCROLLUP";
+    keytype_string[KEYTYPE::SCROLLDOWN] = "SCROLLDOWN";
+    keytype_string[KEYTYPE::MC] = "MC";
   }
 
   Serializer::~Serializer()
@@ -131,7 +141,7 @@ namespace spider
 
     pt.put("timestamp", data.timestamp);
     pt.put("process", data.process);
-    pt.put("data.click", data.keytype);
+    pt.put("data.click", keytype_string.at(data.keytype));
     pt.put("data.x", data.x);
     pt.put("data.y", data.y);
     pt.put("type", data.type);

@@ -29,7 +29,7 @@ struct              t_mouse
 {
     std::string     timestamp;
     std::string	    process;
-    int             keytype;
+    KEYTYPE         keytype;
     unsigned int    x;
     unsigned int    y;
     std::string     type;
