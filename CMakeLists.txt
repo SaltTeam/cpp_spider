@@ -41,7 +41,6 @@ else(UNIX)
         includes/logger/Logger.hpp
         includes/Network/ServerNetwork.hpp
         includes/Protocol/Buffer.hpp
-        sources/Protocol/ServerBuffer.cpp
         includes/Protocol/IProtocol.hpp
         includes/Protocol/Serializer.hpp
         includes/Protocol/ServerProtocol.hpp
