@@ -139,7 +139,6 @@ void spider::Sqlite::pushData(t_unserialized data)
 	      ", and y: " << data.mouse->y << "." << std::endl;
 
     logger.log(logger::DEBUG, strstream.str());
-    std::cout << strstream.str() << std::endl;
     addEntryLog(data.mouse->timestamp.c_str(),
 		data.mouse->process.c_str(),
 		strstream.str().c_str());
