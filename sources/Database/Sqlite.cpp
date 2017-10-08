@@ -10,6 +10,7 @@
 
 #include	<iostream>
 #include	<sstream>
+#include <Protocol/Serializer.hpp>
 #include	"logger/Logger.hpp"
 #include	"Database/Sqlite.hpp"
 
@@ -120,7 +121,7 @@ void spider::Sqlite::pushData(t_unserialized data)
     std::ostringstream strstream;
     std::string		querry;
 
-    strstream << "Click on " << data.mouse->keytype <<
+    strstream << "Click on " << spider::Serializer::getSerializer().get_string_from_keytype(data.mouse->keytype) <<
 	      ", at position x: " << data.mouse->x <<
 	      ", and y: " << data.mouse->y << ".";
     querry = strstream.str();

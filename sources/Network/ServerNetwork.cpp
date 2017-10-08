@@ -5,7 +5,7 @@
 ** Login   <hugo.soszynski@epitech.eu>
 **
 ** Started on  Wed Oct 04 08:04:50 2017 Hugo SOSZYNSKI
-** Last update Wed Oct 04 08:04:50 2017 Hugo SOSZYNSKI
+** Last update Sun Oct 08 13:45:15 2017 Hugo SOSZYNSKI
 */
 
 #include <boost/bind.hpp>
@@ -153,7 +153,7 @@ void spider::NetworkSession::handleRead(boost::system::error_code const& error,
   }
   else
   {
-    logger.log(logger::DEBUG, "Cannot read data: " + error.message());
+    logger.log(logger::ERROR, "Cannot read data: " + error.message());
     delete this;
   }
 }

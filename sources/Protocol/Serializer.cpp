@@ -183,7 +183,7 @@ namespace spider
     return (pt);
   }
 
-  std::string const &Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
+  std::string const Serializer::get_string_from_ptree(boost::property_tree::ptree const &pt) const
   {
     std::ostringstream buf2;
 
@@ -191,10 +191,10 @@ namespace spider
     return (buf2.str());
   }
 
-  std::string const &Serializer::get_string_from_keytype(KEYTYPE const &key) const
+  std::string const Serializer::get_string_from_keytype(KEYTYPE const &key) const
   { return (this->keytype_string.at(key)); }
 
-  KEYTYPE const& Serializer::get_keytype_from_string(std::string const &str) const
+  KEYTYPE const Serializer::get_keytype_from_string(std::string const &str) const
   {
     for (auto it : this->keytype_string)
       if (it.second == str)
