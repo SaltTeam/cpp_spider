@@ -63,22 +63,16 @@ void spider::ClientProtocol::run()
   for (;;)
   {
     std::string str = buf.getBuf();
-    Sleep(200);
-    if (str.empty())
-      continue;
     if (!isConnected.load())
     {
-      std::cout << "writing in file\n";
-      file << str;
+      if (!str.empty())
+	file << str;
       str.clear();
       continue;
     }
     getline(file, tmp);
-    std::cout << tmp << std::endl;
     tmp.append(str);
     str = tmp;
-    std::cout << "here to send to server" << std::endl;
-    std::cout << str << std::endl;
     buf.push(str);
     str.clear();
     tmp.clear();

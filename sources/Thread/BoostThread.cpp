@@ -35,20 +35,17 @@ void BoostThread::threadJoin() {
 }
 
 void BoostThread::createThread(std::unique_ptr<IProtocol> &proto) {
-  std::cout << "before thread" << std::endl;
   thread = boost::thread(boost::bind(&IProtocol::run, proto.get()));
 }
 
   void BoostThread::createNetThread()
   {
-    std::cout << "creating net thread" << std::endl;
     thread = boost::thread(boost::bind(&spider::runNetwork));
   }
 
 
   void BoostThread::createNetServThread()
   {
-    std::cout << "creating net thread" << std::endl;
     thread = boost::thread(boost::bind(&spider::runServerNetwork));
   }
 };

