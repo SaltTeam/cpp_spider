@@ -1,4 +1,4 @@
-project(cpp_spider)
+project(test_spider)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -14,8 +14,10 @@ if (WIN32)
         sources/Protocol/Buffer.cpp
         sources/Protocol/Serializer.cpp
         sources/Protocol/ClientProtocol.cpp
+        sources/Protocol/BufferSender.cpp
         sources/ClientCore.cpp
-        sources/ClientMain.cpp)
+        sources/ClientMain.cpp
+        sources/Thread/BoostThread.cpp)
     include_directories(includes)
     add_definitions(-D_WIN32_WINNT=0x0501)
     SET (Boost_FIND_REQUIRED TRUE)
@@ -29,8 +31,8 @@ if (WIN32)
     LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
     INCLUDE_DIRECTORIES(C:/OpenSSL-Win32/include)
     find_package(OPENSSL)
-    add_executable(cpp_spider ${SOURCE_FILES})
-    target_link_libraries(cpp_spider ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+    add_executable(test_spider ${SOURCE_FILES})
+    target_link_libraries(test_spider ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 else(UNIX)
     cmake_minimum_required(VERSION 3.8)
     set(SOURCE_FILES

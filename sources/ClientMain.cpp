@@ -40,6 +40,7 @@ int			main()
   spider::ClientCore	client;
 
   autorun();
+  std::cout << "passed autorun\n";
   client.run();
   return 0;
 }

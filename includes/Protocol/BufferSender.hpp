@@ -12,7 +12,8 @@
 
 #include <string>
 #include <map>
-#include <boost/atomic/atomic.hpp>
+#include <boost/atomic.hpp>
+#include <boost/thread/mutex.hpp>
 
 /// \namespace spider
 namespace spider {
@@ -37,13 +38,15 @@ namespace spider {
     /// \return instance of BufferSender class
     static BufferSender &BufferSenderInstance();
 
-    std::string& getBuf();
+    const std::string &getBuf();
 
     /// \brief push a string in the buffer
     void push(std::string msg);
 
   private:
     static BufferSender _Instance;
-    boost::atomic<std::string> _buffer;
+    std::string _buffer;
+    boost::mutex		mtx;
+    std::string	_tmp;
   };
 }

