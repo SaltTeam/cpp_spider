@@ -52,6 +52,11 @@ void spider::ClientNetwork::send()
     BufferSender &buf = BufferSender::BufferSenderInstance();
 
     std::string str = buf.getBuf();
+
+    if (str.empty())
+    {
+      return ;
+    }
     std::regex reg = std::regex("\\{(?:(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\"data\": \\{(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+\\}(?:,{0}|,{1}(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)|(?:\\s*\"[ -z|~]+\": \"[ -z|~]+\",{0,1}\\s*)+)\\}");
     for (auto it = std::sregex_iterator(str.begin(), str.end(), reg);
 	 it != std::sregex_iterator(); ++it)

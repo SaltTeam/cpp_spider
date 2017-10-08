@@ -53,7 +53,6 @@ static t_unserialized unserialize_mouse(boost::property_tree::ptree const &pt)
   ret.mouse = new t_mouse;
   ret.mouse->timestamp = pt.get<std::string>("timestamp");
   ret.mouse->process = pt.get<std::string>("process");
-  std::cout << "process is " << ret.mouse->process << std::endl;
   ret.mouse->keytype = spider::Serializer::getSerializer().get_keytype_from_string(pt.get<std::string>("data.click"));
   ret.mouse->x = pt.get<unsigned int>("data.x");
   ret.mouse->y = pt.get<unsigned int>("data.y");

@@ -38,7 +38,7 @@ namespace spider {
     /// \return instance of BufferSender class
     static BufferSender &BufferSenderInstance();
 
-    const std::string &getBuf();
+    std::string getBuf();
 
     /// \brief push a string in the buffer
     void push(std::string msg);
@@ -47,6 +47,5 @@ namespace spider {
     static BufferSender _Instance;
     std::string _buffer;
     boost::mutex		mtx;
-    std::string	_tmp;
   };
 }

