@@ -196,9 +196,13 @@ namespace spider
 
   KEYTYPE const Serializer::get_keytype_from_string(std::string const &str) const
   {
+    std::cout << "get k from str" << std::endl;
     for (auto it : this->keytype_string)
-      if (it.second == str)
+      if (it.second.compare(str) == 0)
+      {
+	std::cout << it.second << std::endl;
 	return (it.first);
+      }
     return (KEYTYPE::KNONE);
   }
 }
