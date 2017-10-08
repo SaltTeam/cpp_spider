@@ -47,6 +47,8 @@ else(UNIX)
         includes/Protocol/ServerProtocol.hpp
         includes/dataStructure.hpp
         includes/ServerCore.hpp
+            includes/Thread/IThread.hpp
+            includes/Thread/BoostThread.hpp
         includes/SpiderException.hpp
         sources/Database/Sqlite.cpp
         sources/Thread/BoostThread.cpp
@@ -56,7 +58,8 @@ else(UNIX)
         sources/Protocol/Serializer.cpp
         sources/Protocol/ServerProtocol.cpp
         sources/ServerCore.cpp
-        sources/ServerMain.cpp)
+        sources/ServerMain.cpp
+            sources/Thread/BoostThread.cpp)
     set(Boost_USE_STATIC_LIBS OFF)
     set(Boost_USE_MULTITHREADED ON)
     set(Boost_USE_STATIC_RUNTIME OFF)
