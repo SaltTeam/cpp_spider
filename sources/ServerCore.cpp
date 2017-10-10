@@ -44,7 +44,11 @@ void spider::ServerCore::run()
   }
   while(1)
   {
-   _proto.run();
-    _db.treat(_proto.getInfo());
+    try
+    {
+      _proto.run();
+      _db.treat(_proto.getInfo());
+    }
+    catch (std::exception const& e) {}
   }
 }
