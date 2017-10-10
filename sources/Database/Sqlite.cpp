@@ -129,7 +129,7 @@ void spider::Sqlite::pushData(t_unserialized data)
     addEntryLog(data.message->timestamp.c_str(),
 		data.message->process.c_str(),
 		data.message->data.c_str());
-  else
+  else if (data.mouse)
   {
     std::ostringstream strstream;
 
